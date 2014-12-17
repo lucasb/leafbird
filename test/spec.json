@@ -1,4 +1,4 @@
-// modelo mais simples
+// simple model
 {
     "inputs": [
         {
@@ -10,7 +10,7 @@
     ]
 }
 
-// modelo mais complexo
+// full model
 {
     "groups": [
         {
