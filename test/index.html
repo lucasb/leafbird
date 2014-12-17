@@ -17,26 +17,27 @@
 <html>
 <body>
 <h1>Leafbird - Index</h1>
-<div id="uuu"></div>
+<div id="form"></div>
 </body>
 <script type="text/javascript" src="../src/leafbird.js"></script>
 <script type="text/javascript">
 
 var json = JSON.parse(
 '{ \
+    "id": "group",\
     "inputs": [\
         {\
             "id": "name",\
             "label": "Name",\
-            "type": "text",\
+            "class": "name",\
+            "type": "number",\
             "required": true\
         }\
     ]\
 }'
 );
 
-var element = document.getElementById("uuu");
+var element = document.getElementById("form");
 lb(json).print(element);
-lb(json).find("id");
 </script>
 </html>
