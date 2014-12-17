@@ -1,0 +1,68 @@
+// modelo mais simples
+{
+    "inputs": [
+        {
+            "id": "name",
+            "label": "Name",
+            "type": "text",
+            "required": true
+        }
+    ]
+}
+
+// modelo mais complexo
+{
+    "groups": [
+        {
+            "id": "personal",
+            "label": "Personal",
+            "inputs": [
+                {
+                    "label": "Name",
+                    "type": "text",
+                    "required": true
+                },
+                {
+                    "label": "Age",
+                    "type": "number",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Contacts",
+            "inputs": [
+                {
+                    "label": "DDD",
+                    "type": "select",
+                    "default": "51",
+                    "values": [
+                        {
+                            "label": "51",
+                            "value": "51"
+                        },
+                        {
+                            "label": "52",
+                            "value": "52"
+                        },
+                        {
+                            "label": "53",
+                            "value": "53"
+                        }
+                    ]
+                }
+            ],
+            "groups": [
+                {
+                    "inputs": [
+                        {
+                            "label": "Enable",
+                            "type": "boolean",
+                            "default": true
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
