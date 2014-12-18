@@ -19,7 +19,7 @@
 <h1>Leafbird - Index</h1>
 <div id="form"></div>
 </body>
-<script type="text/javascript" src="../bin/leafbird.min.js"></script>
+<script type="text/javascript" src="../src/leafbird.js"></script>
 <script type="text/javascript">
 
 var json = JSON.parse(
@@ -30,14 +30,16 @@ var json = JSON.parse(
             "id": "name",\
             "label": "Name",\
             "class": "name",\
-            "type": "number",\
-            "required": true\
+            "name": "name",\
+            "type": "text",\
+            "required": true,\
+            "default": "Default"\
         }\
     ]\
 }'
 );
 
 var element = document.getElementById("form");
-lb(json).print(element);
+lb(json).print(element, ":name");
 </script>
 </html>
