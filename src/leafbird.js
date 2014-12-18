@@ -16,10 +16,13 @@
 
 (function(arg) {
 
-  this.json;
-  var dom_objs;
+  this.json = null;
+  var show_group_label = false;
+  var show_input_label = true;
+  var show_placeholder = false;
 
   this.Leafbird = function(arg) {
+
     if(!(this instanceof Leafbird)) {
       return new Leafbird(arg);
     }
@@ -27,12 +30,24 @@
     this.json = arg;
   };
 
+  Leafbird.prototype.configure = function(args) {
+
+    if(args["json"] != undefined)
+      this.json = args["json"];
+    if(args["show_group_label"] != undefined)
+      show_group_label = args["show_group_label"];
+    if(args["show_input_label"] != undefined)
+      show_input_label = args["show_input_label"];
+    if(args["show_placeholder"] != undefined)
+      show_placeholder = args["show_placeholder"];
+  }
+
   Leafbird.prototype.find = function(property, _value, _json) { //TODO: Add contains to find values
 
     var arr_found = [];
     json = (_json == undefined) ? this.json : _json;
 
-    if(json.hasOwnProperty(property) && 
+    if(json.hasOwnProperty(property) &&
         (_value == undefined || json[property] == _value)) {
       arr_found.push(json);
     }
@@ -71,7 +86,7 @@
       reducedJSON = this.find("label", _attr.substring(1));
     }
     else {
-      throw new SyntaxError("JSONAttribute '" + _attr + "' is not valid.", 
+      throw new SyntaxError("JSONAttribute '" + _attr + "' is not valid.",
                                                                    _attr);
     }
 
@@ -109,11 +124,30 @@
     label.setAttribute("for", json.id);
     label.appendChild(document.createTextNode(json.label));
 
-    var input = document.createElement("input");
-    input.setAttribute("id", json.id);
-    input.setAttribute("name", json.id);
-    input.setAttribute("type", json.type);
-    input.setAttribute("placeholder", json.label);
+    var input;
+
+    switch(json.type) {
+      case "text":
+      case "number":
+      case "date":
+      case "currency":
+        input = document.createElement("input");
+        input.setAttribute("id", json.id);
+        input.setAttribute("name", json.id);
+        input.setAttribute("type", json.type);
+        input.setAttribute("placeholder", json.label);
+        break;
+      case "boolean":
+
+      case "check":
+      case "select":
+        input = document.createElement("select");
+        var option = document.createElement("option");
+        option.setAttribute("value", json.values[0].value);
+      default:
+        throw new SyntaxError("Invalid InputType.", json.type);
+
+    }
   };
 
   var buildInput = function(json, _placeholder) {

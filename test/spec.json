@@ -58,7 +58,17 @@
                         {
                             "label": "Enable",
                             "type": "boolean",
-                            "default": true
+                            "default": true,
+                            "values": [
+                                {
+                                    "label": "Yes",
+                                    "value": true
+                                },
+                                {
+                                    "label": "No",
+                                    "value": false
+                                }
+                            ]
                         }
                     ]
                 }
