@@ -100,13 +100,11 @@
 
   var buildHTMLElement = function(json, element) {
 
-    var group_element;
-
     if(json.hasOwnProperty("type")) {
       buildInputElement(json, element);
     }
     else {
-      group_element = buildDivGroup(json);
+      var group_element = buildDivGroup(json);
       for(i in json) {
         if(json[i] instanceof Array) {
           for(j in json[i]) {
