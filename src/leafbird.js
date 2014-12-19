@@ -1,17 +1,17 @@
 /*
-    Copyright 2014 Leafbird
+  Copyright 2014 Leafbird
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
 */
 
 (function(arg) {
@@ -31,7 +31,7 @@
   };
 
   Leafbird.prototype.configure = function(args) { // TODO: Test this function
-
+                                  // TODO: Config to print labels and placeholder (put if in functions)
     if(args["json"] != undefined) // TODO: Add option mark input required, functiion validation and mask by type
       this.json = args["json"];
     if(args["show_group_label"] != undefined)
@@ -42,7 +42,7 @@
       show_placeholder = args["show_placeholder"];
   }
 
-  Leafbird.prototype.find = function(property, _value, _json) { //TODO: Add contains to find values
+  Leafbird.prototype.find = function(property, _value, _json) { // TODO: Add contains to find values
 
     var arr_found = [];
     json = (_json == undefined) ? this.json : _json;
@@ -64,7 +64,7 @@
 
     return arr_found;
   };
-
+  // TODO: Remove json from constructor and add in print and config functions
   Leafbird.prototype.print = function(element, _attr) { // TODO: Split 2 functions getElements and print
 
     if(!(element instanceof HTMLElement)) { // TODO: add temp config shows to print
@@ -85,7 +85,7 @@
     else if(_attr.indexOf(":") == 0) {
       reducedJSON = this.find("name", _attr.substring(1));
     }
-    else if(_attr.indexOf("$") == 0) {
+    else if(_attr.indexOf("$") == 0) { // TODO: remove label from print find
       reducedJSON = this.find("label", _attr.substring(1));
     } // TODO: Change label structure to object with {value and class}
     else {
@@ -93,16 +93,47 @@
                                                                    _attr);
     }
 
-    var html = "";
     for(i in reducedJSON) {
-      html += buildHTML(reducedJSON[i]);
+      buildHTMLElement(reducedJSON[i], element);
+    }
+  };
+
+  var buildHTMLElement = function(json, element) {
+
+    var group_element;
+
+    if(json.hasOwnProperty("type")) {
+      buildInputElement(json, element);
+    }
+    else {
+      group_element = buildDivGroup(json);
+      for(i in json) {
+        if(json[i] instanceof Array) {
+          for(j in json[i]) {
+            buildHTMLElement(json[i][j], group_element);
+          }
+        }
+      }
+      element.appendChild(group_element);
+    }
+  };
+
+  var buildDivGroup = function(json) {  // TODO: Add class for all inputs verify if defined
+                                        // TODO: Check show label if config is true
+    var div = document.createElement("div");
+    if(json.id != undefined)
+      div.setAttribute("id", json.id);
+    if(json.label != undefined) {
+      var span = document.createElement("span");
+      span.appendChild(document.createTextNode(json.label));
+      div.appendChild(span);
     }
 
-    element.innerHTML = html;
+    return div;
   };
 
   var buildInputElement = function(json, element) { // TODO: Add mask/validation by types
-                                                    // TODO: Criar function to build textarea and file(multifile)
+                                                    // TODO: Add class for all inputs verify if defined
     if(json.label != undefined) {
       var label = document.createElement("label");
       if(json.id != undefined)
@@ -111,6 +142,9 @@
       element.appendChild(label);
     }
 
+    if(json.name == undefined)
+      throw new SyntaxError("InputName is required.", json.name);
+
     switch(json.type) {
       case "text":
       case "number":
@@ -118,23 +152,26 @@
       case "currency":
         buildInputText(json, element);
         break;
-      case "boolean": // TODO: Replace this from boolean to radio type
-        buildInputRadio(json, element);
+      case "radio":
+      case "checkbox":
+        buildInputCheckboxRadio(json, element);
         break;
-      case "check":
-        buildInputCheckbox(json, element);
+      case "textarea":
+        buildInputTextarea(json, element);
+        break;
       case "select":
         buildInputSelect(json, element);
+        break;
+      case "file":
+        buildInputFile(json, element);
         break;
       default:
         throw new SyntaxError("Invalid InputType.", json.type);
     }
-
-    return element;
   };
 
-  var buildInputText = function(json, element) { // TODO: Add class for all inputs verify if defined
-                                                 // TODO: Check config to print labels and placeholder
+  var buildInputText = function(json, element) {
+
       var input = document.createElement("input");
       input.setAttribute("type", "text");
       input.setAttribute("name", json.name);
@@ -150,35 +187,27 @@
       element.appendChild(input);
   };
 
-  var buildInputRadio = function(json, element) { // TODO: Join this with chackbox function
+  var buildInputTextarea = function(json, element) {
 
-    for(i in json.values) {
-      var input = document.createElement("input");
-      input.setAttribute("type", "radio");
-      input.setAttribute("name", json.name);
-      input.setAttribute("value", json.values[i].value);
-      if(json.id != undefined)
-        input.setAttribute("id", json.id + "_" + i);
-      if(json.default == json.values[i].value)
-        input.setAttribute("checked", "checked");
-
-      if(json.label != undefined) {
-        var label = document.createElement("label");
-        if(json.id != undefined)
-          label.setAttribute("for", json.id + "_" + i);
-        label.appendChild(document.createTextNode(json.values[i].label));
-        input.appendChild(label);
-      }
-
-      element.appendChild(input);
+    var textarea = document.createElement("textarea");
+    textarea.setAttribute("name", json.name);
+    if(json.id != undefined)
+      textarea.setAttribute("id", json.id);
+    if(json.default != undefined)
+      textarea.appendChild(document.createTextNode(json.default));
+    if(json.placeholder != undefined || json.label != undefined) {
+      textarea.setAttribute("placeholder",
+        json.placeholder == undefined ? json.label : json.placeholder);
     }
+
+    element.appendChild(textarea);
   };
 
-  var buildInputCheckbox = function(json, element) {
+  var buildInputCheckboxRadio = function(json, element) {
 
     for(i in json.values) {
       var input = document.createElement("input");
-      input.setAttribute("type", "checkbox");
+      input.setAttribute("type", json.type);
       input.setAttribute("name", json.name);
       input.setAttribute("value", json.values[i].value);
       if(json.id != undefined)
@@ -190,11 +219,12 @@
         var label = document.createElement("label");
         if(json.id != undefined)
           label.setAttribute("for", json.id + "_" + i);
+        label.appendChild(input);
         label.appendChild(document.createTextNode(json.values[i].label));
-        input.appendChild(label);
+        element.appendChild(label);
       }
-
-      element.appendChild(input);
+      else
+        element.appendChild(input);
     }
   };
 
@@ -205,60 +235,30 @@
     if(json.id != undefined)
       select.setAttribute("id", json.id);
 
-    var option = document.createElement("option"); // TODO: Add function/config to get option dynamic
-    option.setAttribute("value", json.values[0].value);
-
-    for(i in json.values) {
+    for(i in json.values) { // TODO: Add function/config to get option dynamic
       var option = document.createElement("option");
       option.appendChild(document.createTextNode(json.values[i].label));
+      option.setAttribute("value", json.values[0].value);
       if(json.default == json.values[i].value)
-        input.setAttribute("selected", "selected");
+        option.setAttribute("selected", "selected");
+
+      select.appendChild(option);
+    }
+
+    element.appendChild(select);
+  };
+
+  var buildInputFile = function(json, element) { // TODO: Change this to add multifildes file
+
+      var input = document.createElement("input");
+      input.setAttribute("type", "file");
+      input.setAttribute("name", json.name);
+      if(json.id != undefined)
+        input.setAttribute("id", json.id);
+      if(json.acept != undefined)
+        input.setAttribute("acept", json.acept);
 
       element.appendChild(input);
-    }
-  };
-
-  // TODO: Remove after replaces
-  var buildHTML = function(json) { // TODO: Replace by buildHTMLElement function and test with values array
-                                   // TODO: Add div to groups check label is defined and if config is true
-    var html = "";
-
-    if(json.hasOwnProperty("type")) {
-      html += buildInput(json);
-    }
-    else {
-      for(i in json) {
-        if(json[i] instanceof Array) {
-          for(j in json[i]) {
-            html += buildHTML(json[i][j]);
-          }
-        }
-      }
-    }
-
-    return html;
-  };
-
-  var buildInput = function(json, _placeholder) { // TODO: Replace by buildInputElement function
-
-    // check placeholder and label to genarate html.
-    var html = '<label for="'+json.id+'">'+json.label+'</label>';
-
-    switch(json.type) {
-
-      case "text":
-      case "number":
-        html += '<input id="'+json.id+'" name="'+json.id+'" type="'+json.type+'" />';
-        break;
-      case "boolean":
-        break;
-      case "select": // select-check to checkbox
-        break
-      default:
-        throw new SyntaxError("Invalid InputType.", json.type);
-    }
-
-    return html;
   };
 
   window.Leafbird = Leafbird, window.lb = Leafbird;
