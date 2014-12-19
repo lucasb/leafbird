@@ -32,7 +32,7 @@
 
   Leafbird.prototype.configure = function(args) { // TODO: Test this function
 
-    if(args["json"] != undefined)
+    if(args["json"] != undefined) // TODO: Add option mark input required, functiion validation and mask by type
       this.json = args["json"];
     if(args["show_group_label"] != undefined)
       show_group_label = args["show_group_label"];
@@ -86,8 +86,8 @@
       reducedJSON = this.find("name", _attr.substring(1));
     }
     else if(_attr.indexOf("$") == 0) {
-      reducedJSON = this.find("label", _attr.substring(1)); // TODO: Change label structure to object with {value and class}
-    }
+      reducedJSON = this.find("label", _attr.substring(1));
+    } // TODO: Change label structure to object with {value and class}
     else {
       throw new SyntaxError("JSONAttribute '" + _attr + "' is not valid.",
                                                                    _attr);
@@ -101,8 +101,8 @@
     element.innerHTML = html;
   };
 
-  var buildInputElement = function(json, element) { // TODO: Add mask/validation by types // criar function to build text area and file
-
+  var buildInputElement = function(json, element) { // TODO: Add mask/validation by types
+                                                    // TODO: Criar function to build textarea and file(multifile)
     if(json.label != undefined) {
       var label = document.createElement("label");
       if(json.id != undefined)
@@ -110,7 +110,7 @@
       label.appendChild(document.createTextNode(json.label));
       element.appendChild(label);
     }
-    
+
     switch(json.type) {
       case "text":
       case "number":
@@ -118,7 +118,7 @@
       case "currency":
         buildInputText(json, element);
         break;
-      case "boolean":
+      case "boolean": // TODO: Replace this from boolean to radio type
         buildInputRadio(json, element);
         break;
       case "check":
@@ -133,8 +133,8 @@
     return element;
   };
 
-  var buildInputText = function(json, element) { // TODO: Add class for all inputs verify if defined // check config to print labels and placeholder
-      
+  var buildInputText = function(json, element) { // TODO: Add class for all inputs verify if defined
+                                                 // TODO: Check config to print labels and placeholder
       var input = document.createElement("input");
       input.setAttribute("type", "text");
       input.setAttribute("name", json.name);
@@ -143,14 +143,14 @@
       if(json.default != undefined)
         input.setAttribute("value", json.default);
       if(json.placeholder != undefined || json.label != undefined) {
-        input.setAttribute("placeholder", 
+        input.setAttribute("placeholder",
           json.placeholder == undefined ? json.label : json.placeholder);
       }
 
       element.appendChild(input);
   };
 
-  var buildInputRadio = function(json, element) {
+  var buildInputRadio = function(json, element) { // TODO: Join this with chackbox function
 
     for(i in json.values) {
       var input = document.createElement("input");
@@ -198,14 +198,14 @@
     }
   };
 
-  var buildInputSelect = function(json, element) { // TODO: change this function to acept multiselect
+  var buildInputSelect = function(json, element) { // TODO: Change this function to acept multiselect
 
     var select = document.createElement("select");
     select.setAttribute("name", json.name);
     if(json.id != undefined)
       select.setAttribute("id", json.id);
 
-    var option = document.createElement("option");
+    var option = document.createElement("option"); // TODO: Add function/config to get option dynamic
     option.setAttribute("value", json.values[0].value);
 
     for(i in json.values) {
@@ -219,9 +219,8 @@
   };
 
   // TODO: Remove after replaces
-  var buildHTML = function(json) { // TODO: Replace by buildHTMLElement function and test with values array 
-                                   // TODO: add html element div to groups check label is defined and if config is true
-
+  var buildHTML = function(json) { // TODO: Replace by buildHTMLElement function and test with values array
+                                   // TODO: Add div to groups check label is defined and if config is true
     var html = "";
 
     if(json.hasOwnProperty("type")) {
