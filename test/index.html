@@ -80,7 +80,15 @@ var json = JSON.parse(
 );
 
 var element = document.getElementById("form");
-lb(json).print(element, ".gg ff");
-//lb(json).find("id", "enable");
+lb = Leafbird({json: json});
+lb.configure({
+  show_group_label: true, 
+  show_placeholder: true,
+  show_input_label: true
+});
+lb.print(element, "*.ff", {show_placeholder: false});
+lb.print(element);
+console.log(lb.getElements());
+console.log(lb.find("id", "enable"));
 </script>
 </html>
