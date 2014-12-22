@@ -25,10 +25,13 @@
 var json = JSON.parse(
 '{ \
   "id": "group",\
+  "class": "gg ff",\
   "inputs": [\
     {\
       "id": "name",\
-      "label": "Name",\
+      "label": { \
+        "value": "Name"\
+      },\
       "class": "name",\
       "name": "name",\
       "type": "text",\
@@ -37,28 +40,37 @@ var json = JSON.parse(
     },\
     {\
       "id": "enable",\
-      "label": "Enable",\
+      "label": { \
+        "value": "Enable",\
+        "class": "ll"\
+      },\
       "name": "enable",\
       "type": "select",\
       "default": true,\
       "values": [\
           {\
-              "label": "Yes",\
-              "value": true\
+            "label": { \
+              "value": "Yes"\
+            },\
+            "value": true\
           },\
           {\
-              "label": "No",\
-              "value": false\
+            "label": { \
+              "value": "No"\
+            },\
+            "value": false\
           }\
       ]\
     }\
   ],\
   "groups": [\
     {\
-      "label": "Minimum",\
+      "label": { \
+        "value": "Minimum"\
+      },\
       "inputs": [\
         {\
-          "name": "name",\
+          "name": "name2",\
           "type": "text"\
         }\
       ]\
@@ -68,6 +80,7 @@ var json = JSON.parse(
 );
 
 var element = document.getElementById("form");
-lb(json).print(element);
+lb(json).print(element, ".gg ff");
+//lb(json).find("id", "enable");
 </script>
 </html>
