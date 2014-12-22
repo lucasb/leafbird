@@ -41,17 +41,20 @@
       show_placeholder = args["show_placeholder"];
   }
 
-  Leafbird.prototype.find = function(property, _value, _json) { // TODO: Add contains to find values
+  Leafbird.prototype.find = function(property, _value, _contains, _json) {
 
     var arr_found = [];
     var obj = (_json == undefined) ? this.json : _json;
 
     for(var key in obj) {
-      if(key == property && (_value == undefined || obj[property] == _value))
+      if(key == property && (_value == undefined
+          || (_contains && obj[property].indexOf(_value) > -1)
+          || (!_contains && obj[property] == _value))) {
         arr_found.push(obj);
+      }
 
       if(obj[key] instanceof Object) {
-        var found = this.find(property, _value, obj[key]);
+        var found = this.find(property, _value, _contains, obj[key]);
         if(found.length > 0)
           arr_found = arr_found.concat(found);
       }
@@ -72,7 +75,7 @@
     if(_attr == undefined) {
       reduced_json.push(this.json);
     }
-    else if(_attr.indexOf("#") == 0) {
+    else if(_attr.indexOf("#") == 0) { // TODO: Add check if tag contains(*) is set
       reduced_json = this.find("id", _attr.substring(1));
     }
     else if(_attr.indexOf(".") == 0) {
@@ -109,11 +112,13 @@
     }
   };
 
-  var buildDivGroup = function(json) {  // TODO: Add class for all inputs verify if defined
-                                        // TODO: Check show label if config is true
+  var buildDivGroup = function(json) {// TODO: Check show label if config is true
+
     var div = document.createElement("div");
     if(json.id != undefined)
       div.setAttribute("id", json.id);
+    if(json.class != undefined)
+      div.setAttribute("class", json.class);
     if(json.label != undefined) {
       var span = document.createElement("span");
       span.appendChild(document.createTextNode(json.label.value));
@@ -124,11 +129,13 @@
   };
 
   var buildInputElement = function(json, element) { // TODO: Add mask/validation by types
-                                                    // TODO: Add class for all inputs verify if defined
+
     if(json.label != undefined) {
       var label = document.createElement("label");
       if(json.id != undefined)
         label.setAttribute("for", json.id);
+      if(json.label.class != undefined)
+        label.setAttribute("class", json.label.class);
       label.appendChild(document.createTextNode(json.label.value));
       element.appendChild(label);
     }
@@ -168,6 +175,8 @@
       input.setAttribute("name", json.name);
       if(json.id != undefined)
         input.setAttribute("id", json.id);
+      if(json.class != undefined)
+        input.setAttribute("class", json.class);
       if(json.default != undefined)
         input.setAttribute("value", json.default);
       if(json.placeholder != undefined || json.label != undefined) {
@@ -184,6 +193,8 @@
     textarea.setAttribute("name", json.name);
     if(json.id != undefined)
       textarea.setAttribute("id", json.id);
+    if(json.class != undefined)
+      textarea.setAttribute("class", json.class);
     if(json.default != undefined)
       textarea.appendChild(document.createTextNode(json.default));
     if(json.placeholder != undefined || json.label != undefined) {
@@ -203,6 +214,8 @@
       input.setAttribute("value", json.values[i].value);
       if(json.id != undefined)
         input.setAttribute("id", json.id + "_" + i);
+      if(json.class != undefined)
+        input.setAttribute("class", json.class);
       if(json.default == json.values[i].value)
         input.setAttribute("checked", "checked");
 
@@ -210,6 +223,8 @@
         var label = document.createElement("label");
         if(json.id != undefined)
           label.setAttribute("for", json.id + "_" + i);
+        if(json.values[i].label.class != undefined)
+          label.setAttribute("class", json.values[i].label.class);
         label.appendChild(input);
         label.appendChild(document.createTextNode(json.values[i].label.value));
         element.appendChild(label);
@@ -225,11 +240,15 @@
     select.setAttribute("name", json.name);
     if(json.id != undefined)
       select.setAttribute("id", json.id);
+    if(json.class != undefined)
+      select.setAttribute("class", json.class);
 
     for(i in json.values) { // TODO: Add function/config to get option dynamic
       var option = document.createElement("option");
       option.appendChild(document.createTextNode(json.values[i].label.value));
-      option.setAttribute("value", json.values[0].value);
+      option.setAttribute("value", json.values[i].value);
+      if(json.values[i].label.class != undefined)
+        option.setAttribute("class", json.values[i].label.class);
       if(json.default == json.values[i].value)
         option.setAttribute("selected", "selected");
 
@@ -246,6 +265,8 @@
       input.setAttribute("name", json.name);
       if(json.id != undefined)
         input.setAttribute("id", json.id);
+      if(json.class != undefined)
+        input.setAttribute("class", json.class);
       if(json.acept != undefined)
         input.setAttribute("acept", json.acept);
 
