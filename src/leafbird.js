@@ -14,37 +14,33 @@
   limitations under the License.
 */
 
-(function(arg) {
+(function() {
 
-  var show_group_label = false;
-  var show_input_label = false;
-  var show_placeholder = false;
+  var config = { // TODO: Add option mark input required, function validation and mask by type
+    json: null, 
+    show_group_label: false,
+    show_placeholder: false,
+    show_input_label: false,
+  }
 
-  this.Leafbird = function(arg) {
-
+  this.Leafbird = function(_config) {
     if(!(this instanceof Leafbird)) {
-      return new Leafbird(arg);
+      return new Leafbird(_config);
     }
-
-    this.json = arg;
+    this.configure(_config);
   };
 
-  Leafbird.prototype.configure = function(args) { // TODO: Test this function
-                                  // TODO: Config to print labels and placeholder (put if in functions)
-    if(args["json"] != undefined) // TODO: Add option mark input required, functiion validation and mask by type
-      this.json = args["json"];
-    if(args["show_group_label"] != undefined)
-      show_group_label = args["show_group_label"];
-    if(args["show_input_label"] != undefined)
-      show_input_label = args["show_input_label"];
-    if(args["show_placeholder"] != undefined)
-      show_placeholder = args["show_placeholder"];
+  Leafbird.prototype.configure = function(args) {                    
+    for(var key in args) {                        
+      if(config.hasOwnProperty(key) && args[key] != undefined)
+        config[key] = args[key];
+    }
   }
 
   Leafbird.prototype.find = function(property, _value, _contains, _json) {
 
     var arr_found = [];
-    var obj = (_json == undefined) ? this.json : _json;
+    var obj = (_json == undefined) ? config.json : _json;
 
     for(var key in obj) {
       if(key == property && (_value == undefined
@@ -63,35 +59,52 @@
     return arr_found;
   };
 
-  // TODO: Remove json from constructor and add in print and config functions
-  Leafbird.prototype.print = function(element, _attr) { // TODO: Split 2 functions getElements and print
+  Leafbird.prototype.print = function(element, _attr, _config) { 
 
-    if(!(element instanceof HTMLElement)) { // TODO: add temp config shows to print
+    var save_config = {};
+    for (var key in config)
+      save_config[key] = config[key];
+    
+    if(!(element instanceof HTMLElement)) {
       throw new SyntaxError("Invalid HTMLElement.", element);
     }
 
-    var reduced_json = [];
+    this.configure(_config);
+    var elements = this.getElements(_attr);
+    
+    for(var i in elements) {
+      buildHTMLElement(elements[i], element);
+    }
 
+    this.configure(save_config);
+  };
+
+  Leafbird.prototype.getElements = function(_attr) {
+
+    if(!config.json) 
+      throw new Error("JSON is not valid.", config.json);
+
+    var reduced_json = [];
+    var index = (_attr && _attr.indexOf("*") == 0) ? 1 : 0;
+    
     if(_attr == undefined) {
-      reduced_json.push(this.json);
+      reduced_json.push(config.json);
     }
-    else if(_attr.indexOf("#") == 0) { // TODO: Add check if tag contains(*) is set
-      reduced_json = this.find("id", _attr.substring(1));
+    else if(_attr.indexOf("#") == index) {
+      reduced_json = this.find("id", _attr.substring(index + 1), index);
     }
-    else if(_attr.indexOf(".") == 0) {
-      reduced_json = this.find("class", _attr.substring(1));
+    else if(_attr.indexOf(".") == index) {
+      reduced_json = this.find("class", _attr.substring(index + 1), index);
     }
-    else if(_attr.indexOf(":") == 0) {
-      reduced_json = this.find("name", _attr.substring(1));
+    else if(_attr.indexOf(":") == index) {
+      reduced_json = this.find("name", _attr.substring(index + 1), index);
     }
     else {
       throw new SyntaxError("JSONAttribute '" + _attr + "' is not valid.",
                                                                    _attr);
     }
 
-    for(i in reduced_json) {
-      buildHTMLElement(reduced_json[i], element);
-    }
+    return reduced_json;
   };
 
   var buildHTMLElement = function(json, element) {
@@ -112,14 +125,14 @@
     }
   };
 
-  var buildDivGroup = function(json) {// TODO: Check show label if config is true
+  var buildDivGroup = function(json) {
 
     var div = document.createElement("div");
     if(json.id != undefined)
       div.setAttribute("id", json.id);
     if(json.class != undefined)
       div.setAttribute("class", json.class);
-    if(json.label != undefined) {
+    if(config.show_group_label && json.label != undefined) {
       var span = document.createElement("span");
       span.appendChild(document.createTextNode(json.label.value));
       div.appendChild(span);
@@ -130,7 +143,7 @@
 
   var buildInputElement = function(json, element) { // TODO: Add mask/validation by types
 
-    if(json.label != undefined) {
+    if(config.show_input_label && json.label != undefined) {
       var label = document.createElement("label");
       if(json.id != undefined)
         label.setAttribute("for", json.id);
@@ -179,7 +192,8 @@
         input.setAttribute("class", json.class);
       if(json.default != undefined)
         input.setAttribute("value", json.default);
-      if(json.placeholder != undefined || json.label != undefined) {
+      if(config.show_placeholder && 
+          (json.placeholder != undefined || json.label != undefined)) {
         input.setAttribute("placeholder",
           json.placeholder == undefined ? json.label.value : json.placeholder);
       }
@@ -197,8 +211,9 @@
       textarea.setAttribute("class", json.class);
     if(json.default != undefined)
       textarea.appendChild(document.createTextNode(json.default));
-    if(json.placeholder != undefined || json.label != undefined) {
-      textarea.setAttribute("placeholder",
+    if(config.show_placeholder && 
+        (json.placeholder != undefined || json.label != undefined)) {
+      input.setAttribute("placeholder",
         json.placeholder == undefined ? json.label.value : json.placeholder);
     }
 
@@ -207,7 +222,7 @@
 
   var buildInputCheckboxRadio = function(json, element) {
 
-    for(i in json.values) {
+    for(var i in json.values) {
       var input = document.createElement("input");
       input.setAttribute("type", json.type);
       input.setAttribute("name", json.name);
@@ -219,7 +234,7 @@
       if(json.default == json.values[i].value)
         input.setAttribute("checked", "checked");
 
-      if(json.label != undefined) {
+      if(json.values[i].label != undefined) {
         var label = document.createElement("label");
         if(json.id != undefined)
           label.setAttribute("for", json.id + "_" + i);
@@ -243,7 +258,7 @@
     if(json.class != undefined)
       select.setAttribute("class", json.class);
 
-    for(i in json.values) { // TODO: Add function/config to get option dynamic
+    for(var i in json.values) { // TODO: Add function/config to get option dynamic
       var option = document.createElement("option");
       option.appendChild(document.createTextNode(json.values[i].label.value));
       option.setAttribute("value", json.values[i].value);
