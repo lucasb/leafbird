@@ -17,10 +17,12 @@
 (function() {
 
   var config = { // TODO: Add option mark input required, function validation and mask by type
-    json: null, 
+    json: null,
     show_group_label: false,
     show_placeholder: false,
     show_input_label: false,
+    multifile_input: false,
+    multifile_icon: "+"
   }
 
   this.Leafbird = function(_config) {
@@ -30,8 +32,8 @@
     this.configure(_config);
   };
 
-  Leafbird.prototype.configure = function(args) {                    
-    for(var key in args) {                        
+  Leafbird.prototype.configure = function(args) {
+    for(var key in args) {
       if(config.hasOwnProperty(key) && args[key] != undefined)
         config[key] = args[key];
     }
@@ -59,19 +61,19 @@
     return arr_found;
   };
 
-  Leafbird.prototype.print = function(element, _attr, _config) { 
+  Leafbird.prototype.print = function(element, _attr, _config) {
 
     var save_config = {};
     for (var key in config)
       save_config[key] = config[key];
-    
+
     if(!(element instanceof HTMLElement)) {
       throw new SyntaxError("Invalid HTMLElement.", element);
     }
 
     this.configure(_config);
     var elements = this.getElements(_attr);
-    
+
     for(var i in elements) {
       buildHTMLElement(elements[i], element);
     }
@@ -81,12 +83,12 @@
 
   Leafbird.prototype.getElements = function(_attr) {
 
-    if(!config.json) 
+    if(!config.json)
       throw new Error("JSON is not valid.", config.json);
 
     var reduced_json = [];
     var index = (_attr && _attr.indexOf("*") == 0) ? 1 : 0;
-    
+
     if(_attr == undefined) {
       reduced_json.push(config.json);
     }
@@ -192,7 +194,7 @@
         input.setAttribute("class", json.class);
       if(json.default != undefined)
         input.setAttribute("value", json.default);
-      if(config.show_placeholder && 
+      if(config.show_placeholder &&
           (json.placeholder != undefined || json.label != undefined)) {
         input.setAttribute("placeholder",
           json.placeholder == undefined ? json.label.value : json.placeholder);
@@ -211,7 +213,7 @@
       textarea.setAttribute("class", json.class);
     if(json.default != undefined)
       textarea.appendChild(document.createTextNode(json.default));
-    if(config.show_placeholder && 
+    if(config.show_placeholder &&
         (json.placeholder != undefined || json.label != undefined)) {
       input.setAttribute("placeholder",
         json.placeholder == undefined ? json.label.value : json.placeholder);
@@ -249,7 +251,7 @@
     }
   };
 
-  var buildInputSelect = function(json, element) { // TODO: Change this function to acept multiselect
+  var buildInputSelect = function(json, element) {
 
     var select = document.createElement("select");
     select.setAttribute("name", json.name);
@@ -257,6 +259,8 @@
       select.setAttribute("id", json.id);
     if(json.class != undefined)
       select.setAttribute("class", json.class);
+    if(json.multiple)
+      select.setAttribute("multiple", "multiple");
 
     for(var i in json.values) { // TODO: Add function/config to get option dynamic
       var option = document.createElement("option");
@@ -273,19 +277,25 @@
     element.appendChild(select);
   };
 
-  var buildInputFile = function(json, element) { // TODO: Change this to add multifildes file
+  var buildInputFile = function(json, element) {
 
-      var input = document.createElement("input");
-      input.setAttribute("type", "file");
-      input.setAttribute("name", json.name);
-      if(json.id != undefined)
-        input.setAttribute("id", json.id);
-      if(json.class != undefined)
-        input.setAttribute("class", json.class);
-      if(json.acept != undefined)
-        input.setAttribute("acept", json.acept);
+    var input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("name", json.name);
+    if(json.id != undefined)
+      input.setAttribute("id", json.id);
+    if(json.class != undefined)
+      input.setAttribute("class", json.class);
+    if(json.accept != undefined)
+      input.setAttribute("accept", json.accept);
+    element.appendChild(input);
 
-      element.appendChild(input);
+    if(config.multifile_input) { // TODO: Change this to add multifildes file
+      var a = document.createElement("a");
+      a.setAttribute("onclick", "this.appendChild(document.createTextNode('sss'))");
+      a.appendChild(document.createTextNode(config.multifile_icon));
+      element.appendChild(a);
+    }
   };
 
   window.Leafbird = Leafbird, window.lb = Leafbird;

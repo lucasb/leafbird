@@ -19,7 +19,7 @@
 <h1>Leafbird - Index</h1>
 <div id="form"></div>
 </body>
-<script type="text/javascript" src="../bin/leafbird.js"></script>
+<script type="text/javascript" src="../src/leafbird.js"></script>
 <script type="text/javascript">
 
 var json = JSON.parse(
@@ -72,6 +72,10 @@ var json = JSON.parse(
         {\
           "name": "name2",\
           "type": "text"\
+        },\
+        {\
+          "name": "file",\
+          "type": "file"\
         }\
       ]\
     }\
@@ -82,9 +86,10 @@ var json = JSON.parse(
 var element = document.getElementById("form");
 lb = Leafbird({json: json});
 lb.configure({
-  show_group_label: true, 
+  show_group_label: true,
   show_placeholder: true,
-  show_input_label: true
+  show_input_label: true,
+  multifile_input: true
 });
 lb.print(element, "*.ff", {show_placeholder: false});
 lb.print(element);
