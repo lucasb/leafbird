@@ -21,8 +21,7 @@
     show_group_label: false,
     show_placeholder: false,
     show_input_label: false,
-    multifile_input: false,
-    multifile_icon: "+"
+    multifile_input: false
   }
 
   this.Leafbird = function(_config) {
