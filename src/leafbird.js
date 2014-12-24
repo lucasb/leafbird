@@ -145,7 +145,7 @@
 
   var buildInputElement = function(json, element) { // TODO: Add mask/validation by types
 
-    if(config.show_input_label && json.label != undefined) {
+    if(config.show_input_label && json.label != undefined) { // TODO: Add config to support title attribute
       var label = document.createElement("label");
       if(json.id != undefined)
         label.setAttribute("for", json.id);
@@ -270,7 +270,6 @@
         option.setAttribute("class", json.values[i].label.class);
       if(json.default == json.values[i].value)
         option.setAttribute("selected", "selected");
-
       select.appendChild(option);
     }
 
@@ -288,14 +287,9 @@
       input.setAttribute("class", json.class);
     if(json.accept != undefined)
       input.setAttribute("accept", json.accept);
+    if(config.multifile_input)
+      input.setAttribute("multiple", "multiple");
     element.appendChild(input);
-
-    if(config.multifile_input) { // TODO: Change this to add multifildes file
-      var a = document.createElement("a");
-      a.setAttribute("onclick", "this.appendChild(document.createTextNode('sss'))");
-      a.appendChild(document.createTextNode(config.multifile_icon));
-      element.appendChild(a);
-    }
   };
 
   window.Leafbird = Leafbird, window.lb = Leafbird;
