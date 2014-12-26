@@ -21,6 +21,7 @@
     show_group_label: false,
     show_placeholder: false,
     show_input_label: false,
+    multiselect_input: false,
     multifile_input: false
   }
 
@@ -258,7 +259,7 @@
       select.setAttribute("id", json.id);
     if(json.class != undefined)
       select.setAttribute("class", json.class);
-    if(json.multiple)
+    if(config.multiselect_input)
       select.setAttribute("multiple", "multiple");
 
     for(var i in json.values) { // TODO: Add function/config to get option dynamic
