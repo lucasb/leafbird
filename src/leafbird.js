@@ -16,7 +16,7 @@
 
 (function() {
 
-  var config = { // TODO: Add option mark input required, function validation and mask by type
+  var config = {//TODO: Add option mark input required, function validation and mask by type
     json: null,
     show_group_label: false,
     show_placeholder: false,
@@ -136,6 +136,8 @@
       div.setAttribute("class", json.class);
     if(config.show_group_label && json.label != undefined) {
       var span = document.createElement("span");
+      if(json.label.title != undefined)
+        span.setAttribute("title", json.label.title);
       span.appendChild(document.createTextNode(json.label.value));
       div.appendChild(span);
     }
@@ -143,14 +145,16 @@
     return div;
   };
 
-  var buildInputElement = function(json, element) { // TODO: Add mask/validation by types
+  var buildInputElement = function(json, element) {//TODO: Add mask/validation by types
 
-    if(config.show_input_label && json.label != undefined) { // TODO: Add config to support title attribute
+    if(config.show_input_label && json.label != undefined) {
       var label = document.createElement("label");
       if(json.id != undefined)
         label.setAttribute("for", json.id);
       if(json.label.class != undefined)
         label.setAttribute("class", json.label.class);
+      if(json.label.title != undefined)
+        label.setAttribute("title", json.label.title);
       label.appendChild(document.createTextNode(json.label.value));
       element.appendChild(label);
     }
@@ -194,6 +198,8 @@
         input.setAttribute("class", json.class);
       if(json.default != undefined)
         input.setAttribute("value", json.default);
+      if(json.title != undefined)
+        input.setAttribute("title", json.title);
       if(config.show_placeholder &&
           (json.placeholder != undefined || json.label != undefined)) {
         input.setAttribute("placeholder",
@@ -211,6 +217,8 @@
       textarea.setAttribute("id", json.id);
     if(json.class != undefined)
       textarea.setAttribute("class", json.class);
+    if(json.title != undefined)
+      textarea.setAttribute("title", json.title);
     if(json.default != undefined)
       textarea.appendChild(document.createTextNode(json.default));
     if(config.show_placeholder &&
@@ -242,6 +250,8 @@
           label.setAttribute("for", json.id + "_" + i);
         if(json.values[i].label.class != undefined)
           label.setAttribute("class", json.values[i].label.class);
+        if(json.values[i].label.title != undefined)
+          label.setAttribute("title", json.values[i].label.title);
         label.appendChild(input);
         label.appendChild(document.createTextNode(json.values[i].label.value));
         element.appendChild(label);
@@ -259,10 +269,12 @@
       select.setAttribute("id", json.id);
     if(json.class != undefined)
       select.setAttribute("class", json.class);
+    if(json.title != undefined)
+      select.setAttribute("title", json.title);
     if(config.multiselect_input)
       select.setAttribute("multiple", "multiple");
 
-    for(var i in json.values) { // TODO: Add function/config to get option dynamic
+    for(var i in json.values) {//TODO: Add function/config to get option dynamic
       var option = document.createElement("option");
       option.appendChild(document.createTextNode(json.values[i].label.value));
       option.setAttribute("value", json.values[i].value);
@@ -287,6 +299,8 @@
       input.setAttribute("class", json.class);
     if(json.accept != undefined)
       input.setAttribute("accept", json.accept);
+    if(json.title != undefined)
+      input.setAttribute("title", json.title);
     if(config.multifile_input)
       input.setAttribute("multiple", "multiple");
     element.appendChild(input);
