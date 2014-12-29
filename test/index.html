@@ -19,7 +19,7 @@
 <h1>Leafbird - Index</h1>
 <div id="form"></div>
 </body>
-<script type="text/javascript" src="../src/leafbird.js"></script>
+<script type="text/javascript" src="../bin/leafbird.min.js"></script>
 <script type="text/javascript">
 
 var json = JSON.parse(
@@ -29,8 +29,10 @@ var json = JSON.parse(
   "inputs": [\
     {\
       "id": "name",\
+      "title": "Name Input",\
       "label": { \
-        "value": "Name"\
+        "value": "Name",\
+        "title": "Title Name"\
       },\
       "class": "name",\
       "name": "name",\
@@ -50,7 +52,8 @@ var json = JSON.parse(
       "values": [\
           {\
             "label": { \
-              "value": "Yes"\
+              "value": "Yes",\
+              "title": "Title YES"\
             },\
             "value": true\
           },\
@@ -66,7 +69,8 @@ var json = JSON.parse(
   "groups": [\
     {\
       "label": { \
-        "value": "Minimum"\
+        "value": "Minimum",\
+        "title": "Title Group"\
       },\
       "inputs": [\
         {\
@@ -90,7 +94,7 @@ lb.configure({
   show_placeholder: true,
   show_input_label: true
 });
-lb.print(element, "*.ff", {show_placeholder: false});
+lb.print(element, "*.ff", {show_placeholder: false, multifile_input: true});
 lb.print(element);
 console.log(lb.getElements());
 console.log(lb.find("id", "enable"));
