@@ -1,0 +1,18 @@
+{
+  "name": "leafbird",
+  "homepage": "https://github.com/lucasb/leafbird",
+  "authors": [
+    "Lucas Boscaini <lucasboscaini@gmail.com>"
+  ],
+  "description": "",
+  "main": "leafbird.min.js",
+  "moduleType": ["globals"],
+  "license": "Apache-2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
