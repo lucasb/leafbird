@@ -6,7 +6,7 @@
   ],
   "description": "",
   "main": "leafbird.min.js",
-  "moduleType": ['globals'],
+  "moduleType": ["globals"],
   "license": "Apache-2.0",
   "ignore": [
     "**/.*",
