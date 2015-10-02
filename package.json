@@ -1,0 +1,21 @@
+{
+  "name": "leafbird",
+  "version": "0.0.0",
+  "main": "leafbird.min.js",
+  "bin": {
+    "leafbird": "leafbird.min.js"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasb/leafbird.git"
+  },
+  "author": "Lucas Boscaini <lucasboscaini@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/lucasb/leafbird/issues"
+  },
+  "homepage": "https://github.com/lucasb/leafbird#readme"
+}
