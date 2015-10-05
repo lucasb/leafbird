@@ -2,7 +2,7 @@
   "name": "leafbird",
   "version": "0.0.0",
   "main": "leafbird.min.js",
-  "bin": {
+  "dist": {
     "leafbird": "leafbird.min.js"
   },
   "directories": {
