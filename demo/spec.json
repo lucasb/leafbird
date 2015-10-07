@@ -1,78 +1,62 @@
-// simple model
 {
-    "inputs": [
+  "id": "group",
+  "class": "gg ff",
+  "inputs": [
+    {
+      "id": "name",
+      "title": "Name Input",
+      "label": {
+        "value": "Name",
+        "title": "Title Name"
+      },
+      "class": "name",
+      "name": "name",
+      "type": "text",
+      "required": true,
+      "default": "Default"
+    },
+    {
+      "id": "enable",
+      "label": {
+        "value": "Enable",
+        "class": "ll"
+      },
+      "name": "enable",
+      "type": "select",
+      "default": true,
+      "values": [
+          {
+            "label": {
+              "value": "Yes",
+              "title": "Title YES"
+            },
+            "value": true
+          },
+          {
+            "label": {
+              "value": "No"
+            },
+            "value": false
+          }
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "label": {
+        "value": "Minimum",
+        "title": "Title Group"
+      },
+      "inputs": [
         {
-            "id": "name",
-            "label": "Name",
-            "type": "text",
-            "required": true
-        }
-    ]
-}
-
-// full model
-{
-    "groups": [
-        {
-            "id": "personal",
-            "label": "Personal",
-            "inputs": [
-                {
-                    "label": "Name",
-                    "type": "text",
-                    "required": true
-                },
-                {
-                    "label": "Age",
-                    "type": "number",
-                    "required": false
-                }
-            ]
+          "name": "name2",
+          "type": "text"
         },
         {
-            "label": "Contacts",
-            "inputs": [
-                {
-                    "label": "DDD",
-                    "type": "select",
-                    "default": "51",
-                    "values": [
-                        {
-                            "label": "51",
-                            "value": "51"
-                        },
-                        {
-                            "label": "52",
-                            "value": "52"
-                        },
-                        {
-                            "label": "53",
-                            "value": "53"
-                        }
-                    ]
-                }
-            ],
-            "groups": [
-                {
-                    "inputs": [
-                        {
-                            "label": "Enable",
-                            "type": "boolean",
-                            "default": true,
-                            "values": [
-                                {
-                                    "label": "Yes",
-                                    "value": true
-                                },
-                                {
-                                    "label": "No",
-                                    "value": false
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
+          "name": "file",
+          "type": "file"
         }
-    ]
+      ]
+    }
+  ]
 }

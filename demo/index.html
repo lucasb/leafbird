@@ -1,5 +1,5 @@
 <!--
-  Copyright 2014 Leafbird
+  Copyright 2015 Leafbird
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -19,84 +19,35 @@
 <h1>Leafbird - Index</h1>
 <div id="form"></div>
 </body>
-<script type="text/javascript" src="../bin/leafbird.min.js"></script>
+<script type="text/javascript" src="../dist/leafbird.min.js">
+</script>
 <script type="text/javascript">
 
-var json = JSON.parse(
-'{ \
-  "id": "group",\
-  "class": "gg ff",\
-  "inputs": [\
-    {\
-      "id": "name",\
-      "title": "Name Input",\
-      "label": { \
-        "value": "Name",\
-        "title": "Title Name"\
-      },\
-      "class": "name",\
-      "name": "name",\
-      "type": "text",\
-      "required": true,\
-      "default": "Default"\
-    },\
-    {\
-      "id": "enable",\
-      "label": { \
-        "value": "Enable",\
-        "class": "ll"\
-      },\
-      "name": "enable",\
-      "type": "select",\
-      "default": true,\
-      "values": [\
-          {\
-            "label": { \
-              "value": "Yes",\
-              "title": "Title YES"\
-            },\
-            "value": true\
-          },\
-          {\
-            "label": { \
-              "value": "No"\
-            },\
-            "value": false\
-          }\
-      ]\
-    }\
-  ],\
-  "groups": [\
-    {\
-      "label": { \
-        "value": "Minimum",\
-        "title": "Title Group"\
-      },\
-      "inputs": [\
-        {\
-          "name": "name2",\
-          "type": "text"\
-        },\
-        {\
-          "name": "file",\
-          "type": "file"\
-        }\
-      ]\
-    }\
-  ]\
-}'
-);
+// make a object from json spec url
+var json;
+request = new XMLHttpRequest();
+request.open('GET', 'https://github.com/lucasb/leafbird/blob/master/demo/spec.json', true);
+request.onload = function() { json = JSON.parse(request.responseText); };
+request.send();
 
-var element = document.getElementById("form");
+// start lib to use
 lb = Leafbird({json: json});
+
+// configure general paramters after lib was intanced
 lb.configure({
   show_group_label: true,
   show_placeholder: true,
   show_input_label: true
 });
-lb.print(element, "*.ff", {show_placeholder: false, multifile_input: true});
-lb.print(element);
+
+// get a elements object before to set on DOM, to add/change anything
 console.log(lb.getElements());
 console.log(lb.find("id", "enable"));
+
+// get element form from html and print into it
+var element = document.getElementById("form");
+lb.print(element, "*.ff", {show_placeholder: false, multifile_input: true});
+lb.print(element);
+
 </script>
 </html>
