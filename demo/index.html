@@ -19,14 +19,16 @@
 <h1>Leafbird - Index</h1>
 <div id="form"></div>
 </body>
-<script type="text/javascript" src="../dist/leafbird.min.js">
+<script type="text/javascript"
+  src="https://github.com/lucasb/leafbird/blob/master/dist/leafbird.min.js">
 </script>
 <script type="text/javascript">
 
 // make a object from json spec url
 var json;
 request = new XMLHttpRequest();
-request.open('GET', 'https://github.com/lucasb/leafbird/blob/master/demo/spec.json', true);
+request.open('GET',
+  'https://github.com/lucasb/leafbird/blob/master/demo/spec.json', true);
 request.onload = function() { json = JSON.parse(request.responseText); };
 request.send();
 
