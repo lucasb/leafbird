@@ -15,41 +15,16 @@
 -->
 
 <html>
-<body>
-<h1>Leafbird - Index</h1>
-<div id="form"></div>
-</body>
-<script type="text/javascript"
-  src="https://github.com/lucasb/leafbird/blob/master/dist/leafbird.min.js">
-</script>
-<script type="text/javascript">
 
-// make a object from json spec url
-var json;
-request = new XMLHttpRequest();
-request.open('GET',
-  'https://github.com/lucasb/leafbird/blob/master/demo/spec.json', true);
-request.onload = function() { json = JSON.parse(request.responseText); };
-request.send();
+  <body>
 
-// start lib to use
-lb = Leafbird({json: json});
+    <h1>Leafbird - Demo</h1>
+    <div id="form"></div>
 
-// configure general paramters after lib was intanced
-lb.configure({
-  show_group_label: true,
-  show_placeholder: true,
-  show_input_label: true
-});
+  </body>
 
-// get a elements object before to set on DOM, to add/change anything
-console.log(lb.getElements());
-console.log(lb.find("id", "enable"));
+  <script src="../dist/leafbird.min.js" type="text/javascript"></script>
+  <script src="demo.js" type="text/javascript"></script>
+  <script src="spec.json?jsonp=parseResponse" type="text/javascript"></script>
 
-// get element form from html and print into it
-var element = document.getElementById("form");
-lb.print(element, "*.ff", {show_placeholder: false, multifile_input: true});
-lb.print(element);
-
-</script>
 </html>

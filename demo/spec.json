@@ -1,4 +1,4 @@
-{
+parseResponse({
   "id": "group",
   "class": "gg ff",
   "inputs": [
@@ -59,4 +59,4 @@
       ]
     }
   ]
-}
+});
