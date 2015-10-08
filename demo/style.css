@@ -22,7 +22,16 @@ body {
     width: 49%;
     background-color: #EEE;
 }
-label, span{
+div {
+    font-size: 13px;
+    border: 1px solid #CCC;
+    padding: 5px;
+}
+span {
+  margin:0 0 3px 0;
+  display:block;
+}
+label {
     margin:0 0 3px 0;
     display:block;
     font-weight: bold;
@@ -82,11 +91,7 @@ input[type=submit]:hover, input[type=button]:hover{
     -webkit-box-shadow:none;
 }
 
-.form {
-    font-size: 13px;
-    border-bottom: 1px solid #CCC;
-    padding-bottom: 15px;
-}
-.form .required{
-    color:red;
+.title {
+  font-size: 20px;
+  display: inline;
 }

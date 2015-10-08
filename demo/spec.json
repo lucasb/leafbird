@@ -12,7 +12,8 @@ parseResponse({
       "class": "name",
       "name": "name",
       "type": "text",
-      "required": true
+      "required": true,
+      "default": "Default value"
     },
     {
       "id": "enable",
@@ -50,7 +51,9 @@ parseResponse({
         {
           "name": "name2",
           "type": "text",
-          "default": "Default value"
+          "label": {
+            "value": "Name"
+          }
         },
         {
           "name": "file",

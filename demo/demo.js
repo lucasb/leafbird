@@ -23,8 +23,8 @@ var parseResponse = function(data) {
   // configure general paramters after lib was intanced
   lb.configure({
     show_group_label: true,
-    show_placeholder: true,
-    show_input_label: true
+    show_input_label: true,
+    multifile_input: true
   });
 
   // get a elements object before to set on DOM, to add/change anything
@@ -36,6 +36,6 @@ var parseResponse = function(data) {
   lb.print(element);
 
   var element2 = document.getElementById("form2");
-  lb.print(element2, ":name2", {show_placeholder: false, multifile_input: true});
+  lb.print(element2, ":name2", {show_placeholder: true, show_input_label: false});
 
 };
