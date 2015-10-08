@@ -14,7 +14,7 @@
   limitations under the License.
 */
 
-// get json object from file via jsonp
+// load json object from file via jsonp
 var parseResponse = function(data) {
 
   // start lib to use
@@ -31,9 +31,11 @@ var parseResponse = function(data) {
   console.log(lb.getElements());
   console.log(lb.find("id", "enable"));
 
-  // get element form from html and print into it
+  // print into from html elements
   var element = document.getElementById("form");
-  lb.print(element, "*.ff", {show_placeholder: false, multifile_input: true});
   lb.print(element);
+
+  var element2 = document.getElementById("form2");
+  lb.print(element2, ":name2", {show_placeholder: false, multifile_input: true});
 
 };

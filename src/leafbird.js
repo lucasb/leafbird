@@ -162,7 +162,7 @@
     if(json.name == undefined)
       throw new SyntaxError("InputName is required.", json.name);
 
-    switch(json.type) {
+    switch(json.type) { // TODO: Add support to HTML5 elements/inputs, input submit how to set.
       case "text":
       case "number":
       case "date":

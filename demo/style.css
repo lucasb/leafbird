@@ -1,0 +1,92 @@
+/*
+    Copyright 2015 Leafbird
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
+body {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    margin:10px auto;
+    max-width: 400px;
+    padding: 20px 12px 10px 20px;
+    width: 49%;
+    background-color: #EEE;
+}
+label, span{
+    margin:0 0 3px 0;
+    display:block;
+    font-weight: bold;
+}
+input[type=text],
+input[type=date],
+input[type=datetime],
+input[type=number],
+input[type=search],
+input[type=time],
+input[type=url],
+input[type=email],
+textarea,
+select{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border:1px solid #BEBEBE;
+    padding: 7px;
+    margin:0px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    width: 100%;
+    margin-bottom:10px;
+}
+input[type=text]:focus,
+input[type=date]:focus,
+input[type=datetime]:focus,
+input[type=number]:focus,
+input[type=search]:focus,
+input[type=time]:focus,
+input[type=url]:focus,
+input[type=email]:focus,
+textarea:focus,
+select:focus{
+    -moz-box-shadow: 0 0 8px #88D5E9;
+    -webkit-box-shadow: 0 0 8px #88D5E9;
+    box-shadow: 0 0 8px #88D5E9;
+    border: 1px solid #88D5E9;
+}
+textarea{
+    height: 100px;
+}
+input[type=submit], input[type=button]{
+    background: #4B99AD;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: #FFF;
+}
+input[type=submit]:hover, input[type=button]:hover{
+    background: #4691A4;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+}
+
+.form {
+    font-size: 13px;
+    border-bottom: 1px solid #CCC;
+    padding-bottom: 15px;
+}
+.form .required{
+    color:red;
+}
