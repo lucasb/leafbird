@@ -18,6 +18,7 @@
 
   var config = {//TODO: Add option mark input required, function validation and mask by type
     json: null,
+    add_form_element: false,  // TODO: Add implementation to form element add.
     show_group_label: false,
     show_placeholder: false,
     show_input_label: false,

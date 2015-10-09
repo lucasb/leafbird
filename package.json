@@ -1,6 +1,6 @@
 {
   "name": "leafbird",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "leafbird.min.js",
   "dist": {
     "leafbird": "leafbird.min.js"
@@ -17,5 +17,14 @@
   "bugs": {
     "url": "https://github.com/lucasb/leafbird/issues"
   },
-  "homepage": "https://github.com/lucasb/leafbird#readme"
+  "homepage": "https://github.com/lucasb/leafbird#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-coveralls": "^0.1.4",
+    "gulp-jasmine-browser": "^0.2.3",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.4.1",
+    "gulp-util": "^3.0.6"
+  }
 }
