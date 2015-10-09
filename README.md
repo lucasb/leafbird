@@ -1,7 +1,7 @@
 Leafbird
 ========
 
-[![Build Status](http://img.shields.io/travis/lucasb/leafbird/master.svg)](https://travis-ci.org/lucasb/leafbird)
+[![Build Status](https://travis-ci.org/lucasb/leafbird.svg?branch=master)](https://travis-ci.org/lucasb/leafbird)
 [![Coverage Status](http://img.shields.io/coveralls/lucasb/leafbird/master.svg)](https://coveralls.io/github/lucasb/leafbird?branch=master)
 
 Leafbird is an UI builder based in templates using MVC frontend concepts.
