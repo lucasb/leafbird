@@ -22,6 +22,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var jasmine = require('gulp-jasmine-browser');
+var istanbul = require('gulp-istanbul');
 var coveralls = require('gulp-coveralls');
 
 // Concatenate & Minify JS
@@ -31,6 +32,17 @@ gulp.task('build', function() {
       .pipe(rename({suffix: '.min'}))
       .pipe(uglify())
       .pipe(gulp.dest('./dest'));
+});
+
+// Coverage tool
+gulp.task('pre-test', function () {
+  return gulp.src(['./src/js/*.js'])
+    // Covering files
+    .pipe(istanbul())
+    // Force `require` to return covered files
+    .pipe(istanbul.hookRequire())
+    // Write the covered files to a temporary directory
+    .pipe(gulp.dest('./coverage/'));
 });
 
 // Unit Testing
