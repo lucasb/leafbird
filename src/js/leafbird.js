@@ -17,8 +17,9 @@
 (function() {
 
   var config = {//TODO: Add option mark input required, function validation and mask by type
-    json: null,
-    add_form_element: false,  // TODO: Add implementation to form element add.
+    json: null, // TODO: Add implementation to form element add.
+    required_callback: undefined,
+    required_label: null,
     show_group_label: false,
     show_placeholder: false,
     show_input_label: false,
@@ -69,7 +70,7 @@
       save_config[key] = config[key];
 
     if(!(element instanceof HTMLElement)) {
-      throw new SyntaxError("Invalid HTMLElement.", element);
+      throw new SyntaxError('Invalid HTMLElement.', element);
     }
 
     this.configure(_config);
@@ -85,26 +86,25 @@
   Leafbird.prototype.getElements = function(_attr) {
 
     if(!config.json)
-      throw new Error("JSON is not valid.", config.json);
+      throw new Error('JSON is not valid.', config.json);
 
     var reduced_json = [];
-    var index = (_attr && _attr.indexOf("*") == 0) ? 1 : 0;
+    var index = (_attr && _attr.indexOf('*') == 0) ? 1 : 0;
 
     if(_attr == undefined) {
       reduced_json.push(config.json);
     }
-    else if(_attr.indexOf("#") == index) {
-      reduced_json = this.find("id", _attr.substring(index + 1), index);
+    else if(_attr.indexOf('#') == index) {
+      reduced_json = this.find('id', _attr.substring(index + 1), index);
     }
-    else if(_attr.indexOf(".") == index) {
-      reduced_json = this.find("class", _attr.substring(index + 1), index);
+    else if(_attr.indexOf('.') == index) {
+      reduced_json = this.find('class', _attr.substring(index + 1), index);
     }
-    else if(_attr.indexOf(":") == index) {
-      reduced_json = this.find("name", _attr.substring(index + 1), index);
+    else if(_attr.indexOf(':') == index) {
+      reduced_json = this.find('name', _attr.substring(index + 1), index);
     }
     else {
-      throw new SyntaxError("JSONAttribute '" + _attr + "' is not valid.",
-                                                                   _attr);
+      throw new SyntaxError('JSONAttribute '+ _attr + ' is not valid.', _attr);
     }
 
     return reduced_json;
@@ -112,7 +112,7 @@
 
   var buildHTMLElement = function(json, element) {
 
-    if(json.hasOwnProperty("type")) {
+    if(json.hasOwnProperty('type')) {
       buildInputElement(json, element);
     }
     else {
@@ -130,15 +130,15 @@
 
   var buildDivGroup = function(json) {
 
-    var div = document.createElement("div");
+    var div = document.createElement('div');
     if(json.id != undefined)
-      div.setAttribute("id", json.id);
+      div.setAttribute('id', json.id);
     if(json.class != undefined)
-      div.setAttribute("class", json.class);
+      div.setAttribute('class', json.class);
     if(config.show_group_label && json.label != undefined) {
-      var span = document.createElement("span");
+      var span = document.createElement('span');
       if(json.label.title != undefined)
-        span.setAttribute("title", json.label.title);
+        span.setAttribute('title', json.label.title);
       span.appendChild(document.createTextNode(json.label.value));
       div.appendChild(span);
     }
@@ -149,61 +149,70 @@
   var buildInputElement = function(json, element) {//TODO: Add mask/validation by types
 
     if(config.show_input_label && json.label != undefined) {
-      var label = document.createElement("label");
+      var label = document.createElement('label');
       if(json.id != undefined)
-        label.setAttribute("for", json.id);
+        label.setAttribute('for', json.id);
       if(json.label.class != undefined)
-        label.setAttribute("class", json.label.class);
+        label.setAttribute('class', json.label.class);
       if(json.label.title != undefined)
-        label.setAttribute("title", json.label.title);
+        label.setAttribute('title', json.label.title);
       label.appendChild(document.createTextNode(json.label.value));
+      if(config.required_label != undefined &&
+          config.required_label != null && json.required) {
+        var span = document.createElement('span');
+        span.style.display = 'inline';
+        span.style.color = 'red';
+        span.appendChild(document.createTextNode(config.required_label));
+        label.appendChild(span);
+      }
+
       element.appendChild(label);
     }
 
     if(json.name == undefined)
-      throw new SyntaxError("InputName is required.", json.name);
+      throw new SyntaxError('InputName is required.', json.name);
 
     switch(json.type) { // TODO: Add support to HTML5 elements/inputs, input submit how to set.
-      case "text":
-      case "number":
-      case "date":
-      case "currency":
+      case 'text':
+      case 'number':
+      case 'date':
+      case 'currency':
         buildInputText(json, element);
         break;
-      case "radio":
-      case "checkbox":
+      case 'radio':
+      case 'checkbox':
         buildInputCheckboxRadio(json, element);
         break;
-      case "textarea":
+      case 'textarea':
         buildInputTextarea(json, element);
         break;
-      case "select":
+      case 'select':
         buildInputSelect(json, element);
         break;
-      case "file":
+      case 'file':
         buildInputFile(json, element);
         break;
       default:
-        throw new SyntaxError("Invalid InputType.", json.type);
+        throw new SyntaxError('Invalid InputType.', json.type);
     }
   };
 
   var buildInputText = function(json, element) {
 
-      var input = document.createElement("input");
-      input.setAttribute("type", "text");
-      input.setAttribute("name", json.name);
+      var input = document.createElement('input');
+      input.setAttribute('type', 'text');
+      input.setAttribute('name', json.name);
       if(json.id != undefined)
-        input.setAttribute("id", json.id);
+        input.setAttribute('id', json.id);
       if(json.class != undefined)
-        input.setAttribute("class", json.class);
+        input.setAttribute('class', json.class);
       if(json.default != undefined)
-        input.setAttribute("value", json.default);
+        input.setAttribute('value', json.default);
       if(json.title != undefined)
-        input.setAttribute("title", json.title);
+        input.setAttribute('title', json.title);
       if(config.show_placeholder &&
           (json.placeholder != undefined || json.label != undefined)) {
-        input.setAttribute("placeholder",
+        input.setAttribute('placeholder',
           json.placeholder == undefined ? json.label.value : json.placeholder);
       }
 
@@ -212,19 +221,19 @@
 
   var buildInputTextarea = function(json, element) {
 
-    var textarea = document.createElement("textarea");
-    textarea.setAttribute("name", json.name);
+    var textarea = document.createElement('textarea');
+    textarea.setAttribute('name', json.name);
     if(json.id != undefined)
-      textarea.setAttribute("id", json.id);
+      textarea.setAttribute('id', json.id);
     if(json.class != undefined)
-      textarea.setAttribute("class", json.class);
+      textarea.setAttribute('class', json.class);
     if(json.title != undefined)
-      textarea.setAttribute("title", json.title);
+      textarea.setAttribute('title', json.title);
     if(json.default != undefined)
       textarea.appendChild(document.createTextNode(json.default));
     if(config.show_placeholder &&
         (json.placeholder != undefined || json.label != undefined)) {
-      input.setAttribute("placeholder",
+      input.setAttribute('placeholder',
         json.placeholder == undefined ? json.label.value : json.placeholder);
     }
 
@@ -234,25 +243,25 @@
   var buildInputCheckboxRadio = function(json, element) {
 
     for(var i in json.values) {
-      var input = document.createElement("input");
-      input.setAttribute("type", json.type);
-      input.setAttribute("name", json.name);
-      input.setAttribute("value", json.values[i].value);
+      var input = document.createElement('input');
+      input.setAttribute('type', json.type);
+      input.setAttribute('name', json.name);
+      input.setAttribute('value', json.values[i].value);
       if(json.id != undefined)
-        input.setAttribute("id", json.id + "_" + i);
+        input.setAttribute('id', json.id + '_' + i);
       if(json.class != undefined)
-        input.setAttribute("class", json.class);
+        input.setAttribute('class', json.class);
       if(json.default == json.values[i].value)
-        input.setAttribute("checked", "checked");
+        input.setAttribute('checked', 'checked');
 
       if(json.values[i].label != undefined) {
-        var label = document.createElement("label");
+        var label = document.createElement('label');
         if(json.id != undefined)
-          label.setAttribute("for", json.id + "_" + i);
+          label.setAttribute('for', json.id + '_' + i);
         if(json.values[i].label.class != undefined)
-          label.setAttribute("class", json.values[i].label.class);
+          label.setAttribute('class', json.values[i].label.class);
         if(json.values[i].label.title != undefined)
-          label.setAttribute("title", json.values[i].label.title);
+          label.setAttribute('title', json.values[i].label.title);
         label.appendChild(input);
         label.appendChild(document.createTextNode(json.values[i].label.value));
         element.appendChild(label);
@@ -264,25 +273,25 @@
 
   var buildInputSelect = function(json, element) {
 
-    var select = document.createElement("select");
-    select.setAttribute("name", json.name);
+    var select = document.createElement('select');
+    select.setAttribute('name', json.name);
     if(json.id != undefined)
-      select.setAttribute("id", json.id);
+      select.setAttribute('id', json.id);
     if(json.class != undefined)
-      select.setAttribute("class", json.class);
+      select.setAttribute('class', json.class);
     if(json.title != undefined)
-      select.setAttribute("title", json.title);
+      select.setAttribute('title', json.title);
     if(config.multiselect_input)
-      select.setAttribute("multiple", "multiple");
+      select.setAttribute('multiple', 'multiple');
 
     for(var i in json.values) {//TODO: Add function/config to get option dynamic
-      var option = document.createElement("option");
+      var option = document.createElement('option');
       option.appendChild(document.createTextNode(json.values[i].label.value));
-      option.setAttribute("value", json.values[i].value);
+      option.setAttribute('value', json.values[i].value);
       if(json.values[i].label.class != undefined)
-        option.setAttribute("class", json.values[i].label.class);
+        option.setAttribute('class', json.values[i].label.class);
       if(json.default == json.values[i].value)
-        option.setAttribute("selected", "selected");
+        option.setAttribute('selected', 'selected');
       select.appendChild(option);
     }
 
@@ -291,19 +300,19 @@
 
   var buildInputFile = function(json, element) {
 
-    var input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("name", json.name);
+    var input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('name', json.name);
     if(json.id != undefined)
-      input.setAttribute("id", json.id);
+      input.setAttribute('id', json.id);
     if(json.class != undefined)
-      input.setAttribute("class", json.class);
+      input.setAttribute('class', json.class);
     if(json.accept != undefined)
-      input.setAttribute("accept", json.accept);
+      input.setAttribute('accept', json.accept);
     if(json.title != undefined)
-      input.setAttribute("title", json.title);
+      input.setAttribute('title', json.title);
     if(config.multifile_input)
-      input.setAttribute("multiple", "multiple");
+      input.setAttribute('multiple', 'multiple');
     element.appendChild(input);
   };
 

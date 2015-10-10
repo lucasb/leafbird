@@ -22,6 +22,7 @@ var parseResponse = function(data) {
 
   // configure general paramters after lib was intanced
   lb.configure({
+    required_label: ' *',
     show_group_label: true,
     show_input_label: true,
     multifile_input: true
