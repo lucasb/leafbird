@@ -1,7 +1,7 @@
 parseResponse({
   "id": "group",
   "class": "gg ff",
-  "inputs": [
+  "fields": [
     {
       "id": "name",
       "title": "Name Input",
@@ -22,7 +22,8 @@ parseResponse({
         "class": "ll"
       },
       "name": "enable",
-      "type": "select",
+      "type": "radio",
+      "required": true,
       "default": true,
       "values": [
           {
@@ -47,7 +48,7 @@ parseResponse({
         "value": "Minimum",
         "title": "Title Group"
       },
-      "inputs": [
+      "fields": [
         {
           "name": "name2",
           "type": "text",
@@ -57,7 +58,8 @@ parseResponse({
         },
         {
           "name": "file",
-          "type": "file"
+          "type": "file",
+          "required": true
         }
       ]
     }
