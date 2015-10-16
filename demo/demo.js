@@ -22,7 +22,6 @@ var parseResponse = function(data) {
 
   // configure general paramters after lib was intanced
   lb.configure({
-    validation_callback: validateForm,
     required_label: ' *',
     show_group_label: true,
     show_input_label: true,
@@ -31,14 +30,14 @@ var parseResponse = function(data) {
 
   // get a elements object before to set on DOM, to add/change anything
   console.log(lb.getElements());
-  console.log(lb.find("id", "enable"));
+  console.log(lb.find("id", "text"));
 
   // print into from html elements
   var element = document.getElementById("form");
   lb.print(element);
 
   var element2 = document.getElementById("form2");
-  lb.print(element2, ":name2", {replace_element: true, show_placeholder: true,
+  lb.print(element2, ":text", {replace_element: true, show_placeholder: true,
                                                       show_input_label: false});
 
   var requiredFunctionTest = function(json, obj) {
@@ -69,7 +68,7 @@ for(var i = 0; i < forms.length; i++) {
 
 function getRequired(obj, msg) {
   alert(msg + ' ' + obj.title);
-}*/
+}
 
 
 var form = document.getElementById("form3");
@@ -186,4 +185,4 @@ function LegacyValidation(field) {
 	}
 
 	return valid;
-}
+}*/

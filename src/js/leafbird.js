@@ -15,11 +15,14 @@
 */
 
 (function() {
-  // TODO: Add masks and validation callback for fields.
-  // TODO: Add fields compatibility with all moderns browser.
-  // TODO: Add all types that exists for HTML5 elements/inputs/attributes.
+  // TODO: Add all types that exists for HTML5 elements/attributes. https://html.spec.whatwg.org/multipage/forms.html
   // TODO: Add function callback to fill fieds dynamiclly(select).
+  // TODO: Add masks and validation callback for fields.
+  // FIXME: Add config to date format force.
+  // FIXME: Add option empty or with info to select type
   // FIXME: Checkbox required attribute to a group at least one checked.
+  // FIXME: Add pattern and config to currency.
+  // FIXME: Add fields compatibility with all moderns browser[chrome, safari, firefox, opera, edge/ie10].
   var config = {
     json: null,
     replace_element: false,
@@ -159,16 +162,10 @@
     if(json.name == undefined)
       throw new SyntaxError('FieldName is required.', json.name);
 
-    if(config.show_input_label && json.label != undefined)
+    if(config.show_input_label && json.label && json.label.value)
       buildFieldLabel(json, element);
 
     switch(json.type) {
-      case 'text':
-      case 'number':
-      case 'date':
-      case 'currency':
-        buildFieldText(json, element);
-        break;
       case 'radio':
       case 'checkbox':
         buildFieldCheckboxRadio(json, element);
@@ -179,11 +176,15 @@
       case 'select':
         buildFieldSelect(json, element);
         break;
+      case 'datalist':
+        break;
+      case 'key':
+        break;
       case 'file':
         buildFieldFile(json, element);
         break;
       default:
-        throw new SyntaxError('Invalid FieldType.', json.type);
+        buildFieldText(json, element);
     }
   };
 
@@ -210,7 +211,7 @@
   var buildFieldText = function(json, element) {
 
       var input = document.createElement('input');
-      input.setAttribute('type', 'text');
+      input.setAttribute('type', json.type);
       input.setAttribute('name', json.name);
       if(json.id != undefined)
         input.setAttribute('id', json.id);
@@ -241,10 +242,10 @@
       textarea.setAttribute('class', json.class);
     if(json.title != undefined)
       textarea.setAttribute('title', json.title);
+    if(json.required)
+      textarea.setAttribute('required', 'required');
     if(json.default != undefined)
       textarea.appendChild(document.createTextNode(json.default));
-    if(json.required)
-      input.setAttribute('required', 'required');
     if(config.show_placeholder &&
         (json.placeholder != undefined || json.label != undefined)) {
       input.setAttribute('placeholder',
@@ -298,7 +299,7 @@
     if(json.title != undefined)
       select.setAttribute('title', json.title);
     if(json.required)
-      input.setAttribute('required', 'required');
+      select.setAttribute('required', 'required');
     if(config.multiselect_input)
       select.setAttribute('multiple', 'multiple');
 

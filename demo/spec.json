@@ -1,65 +1,205 @@
 parseResponse({
   "id": "group",
-  "class": "gg ff",
+  "class": "class-name",
   "fields": [
     {
-      "id": "name",
-      "title": "Name Input",
+      "id": "text",
+      "title": "Input text",
       "label": {
-        "value": "Name",
-        "title": "Title Name"
+        "value": "Text",
+        "title": "Input text"
       },
-      "class": "name",
-      "name": "name",
+      "class": "text",
+      "name": "text",
       "type": "text",
       "required": true,
       "default": "Default value"
     },
     {
-      "id": "enable",
+      "id": "password",
+      "title": "Input password",
       "label": {
-        "value": "Enable",
-        "class": "ll"
+        "value": "Password",
+        "title": "Input password"
       },
-      "name": "enable",
+      "name": "password",
+      "type": "password",
+    },
+    {
+      "id": "radio",
+      "label": {
+        "value": "Radio"
+      },
+      "name": "radio",
       "type": "radio",
-      "required": true,
-      "default": true,
       "values": [
           {
             "label": {
-              "value": "Yes",
-              "title": "Title YES"
+              "value": "Item 1",
+              "title": "Item 1 Title"
             },
             "value": true
           },
           {
             "label": {
-              "value": "No"
+              "value": "Item 2"
             },
             "value": false
           }
       ]
-    }
+    },
+    {
+      "id": "select",
+      "label": {
+        "value": "Select",
+      },
+      "name": "select",
+      "type": "select",
+      "values": [
+          {
+            "label": {
+              "value": "Option 1"
+            },
+            "value": true
+          },
+          {
+            "label": {
+              "value": "Option 2"
+            },
+            "value": false
+          }
+      ]
+    },
+    {
+      "id": "checkbox",
+      "label": {
+        "value": "Checkbox",
+      },
+      "name": "checkbox",
+      "type": "checkbox",
+      "values": [
+          {
+            "label": {
+              "value": "Item"
+            },
+            "value": true
+          }
+      ]
+    },
+    {
+      "name": "file",
+      "type": "file"
+    },
+    {
+      "label": {
+        "value": "Textarea"
+      },
+      "name": "textarea",
+      "type": "textarea"
+    },
+    {
+      "name": "hidden",
+      "type": "hidden",
+      "default": "Hidden Value"
+    },
   ],
   "groups": [
     {
       "label": {
-        "value": "Minimum",
-        "title": "Title Group"
+        "value": "HTML 5 Fields",
+        "title": "Fields added in version 5."
       },
       "fields": [
         {
-          "name": "name2",
-          "type": "text",
           "label": {
-            "value": "Name"
-          }
+            "value": "Color"
+          },
+          "name": "color",
+          "type": "color"
         },
         {
-          "name": "file",
-          "type": "file",
-          "required": true
+          "label": {
+            "value": "Date"
+          },
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "label": {
+            "value": "Datetime"
+          },
+          "name": "datetime",
+          "type": "datetime"
+        },
+        {
+          "label": {
+            "value": "Datetime Local"
+          },
+          "name": "datetime-local",
+          "type": "datetime-local"
+        },
+        {
+          "label": {
+            "value": "Email"
+          },
+          "name": "email",
+          "type": "email"
+        },
+        {
+          "label": {
+            "value": "Month"
+          },
+          "name": "month",
+          "type": "month"
+        },
+        {
+          "label": {
+            "value": "Number"
+          },
+          "name": "number",
+          "type": "number"
+        },
+        {
+          "label": {
+            "value": "Range"
+          },
+          "name": "range",
+          "type": "range"
+        },
+        {
+          "label": {
+            "value": "Search"
+          },
+          "name": "search",
+          "type": "search"
+        },
+        {
+          "label": {
+            "value": "Telefone"
+          },
+          "name": "tel",
+          "type": "tel"
+        },
+        {
+          "label": {
+            "value": "Time"
+          },
+          "name": "time",
+          "type": "time"
+        },
+        {
+          "label": {
+            "value": "URL"
+          },
+          "name": "url",
+          "type": "url"
+        },
+        {
+          "label": {
+            "value": "Week"
+          },
+          "name": "week",
+          "type": "week"
         }
       ]
     }
