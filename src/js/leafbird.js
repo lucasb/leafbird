@@ -18,6 +18,7 @@
   // TODO: Add all types that exists for HTML5 elements/attributes. https://html.spec.whatwg.org/multipage/forms.html
   // TODO: Add function callback to fill fieds dynamiclly(select).
   // TODO: Add masks and validation callback for fields.
+  // FIXME: Add full support to image type from input.
   // FIXME: Add config to date format force.
   // FIXME: Add option empty or with info to select type
   // FIXME: Checkbox required attribute to a group at least one checked.
