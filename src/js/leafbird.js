@@ -14,6 +14,8 @@
   limitations under the License.
 */
 
+var leafbird = null;
+
 (function() {
   // TODO: Add all types that exists for HTML5 elements/attributes. https://html.spec.whatwg.org/multipage/forms.html
   // TODO: Add function callback to fill fieds dynamiclly(select).
