@@ -15,12 +15,7 @@
 */
 
 describe('configure', function() {
-  it('Confugure changes on original config.', function() {
-    var leafbrd = Leafbird({});
-    leafbrd.configure({});
-    expect(leafbrd.config).toEqual(undefined);
-  });
-
+  
   it('verify if a leafbird global object has defined', function() {
     expect(leafbird).toBeDefined();
   });
@@ -30,5 +25,19 @@ describe('configure', function() {
       if(!(leafbird instanceof Leafbird)) {
         fail('leafbird global variable is not a Leafbird instance.');
       }
-    });
+    }
+  );
+
+  it('verify if Leafbird has a configure method', function() {
+    if(typeof leafbird.configure !== 'function') {
+      fail('The Leafbird object has not a configure method');
+    }
+  });
+
+  it('verify if configure method make configuration on the leafbird object',
+    function() {
+      leafbird.configure({});
+      expect(leafbird.config).toEqual(undefined);
+    }
+  );
 });
