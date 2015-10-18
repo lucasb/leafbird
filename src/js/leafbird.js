@@ -37,7 +37,9 @@ var leafbird = null;
     //Applying Revealing Pattern
 
     this.configure = configure;
+    this.configs = configs;
 
+    // Internal values of Leafbird (private objects)
     var config = {
       json: null,
       replace_element: false,
@@ -50,6 +52,8 @@ var leafbird = null;
       multifile_input: false
     }
 
+    // Methods declarations
+    
     /**
      * Encapsulate the configuration values entrance to Leafbird.
      * 
@@ -63,6 +67,17 @@ var leafbird = null;
         }
       }
     }
+
+    /**
+     * Returns the leafbird configuration object.
+     *
+     * @method
+     * @memberOf Leafbird
+     */
+    function configs() {
+      return config;
+    }
+
   }
 
   leafbird = new Leafbird();
