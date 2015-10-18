@@ -26,6 +26,13 @@ var leafbird = null;
   // FIXME: Checkbox required attribute to a group at least one checked.
   // FIXME: Add pattern and config to currency.
   // FIXME: Add fields compatibility with all moderns browser[chrome, safari, firefox, opera, edge/ie10].
+
+  function Leafbird() {
+
+  }
+
+  leafbird = new Leafbird();
+
   var config = {
     json: null,
     replace_element: false,
