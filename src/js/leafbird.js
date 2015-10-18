@@ -29,21 +29,34 @@ var leafbird = null;
 
   function Leafbird() {
 
+    //Applying Revealing Pattern
+
+    this.configure = configure;
+
+    var config = {
+      json: null,
+      replace_element: false,
+      validation_callback: undefined,
+      required_label: null,
+      show_group_label: false,
+      show_placeholder: false,
+      show_input_label: false,
+      multiselect_input: false,
+      multifile_input: false
+    }
+
+    function configure(args) {
+      for(var key in args) {
+        if(config.hasOwnProperty(key) && args[key] != undefined){
+          config[key] = args[key];
+        }
+      }
+    }
+
   }
 
   leafbird = new Leafbird();
 
-  var config = {
-    json: null,
-    replace_element: false,
-    validation_callback: undefined,
-    required_label: null,
-    show_group_label: false,
-    show_placeholder: false,
-    show_input_label: false,
-    multiselect_input: false,
-    multifile_input: false
-  }
 
   this.Leafbird = function(_config) {
     if(!(this instanceof Leafbird)) {
@@ -51,13 +64,6 @@ var leafbird = null;
     }
     this.configure(_config);
   };
-
-  Leafbird.prototype.configure = function(args) {
-    for(var key in args) {
-      if(config.hasOwnProperty(key) && args[key] != undefined)
-        config[key] = args[key];
-    }
-  }
 
   Leafbird.prototype.find = function(property, _value, _contains, _json) {
 
