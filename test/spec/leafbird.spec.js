@@ -21,7 +21,14 @@ describe('configure', function() {
     expect(leafbrd.config).toEqual(undefined);
   });
 
-  it('verify if a leafbird global object has defined', function(){
+  it('verify if a leafbird global object has defined', function() {
     expect(leafbird).toBeDefined();
   });
+
+  it('verify if leafbird global variable has a Leafbird object instance',
+    function() {
+      if(!(leafbird instanceof Leafbird)) {
+        fail('leafbird global variable is not a Leafbird instance.');
+      }
+    });
 });
