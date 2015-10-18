@@ -46,7 +46,7 @@ describe('configure', function() {
       multiselect_input: false,
       multifile_input: false
     }
-    expect(leafbird.configs()).toBeEquals(defaultConfig);
+    expect(leafbird.configs()).toEqual(defaultConfig);
   });
 
   it('verify if configure method make configuration on the leafbird object',    
