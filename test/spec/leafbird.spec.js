@@ -52,11 +52,19 @@ describe('configure', function() {
   it('verify if configure method make configuration on the leafbird object',    
     function() {
       var configObject = {
-        "someConfig": "someValue"
+        json: null,
+        replace_element: true,
+        validation_callback: undefined,
+        required_label: true,
+        show_group_label: false,
+        show_placeholder: false,
+        show_input_label: false,
+        multiselect_input: false,
+        multifile_input: false
       };
 
       leafbird.configure(configObject);
-      expect(leafbird.config).toEqual(configObject);
+      expect(leafbird.configs()).toEqual(configObject);
     }
   );
 
