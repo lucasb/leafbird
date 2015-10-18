@@ -34,6 +34,21 @@ describe('configure', function() {
     }
   });
 
+  it('verify if configs() returns the configuration of Leafbird', function() {
+    var defaultConfig = {
+      json: null,
+      replace_element: false,
+      validation_callback: undefined,
+      required_label: null,
+      show_group_label: false,
+      show_placeholder: false,
+      show_input_label: false,
+      multiselect_input: false,
+      multifile_input: false
+    }
+    expect(leafbird.configs()).toBeEquals(defaultConfig);
+  });
+
   it('verify if configure method make configuration on the leafbird object',    
     function() {
       var configObject = {
