@@ -20,4 +20,8 @@ describe('configure', function() {
     leafbrd.configure({});
     expect(leafbrd.config).toEqual(undefined);
   });
+
+  it('verify if a leafbird global object has defined', function(){
+    expect(leafbird).toBeDefined();
+  });
 });
