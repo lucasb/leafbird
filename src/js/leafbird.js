@@ -27,6 +27,11 @@ var leafbird = null;
   // FIXME: Add pattern and config to currency.
   // FIXME: Add fields compatibility with all moderns browser[chrome, safari, firefox, opera, edge/ie10].
 
+  /**
+   * Leafbird main object
+   *
+   * @class
+   */
   function Leafbird() {
 
     //Applying Revealing Pattern
@@ -45,6 +50,12 @@ var leafbird = null;
       multifile_input: false
     }
 
+    /**
+     * Encapsulate the configuration values entrance to Leafbird.
+     * 
+     * @method
+     * @memberOf Leafbird
+     */
     function configure(args) {
       for(var key in args) {
         if(config.hasOwnProperty(key) && args[key] != undefined){
@@ -52,7 +63,6 @@ var leafbird = null;
         }
       }
     }
-
   }
 
   leafbird = new Leafbird();
