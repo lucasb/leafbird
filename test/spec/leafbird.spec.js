@@ -34,10 +34,15 @@ describe('configure', function() {
     }
   });
 
-  it('verify if configure method make configuration on the leafbird object',
+  it('verify if configure method make configuration on the leafbird object',    
     function() {
-      leafbird.configure({});
-      expect(leafbird.config).toEqual(undefined);
+      var configObject = {
+        "someConfig": "someValue"
+      };
+
+      leafbird.configure(configObject);
+      expect(leafbird.config).toEqual(configObject);
     }
   );
+
 });
