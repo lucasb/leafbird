@@ -26,6 +26,10 @@ body {
   width: 49%;
   background-color: #EEE;
 }
+h1 span {
+  font-size: 20px;
+  display: inline;
+}
 h2 {
   font-size: 14px;
 }
@@ -106,7 +110,13 @@ input[type=checkbox] {
   margin-right: 3px;
 }
 
-.title {
-  font-size: 20px;
-  display: inline;
+.errors {
+  color: #FF4444;
+  border-color: #FFAAAA;
+  background-color: #FFEEEE;
+}
+
+.errors
+  span {
+    margin-left: 5px;
 }
