@@ -1,29 +1,32 @@
 {
   "name": "leafbird",
-  "version": "0.0.0",
-  "description": "Leafbird ========",
+  "version": "0.1.0",
   "main": "leafbird.min.js",
-  "bin": {
+  "dist": {
     "leafbird": "leafbird.min.js"
   },
   "directories": {
     "test": "test"
   },
-  "scripts": {
-    "test": "karma start"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lucasb/leafbird.git"
   },
-  "keywords": [
-    "leafbird",
-    "dom"
-  ],
   "author": "Lucas Boscaini <lucasboscaini@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/lucasb/leafbird/issues"
   },
-  "homepage": "https://github.com/lucasb/leafbird#readme"
+  "homepage": "https://github.com/lucasb/leafbird#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-coveralls": "^0.1.4",
+    "gulp-istanbul": "^0.10.1",
+    "gulp-jasmine-browser": "^0.2.3",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.4.1",
+    "gulp-util": "^3.0.6",
+    "phantomjs": "^1.9.18"
+  }
 }

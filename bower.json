@@ -4,20 +4,16 @@
   "authors": [
     "Lucas Boscaini <lucasboscaini@gmail.com>"
   ],
+  "description": "Leafbird is an UI builder based in templates using MVC frontend concepts.",
   "main": "leafbird.min.js",
-  "moduleType": [
-    "globals"
-  ],
-  "keywords": [
-    "leafbird",
-    "dom"
-  ],
+  "moduleType": ["globals"],
   "license": "Apache-2.0",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "demo",
+    "src"
   ]
 }

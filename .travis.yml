@@ -1,0 +1,16 @@
+language: node_js
+
+node_js:
+  - "4.1"
+
+install:
+  - npm install
+
+before_script:
+  - npm install -g bower
+
+script:
+  - gulp build test
+
+after_success:
+  - gulp coveralls
