@@ -22,7 +22,6 @@ var leafbird = null;
   // FIXME: Add config to force format on fields like date, time.
   // FIXME: Checkbox required attribute to a group at least one is checked.
   // FIXME: Add pattern and config to currency.
-<<<<<<< HEAD
   // FIXME: Add fields compatibility with all moderns browser[chrome, safari, firefox, opera, edge/ie10].
 
   /**
@@ -76,19 +75,6 @@ var leafbird = null;
       return config;
     }
 
-=======
-  // FIXME: Add fields compatibility(validation and mask) with all moderns browser[chrome, safari, firefox, opera, edge/ie10].
-  var config = {
-    json: null,
-    replace_element: false,
-    validation_callback: undefined,
-    required_label: null,
-    show_group_label: false,
-    show_placeholder: false,
-    show_input_label: false,
-    multiselect_input: false,
-    multifile_input: false
->>>>>>> upstream/master
   }
 
   leafbird = new Leafbird();
