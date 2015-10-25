@@ -18,13 +18,13 @@ var leafbird = null;
 
 (function() {
   // TODO: Add all types that exists for HTML5 elements/attributes. https://html.spec.whatwg.org/multipage/forms.html
-  // TODO: Add function callback to fill fieds dynamiclly(select).
-  // TODO: Add masks and validation callback for fields.
+  // TODO: Add function callback to fill fieds dynamically(select).
   // FIXME: Add full support to image type from input.
-  // FIXME: Add config to date format force.
+  // FIXME: Add config to force format in date, time fields.
   // FIXME: Add option empty or with info to select type
   // FIXME: Checkbox required attribute to a group at least one checked.
   // FIXME: Add pattern and config to currency.
+<<<<<<< HEAD
   // FIXME: Add fields compatibility with all moderns browser[chrome, safari, firefox, opera, edge/ie10].
 
   /**
@@ -78,6 +78,19 @@ var leafbird = null;
       return config;
     }
 
+=======
+  // FIXME: Add fields compatibility(validation and mask) with all moderns browser[chrome, safari, firefox, opera, edge/ie10].
+  var config = {
+    json: null,
+    replace_element: false,
+    validation_callback: undefined,
+    required_label: null,
+    show_group_label: false,
+    show_placeholder: false,
+    show_input_label: false,
+    multiselect_input: false,
+    multifile_input: false
+>>>>>>> upstream/master
   }
 
   leafbird = new Leafbird();
@@ -161,6 +174,24 @@ var leafbird = null;
 
     return reduced_json;
   };
+
+  Leafbird.prototype.validateForm = function(form) {
+
+    var isValid = true;
+
+    var invalidFields = [].filter.call(
+      form.getElementsByTagName('*'), function(element) {
+        return ['INPUT', 'TEXTAREA', 'SELECT'].indexOf(element.nodeName) > -1
+                && !element.checkValidity();
+    });
+
+    if(invalidFields.length>0) {
+      config.validation_callback(invalidFields, form);
+      isValid = false;
+    }
+
+    return isValid;
+  }
 
   var buildHTMLElement = function(json, element) {
 
