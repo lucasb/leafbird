@@ -17,12 +17,10 @@
 var leafbird = null;
 
 (function() {
+
   // TODO: Add all types that exists for HTML5 elements/attributes. https://html.spec.whatwg.org/multipage/forms.html
-  // TODO: Add function callback to fill fieds dynamically(select).
-  // FIXME: Add full support to image type from input.
-  // FIXME: Add config to force format in date, time fields.
-  // FIXME: Add option empty or with info to select type
-  // FIXME: Checkbox required attribute to a group at least one checked.
+  // FIXME: Add config to force format on fields like date, time.
+  // FIXME: Checkbox required attribute to a group at least one is checked.
   // FIXME: Add pattern and config to currency.
 <<<<<<< HEAD
   // FIXME: Add fields compatibility with all moderns browser[chrome, safari, firefox, opera, edge/ie10].
