@@ -25,7 +25,6 @@
 function Leafbird(configs) {
 
   var lb = this;
-  var configs = null;
 
   /**
    * Revealing Pattern
@@ -36,10 +35,21 @@ function Leafbird(configs) {
   lb.print = print;
   lb.getElements = getElements;
 
-  if(configs === null) {
+
+  if(!configs) {
+    /**
+     * @typedef LeafbirdConfig
+     * @type {object}
+     * @property {object} json Form specification.
+     * @property {boolean} replace_element Transclude parent element.
+     * 
+     */
+     /**
+      * @type {LeafbirdConfig}
+      */
     configs = {
-      json: null,
-      replace_element: false,
+      json: null, //JSON
+      replace_element: false, //like angular transclude
       validation_callback: undefined,
       required_label: null,
       show_group_label: false,
