@@ -30,24 +30,113 @@ function Leafbird(configs) {
     };
   }
 
+  /**
+   * @todo Write JSDoc to this function
+   * 
+   * { function_description }
+   *
+   * @method     configure
+   * @param      {<type>}  args    { description }
+   */
   function configure(args) {
     for(var key in args) {
-      if(configs.hasOwnProperty(key) && args[key] != undefined){
+      if(configs.hasOwnProperty(key) && args[key] !== undefined){
         configs[key] = args[key];
       }
     }
   }
 
+  /**
+   * @todo Write JSDoc to this function
+   * 
+   * { function_description }
+   *
+   * @method     configure
+   * @param      {<type>}  args    { description }
+   */
   function find(property, _value, _contains, _json) {
+    var arr_found = [];
+    var obj = (_json == undefined) ? config.json : _json;
 
+    for(var key in obj) {
+      if(key == property && (_value == undefined
+          || (_contains && obj[property].indexOf(_value) > -1)
+          || (!_contains && obj[property] == _value))) {
+        arr_found.push(obj);
+      }
+
+      if(obj[key] instanceof Object) {
+        var found = this.find(property, _value, _contains, obj[key]);
+        if(found.length > 0)
+          arr_found = arr_found.concat(found);
+      }
+    }
+
+    return arr_found;
   }
 
+  /**
+   * @todo Write JSDoc to this function
+   * 
+   * { function_description }
+   *
+   * @method     configure
+   * @param      {<type>}  args    { description }
+   */
   function print(element, _attr, _config) {
+    var save_config = {};
+    for (var key in config)
+      save_config[key] = config[key];
 
+    if(!(element instanceof HTMLElement)) {
+      throw new SyntaxError('Invalid HTMLElement.', element);
+    }
+
+    this.configure(_config);
+    var elements = this.getElements(_attr);
+
+    if(config.replace_element)
+      element.innerHTML = '';
+
+    for(var i in elements) {
+      buildHTMLElement(elements[i], element);
+    }
+
+    this.configure(save_config);
   }
 
+  /**
+   * @todo Write JSDoc to this function
+   * 
+   * { function_description }
+   *
+   * @method     configure
+   * @param      {<type>}  args    { description }
+   */
   function getElements(_attr) {
+    if(!config.json)
+      throw new Error('JSON is not valid.', config.json);
 
+    var reduced_json = [];
+    var index = (_attr && _attr.indexOf('*') == 0) ? 1 : 0;
+
+    if(_attr == undefined) {
+      reduced_json.push(config.json);
+    }
+    else if(_attr.indexOf('#') == index) {
+      reduced_json = this.find('id', _attr.substring(index + 1), index);
+    }
+    else if(_attr.indexOf('.') == index) {
+      reduced_json = this.find('class', _attr.substring(index + 1), index);
+    }
+    else if(_attr.indexOf(':') == index) {
+      reduced_json = this.find('name', _attr.substring(index + 1), index);
+    }
+    else {
+      throw new SyntaxError('JSONAttribute '+ _attr + ' is not valid.', _attr);
+    }
+
+    return reduced_json;
   }
 }
 
