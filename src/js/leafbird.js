@@ -1,12 +1,9 @@
 /*
     Copyright 2015 Leafbird
-
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,71 +11,24 @@
   limitations under the License.
 */
 
-var leafbird = null;
-
 (function() {
 
   // TODO: Add all types that exists for HTML5 elements/attributes. https://html.spec.whatwg.org/multipage/forms.html
   // FIXME: Add config to force format on fields like date, time.
   // FIXME: Checkbox required attribute to a group at least one is checked.
   // FIXME: Add pattern and config to currency.
-  // FIXME: Add fields compatibility with all moderns browser[chrome, safari, firefox, opera, edge/ie10].
-
-  /**
-   * Leafbird main object
-   *
-   * @class
-   */
-  function Leafbird() {
-
-    //Applying Revealing Pattern
-
-    this.configure = configure;
-    this.configs = configs;
-
-    // Internal values of Leafbird (private objects)
-    var config = {
-      json: null,
-      replace_element: false,
-      validation_callback: undefined,
-      required_label: null,
-      show_group_label: false,
-      show_placeholder: false,
-      show_input_label: false,
-      multiselect_input: false,
-      multifile_input: false
-    }
-
-    // Methods declarations
-    
-    /**
-     * Encapsulate the configuration values entrance to Leafbird.
-     * 
-     * @method
-     * @memberOf Leafbird
-     */
-    function configure(args) {
-      for(var key in args) {
-        if(config.hasOwnProperty(key) && args[key] != undefined){
-          config[key] = args[key];
-        }
-      }
-    }
-
-    /**
-     * Returns the leafbird configuration object.
-     *
-     * @method
-     * @memberOf Leafbird
-     */
-    function configs() {
-      return config;
-    }
-
+  // FIXME: Add fields compatibility(validation and mask) with all moderns browser[chrome, safari, firefox, opera, edge/ie10].
+  var config = {
+    json: null,
+    replace_element: false,
+    validation_callback: undefined,
+    required_label: null,
+    show_group_label: false,
+    show_placeholder: false,
+    show_input_label: false,
+    multiselect_input: false,
+    multifile_input: false
   }
-
-  leafbird = new Leafbird();
-
 
   this.Leafbird = function(_config) {
     if(!(this instanceof Leafbird)) {
@@ -86,6 +36,13 @@ var leafbird = null;
     }
     this.configure(_config);
   };
+
+  Leafbird.prototype.configure = function(args) {
+    for(var key in args) {
+      if(config.hasOwnProperty(key) && args[key] != undefined)
+        config[key] = args[key];
+    }
+  }
 
   Leafbird.prototype.find = function(property, _value, _contains, _json) {
 
