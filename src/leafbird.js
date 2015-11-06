@@ -2,16 +2,19 @@
 
 'use strict';
 
-function Leafbird() {
+function Leafbird(configs) {
 
-  var lf = this;
+  var lb = this;
   var configs = null;
 
-  lf.configure = configure;
-  lf.find = find;
-  lf.print = print;
-  lf.getElements = getElements;
-  lf.validateForm = validateForm;
+  /**
+   * Revealing Pattern
+   * 
+   */
+  lb.configure = configure;
+  lb.find = find;
+  lb.print = print;
+  lb.getElements = getElements;
 
   if(configs === null) {
     configs = {
@@ -28,7 +31,11 @@ function Leafbird() {
   }
 
   function configure(args) {
-
+    for(var key in args) {
+      if(configs.hasOwnProperty(key) && args[key] != undefined){
+        configs[key] = args[key];
+      }
+    }
   }
 
   function find(property, _value, _contains, _json) {
@@ -42,11 +49,6 @@ function Leafbird() {
   function getElements(_attr) {
 
   }
-
-  function validateForm(form) {
-
-  }
-
 }
 
 
