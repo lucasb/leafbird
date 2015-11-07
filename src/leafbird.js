@@ -1,5 +1,5 @@
 /*
-    Copyright 2015 Leafbird
+  Copyright 2015 Leafbird
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -37,19 +37,26 @@ function Leafbird(configs) {
 
 
   if(!configs) {
+    
     /**
      * @typedef LeafbirdConfig
      * @type {object}
      * @property {object} json Form specification.
      * @property {boolean} replace_element Transclude parent element.
-     * 
+     * @property {callback} validation_callback Validation callback function.
+     * @property {string} required_label String indicate required field.
+     * @property {boolean} show_group_label Display a group label.
+     * @property {boolean} show_placeholder Display a field placeholder.
+     * @property {boolean} multiselect_input Set this field as a multiselect.
+     * @property {boolean} multifile_input Set this field as a multifile input.
      */
+
      /**
       * @type {LeafbirdConfig}
       */
     configs = {
-      json: null, //JSON
-      replace_element: false, //like angular transclude
+      json: null,
+      replace_element: false,
       validation_callback: undefined,
       required_label: null,
       show_group_label: false,
@@ -78,15 +85,18 @@ function Leafbird(configs) {
 
   /**
    * @todo Write JSDoc here
-   * 
    * { function_description }
    *
-   * @method     configure
-   * @param      {<type>}  args    { description }
+   * @method     find
+   * @param      {<type>}  property   { description }
+   * @param      {<type>}  _value     { description }
+   * @param      {<type>}  _contains  { description }
+   * @param      {<type>}  _json      { description }
+   * @return     {Array}   { description_of_the_return_value }
    */
   function find(property, _value, _contains, _json) {
     var arr_found = [];
-    var obj = (_json == undefined) ? config.json : _json;
+    var obj = (_json == undefined) ? configs.json : _json;
 
     for(var key in obj) {
       if(key == property && (_value == undefined
@@ -115,8 +125,8 @@ function Leafbird(configs) {
    */
   function print(element, _attr, _config) {
     var save_config = {};
-    for (var key in config)
-      save_config[key] = config[key];
+    for (var key in configs)
+      save_config[key] = configs[key];
 
     if(!(element instanceof HTMLElement)) {
       throw new SyntaxError('Invalid HTMLElement.', element);
@@ -125,7 +135,7 @@ function Leafbird(configs) {
     this.configure(_config);
     var elements = this.getElements(_attr);
 
-    if(config.replace_element)
+    if(configs.replace_element)
       element.innerHTML = '';
 
     for(var i in elements) {
@@ -144,14 +154,14 @@ function Leafbird(configs) {
    * @param      {<type>}  args    { description }
    */
   function getElements(_attr) {
-    if(!config.json)
-      throw new Error('JSON is not valid.', config.json);
+    if(!configs.json)
+      throw new Error('JSON is not valid.', configs.json);
 
     var reduced_json = [];
     var index = (_attr && _attr.indexOf('*') == 0) ? 1 : 0;
 
     if(_attr == undefined) {
-      reduced_json.push(config.json);
+      reduced_json.push(configs.json);
     }
     else if(_attr.indexOf('#') == index) {
       reduced_json = this.find('id', _attr.substring(index + 1), index);
