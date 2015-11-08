@@ -4,7 +4,7 @@ Leafbird
 [![Build Status](http://img.shields.io/travis/lucasb/leafbird/master.svg)](https://travis-ci.org/lucasb/leafbird)
 [![Coverage Status](http://img.shields.io/coveralls/lucasb/leafbird/master.svg)](https://coveralls.io/github/lucasb/leafbird?branch=master)
 
-Leafbird is an UI form builder based on JSON templates using HTML5 features with compatibility with all modern browsers.
+Leafbird is an UI form builder based on JSON templates using HTML5 features with all modern browsers compatibility.
 
 License
 -----

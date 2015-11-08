@@ -51,7 +51,7 @@ var validateFormCallback = function(invalidFields, form) {
   divErrors.setAttribute('class', 'errors');
   divErrors.appendChild(document.createTextNode('Invalid fields:'));
 
-  for(i = 0; i < invalidFields.length; i++) {
+  for(var i = 0; i < invalidFields.length; i++) {
     var span = document.createElement('span');
     span.appendChild(document.createTextNode(invalidFields[i].name));
     divErrors.appendChild(span);
