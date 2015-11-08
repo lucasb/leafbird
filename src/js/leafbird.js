@@ -16,9 +16,10 @@
 
 (function() {
 
-  // FIXME: Add config to force format on fields like date, time.
-  // FIXME: Checkbox required attribute to a group at least one is checked.
-  // FIXME: Add pattern and config to currency.
+  // FIXME: Checkbox required attribute to a group at least one is checked. http://stackoverflow.com/questions/22238368/multiple-checkboxes-at-least-1-required
+  // FIXME: Add support to datalist and keygen fields.
+  // FIXME: Add type currency to spec that set automatically mask, validation.
+  // FIXME: Add config to force format on fields like date, time, currency.
   // FIXME: Add fields compatibility(validation and mask) with all moderns browser[chrome, safari, firefox, opera, edge/ie10]. http://www.sitepoint.com/html5-forms-javascript-constraint-validation-api/
   var config = {
     json: null,
@@ -250,8 +251,8 @@
         input.setAttribute('min', json.min);
       if(json.maxlength != undefined)
         input.setAttribute('maxlength', json.maxlength);
-      if(json.autocomplete)
-        input.setAttribute('autocomplete', 'autocomplete');
+      if(json.autocomplete != undefined)
+        input.setAttribute('autocomplete', json.autocomplete);
       if(json.required)
         input.setAttribute('required', 'required');
       if(json.readonly)
