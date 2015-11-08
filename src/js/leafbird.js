@@ -16,11 +16,11 @@
 
 (function() {
 
-  // TODO: Add all types that exists for HTML5 elements/attributes. https://html.spec.whatwg.org/multipage/forms.html
-  // FIXME: Add config to force format on fields like date, time.
-  // FIXME: Checkbox required attribute to a group at least one is checked.
-  // FIXME: Add pattern and config to currency.
-  // FIXME: Add fields compatibility(validation and mask) with all moderns browser[chrome, safari, firefox, opera, edge/ie10].
+  // FIXME: Checkbox required attribute to a group at least one is checked. http://stackoverflow.com/questions/22238368/multiple-checkboxes-at-least-1-required
+  // FIXME: Add support to datalist and keygen fields.
+  // FIXME: Add type currency to spec that set automatically mask, validation.
+  // FIXME: Add config to force format on fields like date, time, currency.
+  // FIXME: Add fields compatibility(validation and mask) with all moderns browser[chrome, safari, firefox, opera, edge/ie10]. http://www.sitepoint.com/html5-forms-javascript-constraint-validation-api/
   var config = {
     json: null,
     replace_element: false,
@@ -200,7 +200,7 @@
         buildFieldFile(json, element);
         break;
       default:
-        buildFieldText(json, element);
+        buildFieldInput(json, element);
     }
   };
 
@@ -224,7 +224,7 @@
     element.appendChild(label);
   };
 
-  var buildFieldText = function(json, element) {
+  var buildFieldInput = function(json, element) {
 
       var input = document.createElement('input');
       input.setAttribute('type', json.type);
@@ -237,8 +237,30 @@
         input.setAttribute('value', json.default);
       if(json.title != undefined)
         input.setAttribute('title', json.title);
+      if(json.list != undefined)
+        input.setAttribute('list', json.list);
+      if(json.pattern != undefined)
+        input.setAttribute('pattern', json.pattern);
+      if(json.step != undefined)
+        input.setAttribute('step', json.step);
+      if(json.size != undefined)
+        input.setAttribute('size', json.size);
+      if(json.max != undefined)
+        input.setAttribute('max', json.max);
+      if(json.min != undefined)
+        input.setAttribute('min', json.min);
+      if(json.maxlength != undefined)
+        input.setAttribute('maxlength', json.maxlength);
+      if(json.autocomplete != undefined)
+        input.setAttribute('autocomplete', json.autocomplete);
       if(json.required)
         input.setAttribute('required', 'required');
+      if(json.readonly)
+        input.setAttribute('readonly', 'readonly');
+      if(json.autofocus)
+        input.setAttribute('autofocus', 'autofocus');
+      if(json.disabled)
+        input.setAttribute('disabled', 'disabled');
       if(config.show_placeholder &&
           (json.placeholder != undefined || json.label != undefined)) {
         input.setAttribute('placeholder',
@@ -258,8 +280,18 @@
       textarea.setAttribute('class', json.class);
     if(json.title != undefined)
       textarea.setAttribute('title', json.title);
+    if(json.maxlength != undefined)
+      input.setAttribute('maxlength', json.maxlength);
+    if(json.wrap != undefined)
+      input.setAttribute('wrap', json.wrap);
+    if(json.readonly)
+      input.setAttribute('readonly', 'readonly');
+    if(json.autofocus)
+      input.setAttribute('autofocus', 'autofocus');
     if(json.required)
       textarea.setAttribute('required', 'required');
+    if(json.disabled)
+      input.setAttribute('disabled', 'disabled');
     if(json.default != undefined)
       textarea.appendChild(document.createTextNode(json.default));
     if(config.show_placeholder &&
