@@ -75,6 +75,10 @@ function Leafbird(configs) {
    * @param      {<type>}  args    { description }
    */
   function configure(args) {
+    if(args === undefined) {
+      return configs;
+    }
+    
     for(var key in args) {
       if(configs.hasOwnProperty(key) && args[key] !== undefined){
         configs[key] = args[key];
