@@ -35,7 +35,6 @@ function Leafbird(configs) {
   lb.print = print;
   lb.getElements = getElements;
 
-
   if(!configs) {
     
     /**
@@ -81,7 +80,7 @@ function Leafbird(configs) {
         configs[key] = args[key];
       }
     }
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -113,7 +112,7 @@ function Leafbird(configs) {
     }
 
     return arr_found;
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -143,7 +142,7 @@ function Leafbird(configs) {
     }
 
     this.configure(save_config);
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -177,8 +176,7 @@ function Leafbird(configs) {
     }
 
     return reduced_json;
-  };
+  }
 }
-
 
 })();
