@@ -23,6 +23,7 @@ var instance;
  *
  * @todo Write docs to this
  * @todo Verify docs on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function#Function_instances
+ * @todo Make a module enhancement using singleton pattern: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript
  * @class
  * @return     {(Array|Function|Object|boolean|number)}  { description_of_the_return_value }
  */
