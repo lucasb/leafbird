@@ -16,9 +16,8 @@
 
 (function() {
 
-  // FIXME: Add type currency to spec that set automatically mask, validation.
   // FIXME: Add support to datalist and keygen fields.
-  // FIXME: Add config to force format on fields like date, time, currency.
+  // FIXME: Add config to force format(mask) on fields like date, time, currency.
   // FIXME: Add fields compatibility(validation and mask) with all moderns browser[chrome, safari, firefox, opera, edge/ie10]. http://www.sitepoint.com/html5-forms-javascript-constraint-validation-api/
   var config = {
     json: null,
@@ -218,6 +217,8 @@
       case 'file':
         buildFieldFile(json, element);
         break;
+      case 'currency':
+        buildFieldCurrency(json, element);
       default:
         buildFieldInput(json, element);
     }
@@ -242,6 +243,11 @@
 
     element.appendChild(label);
   };
+
+  var buildFieldCurrency = function(json, element) {
+      json.type = 'number';
+      json.step = '0.01';
+  }
 
   var buildFieldInput = function(json, element) {
 
@@ -335,7 +341,7 @@
 
     json.type = 'checkbox';
     element.appendChild(div);
-    
+
     return div;
   };
 
