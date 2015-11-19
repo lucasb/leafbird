@@ -13,4 +13,5 @@ script:
   - gulp build test
 
 after_success:
+  - gulp coverage
   - gulp coveralls

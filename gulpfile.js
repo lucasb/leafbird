@@ -34,8 +34,15 @@ gulp.task('build', function() {
       .pipe(gulp.dest('./dest'));
 });
 
+// Unit Testing
+gulp.task('test', function() {
+  return gulp.src(['./src/js/*.js', './src/test/*.spec.js'])
+    .pipe(jasmine.specRunner({console: true}))
+    .pipe(jasmine.headless());
+});
+
 // Coverage tool
-gulp.task('pre-test', function () {
+gulp.task('coverage', function () {
   return gulp.src(['./src/js/*.js'])
     // Covering files
     .pipe(istanbul())
@@ -43,13 +50,6 @@ gulp.task('pre-test', function () {
     .pipe(istanbul.hookRequire())
     // Write the covered files to a temporary directory
     .pipe(gulp.dest('./coverage/'));
-});
-
-// Unit Testing
-gulp.task('test', function() {
-  return gulp.src(['./src/js/*.js', './test/spec/leafbird.spec.js'])
-    .pipe(jasmine.specRunner({console: true}))
-    .pipe(jasmine.headless());
 });
 
 // Coverage report
