@@ -144,6 +144,13 @@ parseResponse({
         },
         {
           "label": {
+            "value": "Currency"
+          },
+          "name": "currency",
+          "type": "currency"
+        },
+        {
+          "label": {
             "value": "Date"
           },
           "name": "date",
