@@ -13,141 +13,30 @@
 
 (function() {
 
-  var config = {
-    json: null,
-    replace_element: false,
-    validation_callback: undefined,
-    required_label: null,
-    show_group_label: false,
-    show_placeholder: false,
-    show_input_label: false,
-    multiselect_input: false,
-    multifile_input: false
-  }
+'use strict';
 
-  this.Leafbird = function(_config) {
-    if(!(this instanceof Leafbird)) {
-      return new Leafbird(_config);
-    }
-    this.configure(_config);
-  };
+/**
+ * @todo Write JSDoc here
+ * { function_description }
+ *
+ * @class
+ * @return     {<type>}  { description_of_the_return_value }
+ */
+function Render() {
 
-  Leafbird.prototype.configure = function(args) {
-    for(var key in args) {
-      if(config.hasOwnProperty(key) && args[key] != undefined)
-        config[key] = args[key];
-    }
-  };
+  var render = this;
 
-  Leafbird.prototype.find = function(property, _value, _contains, _json) {
+  render.buildHTMLElement = buildHTMLElement;
 
-    var arr_found = [];
-    var obj = (_json == undefined) ? config.json : _json;
-
-    for(var key in obj) {
-      if(key == property && (_value == undefined
-          || (_contains && obj[property].indexOf(_value) > -1)
-          || (!_contains && obj[property] == _value))) {
-        arr_found.push(obj);
-      }
-
-      if(obj[key] instanceof Object) {
-        var found = this.find(property, _value, _contains, obj[key]);
-        if(found.length > 0)
-          arr_found = arr_found.concat(found);
-      }
-    }
-
-    return arr_found;
-  };
-
-  Leafbird.prototype.print = function(element, _attr, _config) {
-
-    var save_config = {};
-    for (var key in config)
-      save_config[key] = config[key];
-
-    if(!(element instanceof HTMLElement)) {
-      throw new SyntaxError('Invalid HTMLElement.', element);
-    }
-
-    this.configure(_config);
-    var elements = this.getElements(_attr);
-
-    if(config.replace_element)
-      element.innerHTML = '';
-
-    for(var i in elements) {
-      buildHTMLElement(elements[i], element);
-    }
-
-    this.configure(save_config);
-  };
-
-  Leafbird.prototype.getElements = function(_attr) {
-
-    if(!config.json)
-      throw new Error('JSON is not valid.', config.json);
-
-    var reduced_json = [];
-    var index = (_attr && _attr.indexOf('*') == 0) ? 1 : 0;
-
-    if(_attr == undefined) {
-      reduced_json.push(config.json);
-    }
-    else if(_attr.indexOf('#') == index) {
-      reduced_json = this.find('id', _attr.substring(index + 1), index);
-    }
-    else if(_attr.indexOf('.') == index) {
-      reduced_json = this.find('class', _attr.substring(index + 1), index);
-    }
-    else if(_attr.indexOf(':') == index) {
-      reduced_json = this.find('name', _attr.substring(index + 1), index);
-    }
-    else {
-      throw new SyntaxError('JSONAttribute '+ _attr + ' is not valid.', _attr);
-    }
-
-    return reduced_json;
-  };
-
-  Leafbird.prototype.validateForm = function(form) {
-
-    var isValid = true;
-
-    var invalidFields = [].filter.call(
-      form.getElementsByTagName('*'), function(element) {
-        return (['INPUT', 'TEXTAREA', 'SELECT'].indexOf(element.nodeName) > -1
-                && !element.checkValidity()) || !validateCheckboxOne(element);
-    });
-
-    if(invalidFields.length>0) {
-      config.validation_callback(invalidFields, form);
-      isValid = false;
-    }
-
-    return isValid;
-  };
-
-  var validateCheckboxOne = function(element) {
-
-    if(element.id && element.id.indexOf('checkboxone_') > -1
-                  && element.getAttribute('required')) {
-
-      var checkBoxes = document.getElementsByName(
-                                element.id.substring('checkboxone_'.length));
-
-      for (var i = 0; i < checkBoxes.length; i++)
-        if (checkBoxes[i].checked)
-          return true;
-
-      return false;
-    }
-
-    return true;
-  }
-
-  var buildHTMLElement = function(json, element) {
+  /**
+   * @todo Write JSDoc here
+   * { function_description }
+   *
+   * @method     buildHTMLElement
+   * @param      {<type>}  json     { description }
+   * @param      {<type>}  element  { description }
+   */
+  function buildHTMLElement(json, element) {
 
     if(json.hasOwnProperty('type')) {
       buildFieldElement(json, element);
@@ -165,7 +54,15 @@
     }
   };
 
-  var buildDivGroup = function(json) {
+  /**
+   * @todo Write JSDoc here
+   * { function_description }
+   *
+   * @method     buildDivGroup
+   * @param      {<type>}  json    { description }
+   * @return     {<type>}  { description_of_the_return_value }
+   */
+  function buildDivGroup(json) {
 
     var div = document.createElement('div');
     if(json.id != undefined)
@@ -183,7 +80,15 @@
     return div;
   };
 
-  var buildFieldElement = function(json, element) {
+  /**
+   * @todo Write JSDoc here
+   * { function_description }
+   *
+   * @method     buildFieldElement
+   * @param      {<type>}  json     { description }
+   * @param      {<type>}  element  { description }
+   */
+  function buildFieldElement (json, element) {
 
     if(json.name == undefined)
       throw new SyntaxError('FieldName is required.', json.name);
@@ -192,10 +97,8 @@
       buildFieldLabel(json, element);
 
     switch(json.type) {
-      case 'checkboxone':
-        element = buildCheckboxOne(json, element);
-      case 'checkbox':
       case 'radio':
+      case 'checkbox':
         buildFieldCheckboxRadio(json, element);
         break;
       case 'textarea':
@@ -211,14 +114,20 @@
       case 'file':
         buildFieldFile(json, element);
         break;
-      case 'currency':
-        buildFieldCurrency(json, element);
       default:
-        buildFieldInput(json, element);
+        buildFieldText(json, element);
     }
   };
 
-  var buildFieldLabel = function(json, element) {
+  /**
+   * @todo Write JSDoc here
+   * { function_description }
+   *
+   * @method     buildFieldLabel
+   * @param      {<type>}  json     { description }
+   * @param      {<type>}  element  { description }
+   */
+  function buildFieldLabel(json, element) {
 
     var label = document.createElement('label');
 
@@ -238,12 +147,15 @@
     element.appendChild(label);
   };
 
-  var buildFieldCurrency = function(json, element) {
-      json.type = 'number';
-      json.step = '0.01';
-  }
-
-  var buildFieldInput = function(json, element) {
+  /**
+   * @todo Write JSDoc here
+   * { function_description }
+   *
+   * @method     buildFieldText
+   * @param      {<type>}  json     { description }
+   * @param      {<type>}  element  { description }
+   */
+  function buildFieldText(json, element) {
 
       var input = document.createElement('input');
       input.setAttribute('type', json.type);
@@ -256,30 +168,8 @@
         input.setAttribute('value', json.default);
       if(json.title != undefined)
         input.setAttribute('title', json.title);
-      if(json.list != undefined)
-        input.setAttribute('list', json.list);
-      if(json.pattern != undefined)
-        input.setAttribute('pattern', json.pattern);
-      if(json.step != undefined)
-        input.setAttribute('step', json.step);
-      if(json.size != undefined)
-        input.setAttribute('size', json.size);
-      if(json.max != undefined)
-        input.setAttribute('max', json.max);
-      if(json.min != undefined)
-        input.setAttribute('min', json.min);
-      if(json.maxlength != undefined)
-        input.setAttribute('maxlength', json.maxlength);
-      if(json.autocomplete != undefined)
-        input.setAttribute('autocomplete', json.autocomplete);
       if(json.required)
         input.setAttribute('required', 'required');
-      if(json.readonly)
-        input.setAttribute('readonly', 'readonly');
-      if(json.autofocus)
-        input.setAttribute('autofocus', 'autofocus');
-      if(json.disabled)
-        input.setAttribute('disabled', 'disabled');
       if(config.show_placeholder &&
           (json.placeholder != undefined || json.label != undefined)) {
         input.setAttribute('placeholder',
@@ -289,7 +179,15 @@
       element.appendChild(input);
   };
 
-  var buildFieldTextarea = function(json, element) {
+  /**
+   * @todo Write JSDoc here
+   * { function_description }
+   *
+   * @method     buildFieldTextarea
+   * @param      {<type>}  json     { description }
+   * @param      {<type>}  element  { description }
+   */
+  function buildFieldTextarea(json, element) {
 
     var textarea = document.createElement('textarea');
     textarea.setAttribute('name', json.name);
@@ -299,18 +197,8 @@
       textarea.setAttribute('class', json.class);
     if(json.title != undefined)
       textarea.setAttribute('title', json.title);
-    if(json.maxlength != undefined)
-      input.setAttribute('maxlength', json.maxlength);
-    if(json.wrap != undefined)
-      input.setAttribute('wrap', json.wrap);
-    if(json.readonly)
-      input.setAttribute('readonly', 'readonly');
-    if(json.autofocus)
-      input.setAttribute('autofocus', 'autofocus');
     if(json.required)
       textarea.setAttribute('required', 'required');
-    if(json.disabled)
-      input.setAttribute('disabled', 'disabled');
     if(json.default != undefined)
       textarea.appendChild(document.createTextNode(json.default));
     if(config.show_placeholder &&
@@ -322,24 +210,15 @@
     element.appendChild(textarea);
   };
 
-  var buildCheckboxOne = function(json, element) {
-
-    var div = document.createElement('div');
-    div.setAttribute('id', 'checkboxone_' + json.name);
-    div.setAttribute('title', json.name);
-
-    if(json.required) {
-      div.setAttribute('required', 'required');
-      json.required = false;
-    }
-
-    json.type = 'checkbox';
-    element.appendChild(div);
-
-    return div;
-  };
-
-  var buildFieldCheckboxRadio = function(json, element) {
+  /**
+   * @todo Write JSDoc here
+   * { function_description }
+   *
+   * @method     buildFieldCheckboxRadio
+   * @param      {<type>}  json     { description }
+   * @param      {<type>}  element  { description }
+   */
+  function buildFieldCheckboxRadio(json, element) {
 
     for(var i in json.values) {
       var input = document.createElement('input');
@@ -372,7 +251,15 @@
     }
   };
 
-  var buildFieldSelect = function(json, element) {
+  /**
+   * @todo Write JSDoc here
+   * { function_description }
+   *
+   * @method     buildFieldSelect
+   * @param      {<type>}  json     { description }
+   * @param      {<type>}  element  { description }
+   */
+  function buildFieldSelect(json, element) {
 
     var select = document.createElement('select');
     select.setAttribute('name', json.name);
@@ -401,7 +288,15 @@
     element.appendChild(select);
   };
 
-  var buildFieldFile = function(json, element) {
+  /**
+   * @todo Write JSDoc here
+   * { function_description }
+   *
+   * @method     buildFieldFile
+   * @param      {<type>}  json     { description }
+   * @param      {<type>}  element  { description }
+   */
+  function buildFieldFile(json, element) {
 
     var input = document.createElement('input');
     input.setAttribute('type', 'file');
@@ -420,7 +315,5 @@
       input.setAttribute('multiple', 'multiple');
     element.appendChild(input);
   };
-
-  window.Leafbird = Leafbird, window.lb = Leafbird;
-
+}
 })();
