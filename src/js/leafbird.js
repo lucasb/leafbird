@@ -16,9 +16,6 @@
 
 (function() {
 
-  // FIXME: Add support to datalist and keygen fields.
-  // FIXME: Add config to force format(mask) on fields like date, time, currency.
-  // FIXME: Add fields compatibility(validation and mask) with all moderns browser[chrome, safari, firefox, opera, edge/ie10]. http://www.sitepoint.com/html5-forms-javascript-constraint-validation-api/
   var config = {
     json: null,
     replace_element: false,
