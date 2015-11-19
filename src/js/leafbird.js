@@ -16,9 +16,8 @@
 
 (function() {
 
-  // FIXME: Checkbox required attribute to a group at least one is checked. http://stackoverflow.com/questions/22238368/multiple-checkboxes-at-least-1-required
-  // FIXME: Add support to datalist and keygen fields.
   // FIXME: Add type currency to spec that set automatically mask, validation.
+  // FIXME: Add support to datalist and keygen fields.
   // FIXME: Add config to force format on fields like date, time, currency.
   // FIXME: Add fields compatibility(validation and mask) with all moderns browser[chrome, safari, firefox, opera, edge/ie10]. http://www.sitepoint.com/html5-forms-javascript-constraint-validation-api/
   var config = {
@@ -45,7 +44,7 @@
       if(config.hasOwnProperty(key) && args[key] != undefined)
         config[key] = args[key];
     }
-  }
+  };
 
   Leafbird.prototype.find = function(property, _value, _contains, _json) {
 
@@ -125,8 +124,8 @@
 
     var invalidFields = [].filter.call(
       form.getElementsByTagName('*'), function(element) {
-        return ['INPUT', 'TEXTAREA', 'SELECT'].indexOf(element.nodeName) > -1
-                && !element.checkValidity();
+        return (['INPUT', 'TEXTAREA', 'SELECT'].indexOf(element.nodeName) > -1
+                && !element.checkValidity()) || !validateCheckboxOne(element);
     });
 
     if(invalidFields.length>0) {
@@ -135,6 +134,24 @@
     }
 
     return isValid;
+  };
+
+  var validateCheckboxOne = function(element) {
+
+    if(element.id && element.id.indexOf('checkboxone_') > -1
+                  && element.getAttribute('required')) {
+
+      var checkBoxes = document.getElementsByName(
+                                element.id.substring('checkboxone_'.length));
+
+      for (var i = 0; i < checkBoxes.length; i++)
+        if (checkBoxes[i].checked)
+          return true;
+
+      return false;
+    }
+
+    return true;
   }
 
   var buildHTMLElement = function(json, element) {
@@ -182,8 +199,10 @@
       buildFieldLabel(json, element);
 
     switch(json.type) {
-      case 'radio':
+      case 'checkboxone':
+        element = buildCheckboxOne(json, element);
       case 'checkbox':
+      case 'radio':
         buildFieldCheckboxRadio(json, element);
         break;
       case 'textarea':
@@ -301,6 +320,23 @@
     }
 
     element.appendChild(textarea);
+  };
+
+  var buildCheckboxOne = function(json, element) {
+
+    var div = document.createElement('div');
+    div.setAttribute('id', 'checkboxone_' + json.name);
+    div.setAttribute('title', json.name);
+
+    if(json.required) {
+      div.setAttribute('required', 'required');
+      json.required = false;
+    }
+
+    json.type = 'checkbox';
+    element.appendChild(div);
+    
+    return div;
   };
 
   var buildFieldCheckboxRadio = function(json, element) {

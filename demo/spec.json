@@ -75,6 +75,7 @@ parseResponse({
       "label": {
         "value": "Checkbox",
       },
+      "required": true,
       "name": "checkbox",
       "type": "checkbox",
       "values": [
@@ -83,6 +84,30 @@ parseResponse({
               "value": "Item"
             },
             "value": true
+          }
+      ]
+    },
+    {
+      "id": "checkboxone",
+      "label": {
+        "value": "Checkboxone at least 1",
+      },
+      "required": true,
+      "default": "a",
+      "name": "checkboxone",
+      "type": "checkboxone",
+      "values": [
+          {
+            "label": {
+              "value": "Item A"
+            },
+            "value": "a"
+          },
+          {
+            "label": {
+              "value": "Item B"
+            },
+            "value": "b"
           }
       ]
     },

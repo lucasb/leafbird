@@ -53,7 +53,9 @@ var validateFormCallback = function(invalidFields, form) {
 
   for(var i = 0; i < invalidFields.length; i++) {
     var span = document.createElement('span');
-    span.appendChild(document.createTextNode(invalidFields[i].name));
+    name = invalidFields[i].name ? invalidFields[i].name
+                                 : invalidFields[i].title 
+    span.appendChild(document.createTextNode(name));
     divErrors.appendChild(span);
   }
 
