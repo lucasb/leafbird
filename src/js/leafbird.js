@@ -11,13 +11,12 @@
   limitations under the License.
 */
 
-var Leafbird;
-
 (function() {
-  
+
 'use strict';
 
-var instance;
+if(!window.leafbird)
+  window.leafbird = new Leafbird();
 
 /**
  * { function_description }
@@ -28,20 +27,12 @@ var instance;
  * @class
  * @return     {(Array|Function|Object|boolean|number)}  { description_of_the_return_value }
  */
-Leafbird = function() {
-  if(instance) {
-    return instance;
-  }
+function Leafbird() {
 
-  /**
-   * Revealing Pattern
-   */
-  instance = this;
-  instance.module = module;
+  var leafbird = this;
 
-  /**
-   * Private variables
-   */
+  leafbird.module = module;
+
   var _modules = [];
 
   /**
@@ -58,12 +49,13 @@ Leafbird = function() {
     var _module;
 
     if(name === undefined) {
-      throw new LeafbirdInvalidModuleName();
+      throw new LeafbirdInvalidModuleNameException('Name cannot be undefined.');
     }
 
     if(callback === undefined) {
       _module = getModule(name);
-    } else {
+    }
+    else {
       _module = setModule(name, callback);
     }
 
@@ -79,10 +71,12 @@ Leafbird = function() {
    * @return     {<type>}  { description_of_the_return_value }
    */
   function getModule(name) {
+
     if(moduleExists(name)) {
       return _modules[name];
-    } else {
-      //TODO: throw a module exception
+    }
+    else {
+      throw new LeafbirdModuleNotFoundException('Module ' + name + ' not exists.');
     }
   }
 
@@ -96,6 +90,7 @@ Leafbird = function() {
    * @return     {<type>}    { description_of_the_return_value }
    */
   function setModule(name, callback) {
+
     _modules[name] = module;
     return _modules[name];
   }
@@ -109,6 +104,7 @@ Leafbird = function() {
    * @return     {boolean}  { description_of_the_return_value }
    */
   function moduleExists(name) {
+
     var exists = false;
 
     for(module in _modules) {
@@ -131,11 +127,9 @@ Leafbird = function() {
  * @return     {Object}  { description_of_the_return_value }
  */
 function LeafbirdException(message) {
-  return {
-    name: "LeafbirdException",
-    message: message
-  };
-}
+    this.name = "LeafbirdException";
+    this.message = message;
+};
 
 /**
  * { function_description }
@@ -147,11 +141,9 @@ function LeafbirdException(message) {
  */
 function LeafbirdModuleNotFoundException(message) {
   LeafbirdModuleNotFoundException.prototype = LeafbirdException;
-  return {
-    name: "LeafbirdModuleNotFoundException",
-    message: message
-  };
-}
+  this.name = "LeafbirdModuleNotFoundException";
+  this.message = message;
+};
 
 /**
  * { function_description }
@@ -161,15 +153,10 @@ function LeafbirdModuleNotFoundException(message) {
  * @param      {<type>}  message  { description }
  * @return     {Object}  { description_of_the_return_value }
  */
-function LeafbirdInvalidModuleName(message) {
-  LeafbirdInvalidModuleName.prototype = LeafbirdException;
-  return {
-    name: "LeafbirdModuleNameInvalid",
-    message: message
-  };
-}
-
+function LeafbirdInvalidModuleNameException(message) {
+  LeafbirdInvalidModuleNameException.prototype = LeafbirdException;
+  this.name = "LeafbirdModuleNameInvalidException",
+  this.message = message
+};
 
 })();
-
-console.log(new Leafbird());

@@ -18,7 +18,7 @@
 var parseResponse = function(data) {
 
   // configure general paramters after lib was intanced
-  lb.configure({
+  leafbird.configure({
     json: data,
     required_label: ' *',
     validation_callback: validateFormCallback,
@@ -28,22 +28,20 @@ var parseResponse = function(data) {
   });
 
   // get a elements object before to set on DOM, to add/change anything
-  console.log(lb.getElements());
-  console.log(lb.find("id", "text"));
+  console.log(leafbird.getElements());
+  console.log(leafbird.find("id", "text"));
 
   // print all elements into html form
   var element = document.getElementById("form");
-  lb.print(element);
+  leafbird.print(element);
 
   // print specific element with name text into html form2
   var element2 = document.getElementById("form2");
-  lb.print(element2, ":text", {replace_element: true, show_placeholder: true,
-                                                      show_input_label: false});
+  leafbird.print(element2, ":text", {replace_element: true,
+                                     show_placeholder: true,
+                                     show_input_label: false});
 
 };
-
-// start lib to use
-var lb = Leafbird();
 
 // define function of callback validation to Leafbird call
 var validateFormCallback = function(invalidFields, form) {
@@ -70,6 +68,6 @@ for(var i = 0; i < forms.length; i++) {
     if(this.firstChild.className == 'errors')
       this.removeChild(this.firstChild);
     window.scrollTo(0, 0);
-    return lb.validateForm(this);
+    return leafbird.validateForm(this);
   }
 }
