@@ -31,10 +31,11 @@ var parseResponse = function(data) {
   console.log(lb.getElements());
   console.log(lb.find("id", "text"));
 
-  // print into from html elements
+  // print all elements into html form
   var element = document.getElementById("form");
   lb.print(element);
 
+  // print specific element with name text into html form2
   var element2 = document.getElementById("form2");
   lb.print(element2, ":text", {replace_element: true, show_placeholder: true,
                                                       show_input_label: false});
@@ -54,7 +55,7 @@ var validateFormCallback = function(invalidFields, form) {
   for(var i = 0; i < invalidFields.length; i++) {
     var span = document.createElement('span');
     name = invalidFields[i].name ? invalidFields[i].name
-                                 : invalidFields[i].title 
+                                 : invalidFields[i].title
     span.appendChild(document.createTextNode(name));
     divErrors.appendChild(span);
   }
@@ -62,7 +63,7 @@ var validateFormCallback = function(invalidFields, form) {
   form.insertBefore(divErrors, form.firstChild);
 }
 
-// Add function validation from Leafbird to onsubmit forms events
+// Add call to validateForm function from Leafbird on submit forms
 var forms = document.getElementsByTagName('form');
 for(var i = 0; i < forms.length; i++) {
   forms[i].onsubmit = function (event) {
