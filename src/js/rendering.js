@@ -15,6 +15,8 @@
 
 'use strict';
 
+leafbird.rendering = new Rendering();
+
 /**
  * @todo Write JSDoc here
  * { function_description }
@@ -26,7 +28,7 @@ function Rendering() {
 
   var rendering = this;
 
-  rendering.buildHTMLElement = buildHTMLElement;
+  rendering.print = print;
 
   /**
    * @typedef RenderingConfig
@@ -50,6 +52,37 @@ function Rendering() {
     show_input_label: false,
     multiselect_input: false,
     multifile_input: false
+  };
+
+  /**
+   * @todo Write JSDoc here
+   *
+   * { function_description }
+   *
+   * @method     configure
+   * @param      {<type>}  args    { description }
+   */
+  function print(element, _attr, _configs) {
+
+    var defaultConfigs = {};
+    for (var key in configs)
+      defaultConfigs[key] = configs[key];
+
+    if(!(element instanceof HTMLElement)) {
+      throw new SyntaxError('Invalid HTMLElement.', element);
+    }
+
+    this.configure(_configs);
+    var elements = this.getElements(_attr);
+
+    if(configs.replace_element)
+      element.innerHTML = '';
+
+    for(var i in elements) {
+      buildHTMLElement(elements[i], element);
+    }
+
+    this.configure(defaultConfigs);
   };
 
   /**

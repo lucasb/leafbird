@@ -28,8 +28,8 @@ var parseResponse = function(data) {
   });
 
   // get a elements object before to set on DOM, to add/change anything
-  console.log(leafbird.getElements());
-  console.log(leafbird.find("id", "text"));
+  console.log(leafbird.element.getElements());
+  console.log(leafbird.element.find("id", "text"));
 
   // print all elements into html form
   var element = document.getElementById("form");

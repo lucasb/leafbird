@@ -18,6 +18,12 @@
 if(!window.leafbird)
   window.leafbird = new Leafbird();
 
+/*
+leafbird.module('leafbird.Leafbird', Leafbird)
+        .dependecies({'element.Element': element,
+                      'rendering.Rendering': rendering,
+                      'validation.Validation': validation});
+*/
 /**
  * { function_description }
  *
@@ -31,132 +37,29 @@ function Leafbird() {
 
   var leafbird = this;
 
-  leafbird.module = module;
+  leafbird.configure = configure;
 
-  var _modules = [];
-
+var configs = {};
   /**
+   * @todo Write JSDoc here
+   *
    * { function_description }
    *
-   * @todo write the docs to this!
-   * @method     module
-   * @param      {<type>}    name      { description }
-   * @param      {Function}  callback  { description }
-   * @return     {Function}  { description_of_the_return_value }
+   * @method     configure
+   * @param      {<type>}  args    { description }
    */
-  function module(name, callback) {
+  function configure(args) {
 
-    var _module;
-
-    if(name === undefined) {
-      throw new LeafbirdInvalidModuleNameException('Name cannot be undefined.');
+    if(args === undefined) {
+      return configs;
     }
 
-    if(callback === undefined) {
-      _module = getModule(name);
-    }
-    else {
-      _module = setModule(name, callback);
-    }
-
-    return _module;
-  }
-
-  /**
-   * { function_description }
-   *
-   * @todo write the docs to this!
-   * @method     getModule
-   * @param      {<type>}  name    { description }
-   * @return     {<type>}  { description_of_the_return_value }
-   */
-  function getModule(name) {
-
-    if(moduleExists(name)) {
-      return _modules[name];
-    }
-    else {
-      throw new LeafbirdModuleNotFoundException('Module ' + name + ' not exists.');
-    }
-  }
-
-  /**
-   * { function_description }
-   *
-   * @todo write the docs to this!
-   * @method     setModule
-   * @param      {<type>}    name      { description }
-   * @param      {Function}  callback  { description }
-   * @return     {<type>}    { description_of_the_return_value }
-   */
-  function setModule(name, callback) {
-
-    _modules[name] = module;
-    return _modules[name];
-  }
-
-  /**
-   * { function_description }
-   *
-   * @todo write the docs to this!
-   * @method     moduleExists
-   * @param      {<type>}   name    { description }
-   * @return     {boolean}  { description_of_the_return_value }
-   */
-  function moduleExists(name) {
-
-    var exists = false;
-
-    for(module in _modules) {
-      if(module === name) {
-        exists = true;
+    for(var key in args) {
+      if(configs.hasOwnProperty(key) && args[key] !== undefined){
+        configs[key] = args[key];
       }
     }
-
-    return exists;
-  }
-};
-
-
-/**
- * { function_description }
- *
- * @todo write the docs to this!
- * @class
- * @param      {<type>}  message  { description }
- * @return     {Object}  { description_of_the_return_value }
- */
-function LeafbirdException(message) {
-    this.name = "LeafbirdException";
-    this.message = message;
-};
-
-/**
- * { function_description }
- *
- * @todo write the docs to this!
- * @class
- * @param      {<type>}  message  { description }
- * @return     {Object}  { description_of_the_return_value }
- */
-function LeafbirdModuleNotFoundException(message) {
-  LeafbirdModuleNotFoundException.prototype = LeafbirdException;
-  this.name = "LeafbirdModuleNotFoundException";
-  this.message = message;
-};
-
-/**
- * { function_description }
- *
- * @todo write the docs to this!
- * @class
- * @param      {<type>}  message  { description }
- * @return     {Object}  { description_of_the_return_value }
- */
-function LeafbirdInvalidModuleNameException(message) {
-  LeafbirdInvalidModuleNameException.prototype = LeafbirdException;
-  this.name = "LeafbirdModuleNameInvalidException",
-  this.message = message
-};
+  };
+}
 
 })();

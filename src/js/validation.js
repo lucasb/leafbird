@@ -15,6 +15,8 @@
 
 'use strict';
 
+leafbird.validation = new Validation();
+
 /**
  * @todo Write JSDoc here
  * { function_description }

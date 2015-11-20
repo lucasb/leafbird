@@ -15,6 +15,8 @@
 
 'use strict';
 
+leafbird.rendering = new Rendering();
+
 /**
  * @todo Write JSDoc here
  * { function_description }
@@ -26,7 +28,6 @@ function Element() {
 
   var element = this;
 
-  element.configure = configure;
   element.find = find;
   element.print = print;
   element.getElements = getElements;
@@ -42,27 +43,6 @@ function Element() {
     */
   configs = {
     json: null
-  };
-
-  /**
-   * @todo Write JSDoc here
-   *
-   * { function_description }
-   *
-   * @method     configure
-   * @param      {<type>}  args    { description }
-   */
-  function configure(args) {
-
-    if(args === undefined) {
-      return configs;
-    }
-
-    for(var key in args) {
-      if(configs.hasOwnProperty(key) && args[key] !== undefined){
-        configs[key] = args[key];
-      }
-    }
   };
 
   /**
@@ -96,37 +76,6 @@ function Element() {
     }
 
     return arrFound;
-  };
-
-  /**
-   * @todo Write JSDoc here
-   *
-   * { function_description }
-   *
-   * @method     configure
-   * @param      {<type>}  args    { description }
-   */
-  function print(element, _attr, _configs) {
-
-    var defaultConfigs = {};
-    for (var key in configs)
-      defaultConfigs[key] = configs[key];
-
-    if(!(element instanceof HTMLElement)) {
-      throw new SyntaxError('Invalid HTMLElement.', element);
-    }
-
-    this.configure(_configs);
-    var elements = this.getElements(_attr);
-
-    if(configs.replace_element)
-      element.innerHTML = '';
-
-    for(var i in elements) {
-      buildHTMLElement(elements[i], element);
-    }
-
-    this.configure(defaultConfigs);
   };
 
   /**
