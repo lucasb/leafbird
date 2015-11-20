@@ -20,55 +20,48 @@
  * { function_description }
  *
  * @class
- * @param      {<type>}  configs  { description }
+ * @return     {boolean}  { description_of_the_return_value }
  */
-function Leafbird(configs) {
+function Element() {
 
-  var lb = this;
+  var element = this;
+
+  element.configure = configure;
+  element.find = find;
+  element.print = print;
+  element.getElements = getElements;
 
   /**
-   * Revealing Pattern
-   * 
+   * @typedef LeafbirdConfig
+   * @type {object}
+   * @property {object} json Form specification.
+   * @property {boolean} replace_element Transclude parent element.
+   * @property {callback} validation_callback Validation callback function.
+   * @property {string} required_label String indicate required field.
+   * @property {boolean} show_group_label Display a group label.
+   * @property {boolean} show_placeholder Display a field placeholder.
+   * @property {boolean} multiselect_input Set this field as a multiselect.
+   * @property {boolean} multifile_input Set this field as a multifile input.
    */
-  lb.configure = configure;
-  lb.find = find;
-  lb.print = print;
-  lb.getElements = getElements;
 
-  if(!configs) {
-    
-    /**
-     * @typedef LeafbirdConfig
-     * @type {object}
-     * @property {object} json Form specification.
-     * @property {boolean} replace_element Transclude parent element.
-     * @property {callback} validation_callback Validation callback function.
-     * @property {string} required_label String indicate required field.
-     * @property {boolean} show_group_label Display a group label.
-     * @property {boolean} show_placeholder Display a field placeholder.
-     * @property {boolean} multiselect_input Set this field as a multiselect.
-     * @property {boolean} multifile_input Set this field as a multifile input.
-     */
-
-     /**
-      * @type {LeafbirdConfig}
-      */
-    configs = {
-      json: null,
-      replace_element: false,
-      validation_callback: undefined,
-      required_label: null,
-      show_group_label: false,
-      show_placeholder: false,
-      show_input_label: false,
-      multiselect_input: false,
-      multifile_input: false
-    };
-  }
+   /**
+    * @type {LeafbirdConfig}
+    */
+  configs = {
+    json: null,
+    replace_element: false,
+    validation_callback: undefined,
+    required_label: null,
+    show_group_label: false,
+    show_placeholder: false,
+    show_input_label: false,
+    multiselect_input: false,
+    multifile_input: false
+  };
 
   /**
    * @todo Write JSDoc here
-   * 
+   *
    * { function_description }
    *
    * @method     configure
@@ -78,13 +71,13 @@ function Leafbird(configs) {
     if(args === undefined) {
       return configs;
     }
-    
+
     for(var key in args) {
       if(configs.hasOwnProperty(key) && args[key] !== undefined){
         configs[key] = args[key];
       }
     }
-  }
+  };
 
   /**
    * @todo Write JSDoc here
@@ -98,38 +91,38 @@ function Leafbird(configs) {
    * @return     {Array}   { description_of_the_return_value }
    */
   function find(property, _value, _contains, _json) {
-    var arr_found = [];
+    var arrFound = [];
     var obj = (_json == undefined) ? configs.json : _json;
 
     for(var key in obj) {
       if(key == property && (_value == undefined
           || (_contains && obj[property].indexOf(_value) > -1)
           || (!_contains && obj[property] == _value))) {
-        arr_found.push(obj);
+        arrFound.push(obj);
       }
 
       if(obj[key] instanceof Object) {
         var found = this.find(property, _value, _contains, obj[key]);
         if(found.length > 0)
-          arr_found = arr_found.concat(found);
+          arrFound = arrFound.concat(found);
       }
     }
 
-    return arr_found;
-  }
+    return arrFound;
+  };
 
   /**
    * @todo Write JSDoc here
-   * 
+   *
    * { function_description }
    *
    * @method     configure
    * @param      {<type>}  args    { description }
    */
   function print(element, _attr, _config) {
-    var save_config = {};
+    var saveConfig = {};
     for (var key in configs)
-      save_config[key] = configs[key];
+      saveConfig[key] = configs[key];
 
     if(!(element instanceof HTMLElement)) {
       throw new SyntaxError('Invalid HTMLElement.', element);
@@ -145,12 +138,12 @@ function Leafbird(configs) {
       buildHTMLElement(elements[i], element);
     }
 
-    this.configure(save_config);
-  }
+    this.configure(saveConfig);
+  };
 
   /**
    * @todo Write JSDoc here
-   * 
+   *
    * { function_description }
    *
    * @method     configure
@@ -160,27 +153,27 @@ function Leafbird(configs) {
     if(!configs.json)
       throw new Error('JSON is not valid.', configs.json);
 
-    var reduced_json = [];
+    var reducedJson = [];
     var index = (_attr && _attr.indexOf('*') == 0) ? 1 : 0;
 
     if(_attr == undefined) {
-      reduced_json.push(configs.json);
+      reducedJson.push(configs.json);
     }
     else if(_attr.indexOf('#') == index) {
-      reduced_json = this.find('id', _attr.substring(index + 1), index);
+      reducedJson = this.find('id', _attr.substring(index + 1), index);
     }
     else if(_attr.indexOf('.') == index) {
-      reduced_json = this.find('class', _attr.substring(index + 1), index);
+      reducedJson = this.find('class', _attr.substring(index + 1), index);
     }
     else if(_attr.indexOf(':') == index) {
-      reduced_json = this.find('name', _attr.substring(index + 1), index);
+      reducedJson = this.find('name', _attr.substring(index + 1), index);
     }
     else {
       throw new SyntaxError('JSONAttribute '+ _attr + ' is not valid.', _attr);
     }
 
-    return reduced_json;
-  }
+    return reducedJson;
+  };
 }
 
 })();

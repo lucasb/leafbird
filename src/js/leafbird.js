@@ -13,7 +13,8 @@
 
 var Leafbird;
 
-(function(){
+(function() {
+  
 'use strict';
 
 var instance;
@@ -53,7 +54,7 @@ Leafbird = function() {
    * @return     {Function}  { description_of_the_return_value }
    */
   function module(name, callback) {
-    
+
     var _module;
 
     if(name === undefined) {
@@ -68,7 +69,7 @@ Leafbird = function() {
 
     return _module;
   }
-  
+
   /**
    * { function_description }
    *
@@ -109,7 +110,7 @@ Leafbird = function() {
    */
   function moduleExists(name) {
     var exists = false;
-    
+
     for(module in _modules) {
       if(module === name) {
         exists = true;

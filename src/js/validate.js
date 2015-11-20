@@ -12,7 +12,7 @@
 */
 
 (function() {
-  
+
 'use strict';
 
 /**
@@ -40,8 +40,8 @@ function Validate() {
 
     var invalidFields = [].filter.call(
       form.getElementsByTagName('*'), function(element) {
-        return ['INPUT', 'TEXTAREA', 'SELECT'].indexOf(element.nodeName) > -1
-                && !element.checkValidity();
+        return (['INPUT', 'TEXTAREA', 'SELECT'].indexOf(element.nodeName) > -1
+                && !element.checkValidity()) || !validateCheckboxOne(element);
     });
 
     if(invalidFields.length>0) {
@@ -50,7 +50,31 @@ function Validate() {
     }
 
     return isValid;
+  };
 
+  /**
+   * @todo Write JSDoc here
+   * { function_description }
+   *
+   * @method     validateCheckboxOne
+   * @return     {boolean}  { description_of_the_return_value }
+   */
+  function validateCheckboxOne(element) {
+
+    if(element.id && element.id.indexOf('checkboxone_') > -1
+                  && element.getAttribute('required')) {
+
+      var checkBoxes = document.getElementsByName(
+                                element.id.substring('checkboxone_'.length));
+
+      for (var i = 0; i < checkBoxes.length; i++)
+        if (checkBoxes[i].checked)
+          return true;
+
+      return false;
+    }
+
+    return true;
   };
 }
 

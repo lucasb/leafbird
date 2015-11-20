@@ -42,15 +42,15 @@ function Render() {
       buildFieldElement(json, element);
     }
     else {
-      var group_element = buildDivGroup(json);
+      var groupElement = buildDivGroup(json);
       for(var i in json) {
         if(json[i] instanceof Array) {
           for(var j in json[i]) {
-            buildHTMLElement(json[i][j], group_element);
+            buildHTMLElement(json[i][j], groupElement);
           }
         }
       }
-      element.appendChild(group_element);
+      element.appendChild(groupElement);
     }
   };
 
@@ -97,8 +97,10 @@ function Render() {
       buildFieldLabel(json, element);
 
     switch(json.type) {
-      case 'radio':
+      case 'checkboxone':
+        buildCheckboxOne(json, element);
       case 'checkbox':
+      case 'radio':
         buildFieldCheckboxRadio(json, element);
         break;
       case 'textarea':
@@ -114,8 +116,10 @@ function Render() {
       case 'file':
         buildFieldFile(json, element);
         break;
+      case 'currency':
+        buildFieldCurrency(json, element);
       default:
-        buildFieldText(json, element);
+        buildFieldInput(json, element);
     }
   };
 
@@ -157,27 +161,62 @@ function Render() {
    */
   function buildFieldText(json, element) {
 
-      var input = document.createElement('input');
-      input.setAttribute('type', json.type);
-      input.setAttribute('name', json.name);
-      if(json.id != undefined)
-        input.setAttribute('id', json.id);
-      if(json.class != undefined)
-        input.setAttribute('class', json.class);
-      if(json.default != undefined)
-        input.setAttribute('value', json.default);
-      if(json.title != undefined)
-        input.setAttribute('title', json.title);
-      if(json.required)
-        input.setAttribute('required', 'required');
-      if(config.show_placeholder &&
-          (json.placeholder != undefined || json.label != undefined)) {
-        input.setAttribute('placeholder',
-          json.placeholder == undefined ? json.label.value : json.placeholder);
-      }
+    var input = document.createElement('input');
+    input.setAttribute('type', json.type);
+    input.setAttribute('name', json.name);
+    if(json.id != undefined)
+      input.setAttribute('id', json.id);
+    if(json.class != undefined)
+      input.setAttribute('class', json.class);
+    if(json.default != undefined)
+      input.setAttribute('value', json.default);
+    if(json.title != undefined)
+      input.setAttribute('title', json.title);
+    if(json.list != undefined)
+      input.setAttribute('list', json.list);
+    if(json.pattern != undefined)
+      input.setAttribute('pattern', json.pattern);
+    if(json.step != undefined)
+      input.setAttribute('step', json.step);
+    if(json.size != undefined)
+      input.setAttribute('size', json.size);
+    if(json.max != undefined)
+      input.setAttribute('max', json.max);
+    if(json.min != undefined)
+      input.setAttribute('min', json.min);
+    if(json.maxlength != undefined)
+      input.setAttribute('maxlength', json.maxlength);
+    if(json.autocomplete != undefined)
+      input.setAttribute('autocomplete', json.autocomplete);
+    if(json.required)
+      input.setAttribute('required', 'required');
+    if(json.readonly)
+      input.setAttribute('readonly', 'readonly');
+    if(json.autofocus)
+      input.setAttribute('autofocus', 'autofocus');
+    if(json.disabled)
+      input.setAttribute('disabled', 'disabled');
+    if(config.show_placeholder &&
+        (json.placeholder != undefined || json.label != undefined)) {
+      input.setAttribute('placeholder',
+        json.placeholder == undefined ? json.label.value : json.placeholder);
+    }
 
-      element.appendChild(input);
+    element.appendChild(input);
   };
+
+  /**
+   * @todo Write JSDoc here
+   * { function_description }
+   *
+   * @method     buildFieldCurrency
+   * @param      {<type>}  json     { description }
+   * @param      {<type>}  element  { description }
+   */
+  function buildFieldCurrency(json, element) {
+      json.type = 'number';
+      json.step = '0.01';
+  }
 
   /**
    * @todo Write JSDoc here
@@ -197,8 +236,18 @@ function Render() {
       textarea.setAttribute('class', json.class);
     if(json.title != undefined)
       textarea.setAttribute('title', json.title);
+    if(json.maxlength != undefined)
+      input.setAttribute('maxlength', json.maxlength);
+    if(json.wrap != undefined)
+      input.setAttribute('wrap', json.wrap);
+    if(json.readonly)
+      input.setAttribute('readonly', 'readonly');
+    if(json.autofocus)
+      input.setAttribute('autofocus', 'autofocus');
     if(json.required)
       textarea.setAttribute('required', 'required');
+    if(json.disabled)
+      input.setAttribute('disabled', 'disabled');
     if(json.default != undefined)
       textarea.appendChild(document.createTextNode(json.default));
     if(config.show_placeholder &&
@@ -249,6 +298,30 @@ function Render() {
       else
         element.appendChild(input);
     }
+  };
+
+  /**
+   * @todo Write JSDoc here
+   * { function_description }
+   *
+   * @method     buildCheckboxOne
+   * @param      {<type>}  json     { description }
+   * @param      {<type>}  element  { description }
+   */
+  function buildCheckboxOne(json, element) {
+
+    var div = document.createElement('div');
+    div.setAttribute('id', 'checkboxone_' + json.name);
+    div.setAttribute('title', json.name);
+
+    if(json.required) {
+      div.setAttribute('required', 'required');
+      json.required = false;
+    }
+
+    json.type = 'checkbox';
+    element.appendChild(div);
+    element = div;
   };
 
   /**
