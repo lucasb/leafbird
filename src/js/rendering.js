@@ -22,11 +22,35 @@
  * @class
  * @return     {<type>}  { description_of_the_return_value }
  */
-function Render() {
+function Rendering() {
 
-  var render = this;
+  var rendering = this;
 
-  render.buildHTMLElement = buildHTMLElement;
+  rendering.buildHTMLElement = buildHTMLElement;
+
+  /**
+   * @typedef RenderingConfig
+   * @type {object}
+   * @property {boolean} replace_element Transclude parent element.
+   * @property {string} required_label String indicate required field.
+   * @property {boolean} show_group_label Display a group label.
+   * @property {boolean} show_placeholder Display a field placeholder.
+   * @property {boolean} multiselect_input Set this field as a multiselect.
+   * @property {boolean} multifile_input Set this field as a multifile input.
+   */
+
+   /**
+    * @type {RenderingConfig}
+    */
+  configs = {
+    replace_element: false,
+    required_label: null,
+    show_group_label: false,
+    show_placeholder: false,
+    show_input_label: false,
+    multiselect_input: false,
+    multifile_input: false
+  };
 
   /**
    * @todo Write JSDoc here

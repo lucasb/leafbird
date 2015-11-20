@@ -32,31 +32,16 @@ function Element() {
   element.getElements = getElements;
 
   /**
-   * @typedef LeafbirdConfig
+   * @typedef ElementConfig
    * @type {object}
    * @property {object} json Form specification.
-   * @property {boolean} replace_element Transclude parent element.
-   * @property {callback} validation_callback Validation callback function.
-   * @property {string} required_label String indicate required field.
-   * @property {boolean} show_group_label Display a group label.
-   * @property {boolean} show_placeholder Display a field placeholder.
-   * @property {boolean} multiselect_input Set this field as a multiselect.
-   * @property {boolean} multifile_input Set this field as a multifile input.
    */
 
    /**
-    * @type {LeafbirdConfig}
+    * @type {ElementConfig}
     */
   configs = {
-    json: null,
-    replace_element: false,
-    validation_callback: undefined,
-    required_label: null,
-    show_group_label: false,
-    show_placeholder: false,
-    show_input_label: false,
-    multiselect_input: false,
-    multifile_input: false
+    json: null
   };
 
   /**
@@ -68,6 +53,7 @@ function Element() {
    * @param      {<type>}  args    { description }
    */
   function configure(args) {
+
     if(args === undefined) {
       return configs;
     }
@@ -91,6 +77,7 @@ function Element() {
    * @return     {Array}   { description_of_the_return_value }
    */
   function find(property, _value, _contains, _json) {
+
     var arrFound = [];
     var obj = (_json == undefined) ? configs.json : _json;
 
@@ -119,16 +106,17 @@ function Element() {
    * @method     configure
    * @param      {<type>}  args    { description }
    */
-  function print(element, _attr, _config) {
-    var saveConfig = {};
+  function print(element, _attr, _configs) {
+
+    var defaultConfigs = {};
     for (var key in configs)
-      saveConfig[key] = configs[key];
+      defaultConfigs[key] = configs[key];
 
     if(!(element instanceof HTMLElement)) {
       throw new SyntaxError('Invalid HTMLElement.', element);
     }
 
-    this.configure(_config);
+    this.configure(_configs);
     var elements = this.getElements(_attr);
 
     if(configs.replace_element)
@@ -138,7 +126,7 @@ function Element() {
       buildHTMLElement(elements[i], element);
     }
 
-    this.configure(saveConfig);
+    this.configure(defaultConfigs);
   };
 
   /**
@@ -150,6 +138,7 @@ function Element() {
    * @param      {<type>}  args    { description }
    */
   function getElements(_attr) {
+
     if(!configs.json)
       throw new Error('JSON is not valid.', configs.json);
 

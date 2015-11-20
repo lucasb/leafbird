@@ -22,11 +22,24 @@
  * @class
  * @return     {boolean}  { description_of_the_return_value }
  */
-function Validate() {
+function Validation() {
 
-  var validate = this;
+  var validation = this;
 
-  validate.validateForm = validateForm;
+  validation.validateForm = validateForm;
+
+  /**
+   * @typedef ValidationConfig
+   * @type {object}
+   * @property {callback} validation_callback Validation callback function.
+   */
+
+   /**
+    * @type {ValidationConfig}
+    */
+  configs = {
+    validation_callback: undefined
+  };
 
   /**
    * @todo Write JSDoc here
