@@ -15,7 +15,7 @@
 
 'use strict';
 
-leafbird.rendering = new Rendering();
+leafbird.element = new Element();
 
 /**
  * @todo Write JSDoc here
@@ -29,21 +29,9 @@ function Element() {
   var element = this;
 
   element.find = find;
-  element.print = print;
   element.getElements = getElements;
 
-  /**
-   * @typedef ElementConfig
-   * @type {object}
-   * @property {object} json Form specification.
-   */
-
-   /**
-    * @type {ElementConfig}
-    */
-  configs = {
-    json: null
-  };
+  var configs;
 
   /**
    * @todo Write JSDoc here
@@ -58,6 +46,7 @@ function Element() {
    */
   function find(property, _value, _contains, _json) {
 
+    configs = leafbird.configure();
     var arrFound = [];
     var obj = (_json == undefined) ? configs.json : _json;
 
@@ -88,8 +77,10 @@ function Element() {
    */
   function getElements(_attr) {
 
-    if(!configs.json)
-      throw new Error('JSON is not valid.', configs.json);
+    configs = leafbird.configure();
+
+    if(!configs || !configs.json)
+      throw new Error('JSON is not valid.');
 
     var reducedJson = [];
     var index = (_attr && _attr.indexOf('*') == 0) ? 1 : 0;

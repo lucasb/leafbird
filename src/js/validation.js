@@ -30,18 +30,7 @@ function Validation() {
 
   validation.validateForm = validateForm;
 
-  /**
-   * @typedef ValidationConfig
-   * @type {object}
-   * @property {callback} validation_callback Validation callback function.
-   */
-
-   /**
-    * @type {ValidationConfig}
-    */
-  configs = {
-    validation_callback: undefined
-  };
+  var configs;
 
   /**
    * @todo Write JSDoc here
@@ -51,6 +40,8 @@ function Validation() {
    * @return     {boolean}  { description_of_the_return_value }
    */
   function validateForm() {
+
+    configs = leafbird.configure();
     var isValid = true;
 
     var invalidFields = [].filter.call(
@@ -60,7 +51,7 @@ function Validation() {
     });
 
     if(invalidFields.length>0) {
-      config.validation_callback(invalidFields, form);
+      configs.validation_callback(invalidFields, form);
       isValid = false;
     }
 

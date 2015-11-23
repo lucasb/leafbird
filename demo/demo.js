@@ -33,13 +33,13 @@ var parseResponse = function(data) {
 
   // print all elements into html form
   var element = document.getElementById("form");
-  leafbird.print(element);
+  leafbird.rendering.print(element);
 
   // print specific element with name text into html form2
   var element2 = document.getElementById("form2");
-  leafbird.print(element2, ":text", {replace_element: true,
-                                     show_placeholder: true,
-                                     show_input_label: false});
+  leafbird.rendering.print(element2, ":text", {replace_element: true,
+                                               show_placeholder: true,
+                                               show_input_label: false});
 
 };
 
@@ -52,8 +52,8 @@ var validateFormCallback = function(invalidFields, form) {
 
   for(var i = 0; i < invalidFields.length; i++) {
     var span = document.createElement('span');
-    name = invalidFields[i].name ? invalidFields[i].name
-                                 : invalidFields[i].title
+    var name = invalidFields[i].name ? invalidFields[i].name
+                                     : invalidFields[i].title;
     span.appendChild(document.createTextNode(name));
     divErrors.appendChild(span);
   }
@@ -68,6 +68,6 @@ for(var i = 0; i < forms.length; i++) {
     if(this.firstChild.className == 'errors')
       this.removeChild(this.firstChild);
     window.scrollTo(0, 0);
-    return leafbird.validateForm(this);
+    return leafbird.validation.validateForm(this);
   }
 }

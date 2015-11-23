@@ -30,29 +30,7 @@ function Rendering() {
 
   rendering.print = print;
 
-  /**
-   * @typedef RenderingConfig
-   * @type {object}
-   * @property {boolean} replace_element Transclude parent element.
-   * @property {string} required_label String indicate required field.
-   * @property {boolean} show_group_label Display a group label.
-   * @property {boolean} show_placeholder Display a field placeholder.
-   * @property {boolean} multiselect_input Set this field as a multiselect.
-   * @property {boolean} multifile_input Set this field as a multifile input.
-   */
-
-   /**
-    * @type {RenderingConfig}
-    */
-  configs = {
-    replace_element: false,
-    required_label: null,
-    show_group_label: false,
-    show_placeholder: false,
-    show_input_label: false,
-    multiselect_input: false,
-    multifile_input: false
-  };
+  var configs;
 
   /**
    * @todo Write JSDoc here
@@ -64,16 +42,14 @@ function Rendering() {
    */
   function print(element, _attr, _configs) {
 
-    var defaultConfigs = {};
-    for (var key in configs)
-      defaultConfigs[key] = configs[key];
-
     if(!(element instanceof HTMLElement)) {
       throw new SyntaxError('Invalid HTMLElement.', element);
     }
 
-    this.configure(_configs);
-    var elements = this.getElements(_attr);
+    var defaultConfigs = leafbird.configure();
+    configs = leafbird.configure(_configs);
+
+    var elements = leafbird.element.getElements(_attr);
 
     if(configs.replace_element)
       element.innerHTML = '';
@@ -82,7 +58,7 @@ function Rendering() {
       buildHTMLElement(elements[i], element);
     }
 
-    this.configure(defaultConfigs);
+    configs = defaultConfigs;
   };
 
   /**
@@ -126,7 +102,7 @@ function Rendering() {
       div.setAttribute('id', json.id);
     if(json.class != undefined)
       div.setAttribute('class', json.class);
-    if(config.show_group_label && json.label != undefined) {
+    if(configs.show_group_label && json.label != undefined) {
       var span = document.createElement('span');
       if(json.label.title != undefined)
         span.setAttribute('title', json.label.title);
@@ -150,12 +126,12 @@ function Rendering() {
     if(json.name == undefined)
       throw new SyntaxError('FieldName is required.', json.name);
 
-    if(config.show_input_label && json.label && json.label.value)
+    if(configs.show_input_label && json.label && json.label.value)
       buildFieldLabel(json, element);
 
     switch(json.type) {
       case 'checkboxone':
-        buildCheckboxOne(json, element);
+        element = buildCheckboxOne(json, element);
       case 'checkbox':
       case 'radio':
         buildFieldCheckboxRadio(json, element);
@@ -199,9 +175,9 @@ function Rendering() {
     if(json.label.title != undefined)
       label.setAttribute('title', json.label.title);
     label.appendChild(document.createTextNode(json.label.value));
-    if(config.required_label && json.required) {
+    if(configs.required_label && json.required) {
       var span = document.createElement('span');
-      span.appendChild(document.createTextNode(config.required_label));
+      span.appendChild(document.createTextNode(configs.required_label));
       label.appendChild(span);
     }
 
@@ -216,7 +192,7 @@ function Rendering() {
    * @param      {<type>}  json     { description }
    * @param      {<type>}  element  { description }
    */
-  function buildFieldText(json, element) {
+  function buildFieldInput(json, element) {
 
     var input = document.createElement('input');
     input.setAttribute('type', json.type);
@@ -253,7 +229,7 @@ function Rendering() {
       input.setAttribute('autofocus', 'autofocus');
     if(json.disabled)
       input.setAttribute('disabled', 'disabled');
-    if(config.show_placeholder &&
+    if(configs.show_placeholder &&
         (json.placeholder != undefined || json.label != undefined)) {
       input.setAttribute('placeholder',
         json.placeholder == undefined ? json.label.value : json.placeholder);
@@ -307,7 +283,7 @@ function Rendering() {
       input.setAttribute('disabled', 'disabled');
     if(json.default != undefined)
       textarea.appendChild(document.createTextNode(json.default));
-    if(config.show_placeholder &&
+    if(configs.show_placeholder &&
         (json.placeholder != undefined || json.label != undefined)) {
       input.setAttribute('placeholder',
         json.placeholder == undefined ? json.label.value : json.placeholder);
@@ -378,7 +354,7 @@ function Rendering() {
 
     json.type = 'checkbox';
     element.appendChild(div);
-    element = div;
+    return div;
   };
 
   /**
@@ -401,7 +377,7 @@ function Rendering() {
       select.setAttribute('title', json.title);
     if(json.required)
       select.setAttribute('required', 'required');
-    if(config.multiselect_input)
+    if(configs.multiselect_input)
       select.setAttribute('multiple', 'multiple');
 
     for(var i in json.values) {
@@ -441,7 +417,7 @@ function Rendering() {
       input.setAttribute('title', json.title);
     if(json.required)
       input.setAttribute('required', 'required');
-    if(config.multifile_input)
+    if(configs.multifile_input)
       input.setAttribute('multiple', 'multiple');
     element.appendChild(input);
   };

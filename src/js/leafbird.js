@@ -18,18 +18,10 @@
 if(!window.leafbird)
   window.leafbird = new Leafbird();
 
-/*
-leafbird.module('leafbird.Leafbird', Leafbird)
-        .dependecies({'element.Element': element,
-                      'rendering.Rendering': rendering,
-                      'validation.Validation': validation});
-*/
 /**
  * { function_description }
  *
  * @todo Write docs to this
- * @todo Verify docs on https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function#Function_instances
- * @todo Make a module enhancement using singleton pattern: http://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript
  * @class
  * @return     {(Array|Function|Object|boolean|number)}  { description_of_the_return_value }
  */
@@ -39,7 +31,34 @@ function Leafbird() {
 
   leafbird.configure = configure;
 
-var configs = {};
+  /**
+   * @typedef LeafbirdConfig
+   * @type {object}
+   * @property {object} json Form specification.
+   * @property {boolean} replace_element Transclude parent element.
+   * @property {callback} validation_callback Validation callback function.
+   * @property {string} required_label String indicate required field.
+   * @property {boolean} show_group_label Display a group label.
+   * @property {boolean} show_placeholder Display a field placeholder.
+   * @property {boolean} multiselect_input Set this field as a multiselect.
+   * @property {boolean} multifile_input Set this field as a multifile input.
+   */
+
+   /**
+    * @type {LeafbirdConfig}
+    */
+  var configs = {
+    json: null,
+    replace_element: false,
+    validation_callback: undefined,
+    required_label: null,
+    show_group_label: false,
+    show_placeholder: false,
+    show_input_label: false,
+    multiselect_input: false,
+    multifile_input: false
+  };
+
   /**
    * @todo Write JSDoc here
    *
@@ -50,15 +69,15 @@ var configs = {};
    */
   function configure(args) {
 
-    if(args === undefined) {
-      return configs;
-    }
-
-    for(var key in args) {
-      if(configs.hasOwnProperty(key) && args[key] !== undefined){
-        configs[key] = args[key];
+    if(args !== undefined) {
+      for(var key in args) {
+        if(configs.hasOwnProperty(key) && args[key] !== undefined) {
+          configs[key] = args[key];
+        }
       }
     }
+
+    return configs;
   };
 }
 

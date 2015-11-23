@@ -27,7 +27,8 @@ var coveralls = require('gulp-coveralls');
 
 // Concatenate & Minify JS
 gulp.task('build', function() {
-    return gulp.src('./src/js/*.js')
+    return gulp.src(['./src/js/leafbird.js','./src/js/element.js',
+                     './src/js/validation.js','./src/js/rendering.js'])
       .pipe(concat('leafbird.js'))
       .pipe(rename({suffix: '.min'}))
       .pipe(uglify())
@@ -57,3 +58,6 @@ gulp.task('coveralls', function() {
   return gulp.src('./coverage/lcov.info')
     .pipe(coveralls());
 });
+
+//gulp.task('default', ['build', 'test', 'coverage', 'coveralls']);
+gulp.task('default', ['build']);
