@@ -39,7 +39,7 @@ function Validation() {
    * @method     validateForm
    * @return     {boolean}  { description_of_the_return_value }
    */
-  function validateForm() {
+  function validateForm(form) {
 
     configs = leafbird.configure();
     var isValid = true;
