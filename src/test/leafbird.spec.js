@@ -21,7 +21,7 @@ describe('leafbird', function() {
   });
 
   it('verify if leafbird global variable has a Leafbird object instance',
-    function() {console.log(typeof leafbird);
+    function() {
       if(!(typeof leafbird !== 'Leafbird')) {
         fail('leafbird global variable is not a Leafbird instance.');
       }
