@@ -13,3 +13,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+
+
+describe('element', function() {
+
+  it('verify if a global object to element was defined', function() {
+    expect(leafbird.element).toBeDefined();
+  });
+
+});

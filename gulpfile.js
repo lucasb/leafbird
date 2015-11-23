@@ -37,7 +37,7 @@ gulp.task('build', function() {
 
 // Unit Testing
 gulp.task('test', function() {
-  return gulp.src(['./src/js/*.js', './src/test/*.spec.js'])
+  return gulp.src(['./dest/leafbird.min.js', './src/test/*.spec.js'])
     .pipe(jasmine.specRunner({console: true}))
     .pipe(jasmine.headless());
 });
@@ -59,5 +59,5 @@ gulp.task('coveralls', function() {
     .pipe(coveralls());
 });
 
-//gulp.task('default', ['build', 'test', 'coverage', 'coveralls']);
-gulp.task('default', ['build']);
+// run all tasks
+gulp.task('default', ['build', 'test', 'coverage']);

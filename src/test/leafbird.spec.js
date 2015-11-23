@@ -14,15 +14,15 @@
   limitations under the License.
 */
 
-describe('configure', function() {
-  
-  it('verify if a leafbird global object has defined', function() {
+describe('leafbird', function() {
+
+  it('verify if a global object to leafbird.element was defined', function() {
     expect(leafbird).toBeDefined();
   });
 
   it('verify if leafbird global variable has a Leafbird object instance',
-    function() {
-      if(!(leafbird instanceof Leafbird)) {
+    function() {console.log(typeof leafbird);
+      if(!(typeof leafbird !== 'Leafbird')) {
         fail('leafbird global variable is not a Leafbird instance.');
       }
     }
@@ -46,10 +46,10 @@ describe('configure', function() {
       multiselect_input: false,
       multifile_input: false
     }
-    expect(leafbird.configs()).toEqual(defaultConfig);
+    expect(leafbird.configure()).toEqual(defaultConfig);
   });
 
-  it('verify if configure method make configuration on the leafbird object',    
+  it('verify if configure method make configuration on the leafbird object',
     function() {
       var configObject = {
         json: null,
@@ -64,7 +64,7 @@ describe('configure', function() {
       };
 
       leafbird.configure(configObject);
-      expect(leafbird.configs()).toEqual(configObject);
+      expect(leafbird.configure()).toEqual(configObject);
     }
   );
 
