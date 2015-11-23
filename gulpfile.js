@@ -27,8 +27,7 @@ var coveralls = require('gulp-coveralls');
 
 // Concatenate & Minify JS
 gulp.task('build', function() {
-    return gulp.src(['./src/js/leafbird.js','./src/js/element.js',
-                     './src/js/validation.js','./src/js/rendering.js'])
+    return gulp.src(['./src/js/leafbird.js', './src/js/*.js'])
       .pipe(concat('leafbird.js'))
       .pipe(rename({suffix: '.min'}))
       .pipe(uglify())
@@ -46,11 +45,13 @@ gulp.task('test', function() {
 gulp.task('coverage', function () {
   return gulp.src(['./src/js/*.js'])
     // Covering files
-    .pipe(istanbul())
-    // Force `require` to return covered files
-    .pipe(istanbul.hookRequire())
+    .pipe(istanbul({includeUntested: true}))
     // Write the covered files to a temporary directory
-    .pipe(gulp.dest('./coverage/'));
+    .pipe(istanbul.writeReports({
+      dir: './coverage',
+      reporters: [ 'lcov' ],
+      reportOpts: { dir: './coverage'}
+    }));
 });
 
 // Coverage report
