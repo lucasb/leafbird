@@ -27,15 +27,23 @@ var coveralls = require('gulp-coveralls');
 
 // Concatenate & Minify JS
 gulp.task('build', function() {
-    return gulp.src('./src/js/*.js')
+    return gulp.src(['./src/js/leafbird.js','./src/js/element.js',
+                     './src/js/validation.js','./src/js/rendering.js'])
       .pipe(concat('leafbird.js'))
       .pipe(rename({suffix: '.min'}))
       .pipe(uglify())
       .pipe(gulp.dest('./dest'));
 });
 
+// Unit Testing
+gulp.task('test', function() {
+  return gulp.src(['./src/js/*.js', './src/test/*.spec.js'])
+    .pipe(jasmine.specRunner({console: true}))
+    .pipe(jasmine.headless());
+});
+
 // Coverage tool
-gulp.task('pre-test', function () {
+gulp.task('coverage', function () {
   return gulp.src(['./src/js/*.js'])
     // Covering files
     .pipe(istanbul())
@@ -45,15 +53,11 @@ gulp.task('pre-test', function () {
     .pipe(gulp.dest('./coverage/'));
 });
 
-// Unit Testing
-gulp.task('test', function() {
-  return gulp.src(['./src/js/*.js', './test/spec/leafbird.spec.js'])
-    .pipe(jasmine.specRunner({console: true}))
-    .pipe(jasmine.headless());
-});
-
 // Coverage report
 gulp.task('coveralls', function() {
   return gulp.src('./coverage/lcov.info')
     .pipe(coveralls());
 });
+
+//gulp.task('default', ['build', 'test', 'coverage', 'coveralls']);
+gulp.task('default', ['build']);

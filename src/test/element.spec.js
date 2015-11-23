@@ -13,11 +13,3 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
-
-describe('configure', function() {
-  it('Confugure changes on original config.', function() {
-    var leafbrd = Leafbird({});
-    leafbrd.configure({});
-    expect(leafbrd.config).toEqual(undefined);
-  });
-});

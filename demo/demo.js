@@ -18,7 +18,7 @@
 var parseResponse = function(data) {
 
   // configure general paramters after lib was intanced
-  lb.configure({
+  leafbird.configure({
     json: data,
     required_label: ' *',
     validation_callback: validateFormCallback,
@@ -28,21 +28,20 @@ var parseResponse = function(data) {
   });
 
   // get a elements object before to set on DOM, to add/change anything
-  console.log(lb.getElements());
-  console.log(lb.find("id", "text"));
+  console.log(leafbird.element.getElements());
+  console.log(leafbird.element.find("id", "text"));
 
-  // print into from html elements
+  // print all elements into html form
   var element = document.getElementById("form");
-  lb.print(element);
+  leafbird.rendering.print(element);
 
+  // print specific element with name text into html form2
   var element2 = document.getElementById("form2");
-  lb.print(element2, ":text", {replace_element: true, show_placeholder: true,
-                                                      show_input_label: false});
+  leafbird.rendering.print(element2, ":text", {replace_element: true,
+                                               show_placeholder: true,
+                                               show_input_label: false});
 
 };
-
-// start lib to use
-var lb = Leafbird();
 
 // define function of callback validation to Leafbird call
 var validateFormCallback = function(invalidFields, form) {
@@ -53,8 +52,8 @@ var validateFormCallback = function(invalidFields, form) {
 
   for(var i = 0; i < invalidFields.length; i++) {
     var span = document.createElement('span');
-    name = invalidFields[i].name ? invalidFields[i].name
-                                 : invalidFields[i].title 
+    var name = invalidFields[i].name ? invalidFields[i].name
+                                     : invalidFields[i].title;
     span.appendChild(document.createTextNode(name));
     divErrors.appendChild(span);
   }
@@ -62,13 +61,13 @@ var validateFormCallback = function(invalidFields, form) {
   form.insertBefore(divErrors, form.firstChild);
 }
 
-// Add function validation from Leafbird to onsubmit forms events
+// Add call to validateForm function from Leafbird on submit forms
 var forms = document.getElementsByTagName('form');
 for(var i = 0; i < forms.length; i++) {
   forms[i].onsubmit = function (event) {
     if(this.firstChild.className == 'errors')
       this.removeChild(this.firstChild);
     window.scrollTo(0, 0);
-    return lb.validateForm(this);
+    return leafbird.validation.validateForm(this);
   }
 }
