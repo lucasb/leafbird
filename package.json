@@ -6,18 +6,18 @@
     "leafbird": "leafbird.min.js"
   },
   "directories": {
-    "test": "test"
+    "test": "src/test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lucasb/leafbird.git"
+    "url": "git+https://github.com/leafbirdjs/leafbird.git"
   },
   "author": "Lucas Boscaini <lucasboscaini@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/lucasb/leafbird/issues"
+    "url": "https://github.com/leafbirdjs/leafbird/issues"
   },
-  "homepage": "https://github.com/lucasb/leafbird#readme",
+  "homepage": "https://github.com/leafbirdjs/leafbird#readme",
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
