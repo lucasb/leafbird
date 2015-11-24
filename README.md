@@ -6,6 +6,53 @@ Leafbird
 
 Leafbird is an UI form builder based on JSON templates using HTML5 features with all modern browsers compatibility.
 
+How to Install
+-----
+- Bower
+
+Simple install bower command and it is already to use.
+```
+bower install leafbird
+```
+
+- No bower
+
+Get `leafbird.min.js` file in 'dest' folder from Github repository and save in your project.
+
+Easy to Start
+-----
+Leafbird is fun, see how to use it is easy:
+
+```html
+<html>
+  <body></body>
+  <script src="./dest/leafbird.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var data = {
+      "name": "text",
+      "type": "text",
+      "default": "Default Value"
+    }
+
+    leafbird.configure({json: data});
+    leafbird.rendering.print(document.body);
+  </script>
+</html>
+```
+For more example see demo folder.
+
+Features
+-----
+Beyond build form form JSON, look what Leafbird also can do:
+
+- Automatically validate forms;
+- Change fields object in runtime;
+- Find for a specific field or group;
+- Get or print a form part;
+- Push model from backend to form in frontend.
+
+To see more, look on documentation.
+
 License
 -----
 The project Leafbird is licensed under the Apache license version 2.0.
