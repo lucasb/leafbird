@@ -21,7 +21,8 @@ Get `leafbird.min.js` file in 'dest' folder from Github repository and save in y
 
 Easy to Start
 -----
-Leafbird is fun, see how use is easy:
+Leafbird is fun, see how to use it is easy:
+
 ```html
 <html>
   <body></body>
@@ -32,14 +33,25 @@ Leafbird is fun, see how use is easy:
       "type": "text",
       "default": "Default Value"
     }
-    
+
     leafbird.configure({json: data});
     leafbird.rendering.print(document.body);
   </script>
 </html>
-
 ```
 For more example see demo folder.
+
+Features
+-----
+Beyond build form form JSON, look what Leafbird also can do:
+
+- Automatically validate forms;
+- Change fields object in runtime;
+- Find for a specific field or group;
+- Get or print a form part;
+- Push model from backend to form in frontend.
+
+To see more, look on documentation.
 
 License
 -----
