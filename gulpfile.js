@@ -24,6 +24,17 @@ var rename = require('gulp-rename');
 var jasmine = require('gulp-jasmine-browser');
 var istanbul = require('gulp-istanbul');
 var coveralls = require('gulp-coveralls');
+var jscs = require('gulp-jscs');
+
+// Code Checkstyle
+gulp.task('checkstyle', function() {
+  return gulp.src(['./src/js/**/*.js', './src/test/**.*.js'])
+  .pipe(jscs())
+  .pipe(jscs.reporter())
+  .pipe(jscs.reporter('fail'));
+});
+
+
 
 // Concatenate & Minify JS
 gulp.task('build', function() {
@@ -61,4 +72,4 @@ gulp.task('coveralls', function() {
 });
 
 // run all tasks
-gulp.task('default', ['build', 'test', 'coverage']);
+gulp.task('default', ['checkstyle', 'build', 'test', 'coverage']);
