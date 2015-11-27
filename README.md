@@ -43,7 +43,7 @@ For more example see demo folder.
 
 Features
 -----
-Beyond build form form JSON, look what Leafbird also can do:
+Beyond build form from JSON, look what Leafbird also can do:
 
 - Automatically validate forms;
 - Change fields object in runtime;
