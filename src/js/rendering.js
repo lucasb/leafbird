@@ -42,7 +42,7 @@ function Rendering() {
    */
   function print(element, _attr, _configs) {
 
-    if(!(element instanceof HTMLElement)) {
+    if (!(element instanceof HTMLElement)) {
       throw new SyntaxError('Invalid HTMLElement.', element);
     }
 
@@ -51,15 +51,15 @@ function Rendering() {
 
     var elements = leafbird.element.getElements(_attr);
 
-    if(configs.replace_element)
+    if (configs.replaceElement)
       element.innerHTML = '';
 
-    for(var i in elements) {
+    for (var i in elements) {
       buildHTMLElement(elements[i], element);
     }
 
     configs = defaultConfigs;
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -71,21 +71,21 @@ function Rendering() {
    */
   function buildHTMLElement(json, element) {
 
-    if(json.hasOwnProperty('type')) {
+    if (json.hasOwnProperty('type'))
       buildFieldElement(json, element);
-    }
     else {
       var groupElement = buildDivGroup(json);
-      for(var i in json) {
-        if(json[i] instanceof Array) {
-          for(var j in json[i]) {
+      for (var i in json) {
+        if (json[i] instanceof Array) {
+          for (var j in json[i]) {
             buildHTMLElement(json[i][j], groupElement);
           }
         }
       }
+
       element.appendChild(groupElement);
     }
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -98,20 +98,20 @@ function Rendering() {
   function buildDivGroup(json) {
 
     var div = document.createElement('div');
-    if(json.id != undefined)
+    if (json.id !== undefined)
       div.setAttribute('id', json.id);
-    if(json.class != undefined)
+    if (json.class !== undefined)
       div.setAttribute('class', json.class);
-    if(configs.show_group_label && json.label != undefined) {
+    if (configs.showGroupLabel && json.label !== undefined) {
       var span = document.createElement('span');
-      if(json.label.title != undefined)
+      if (json.label.title !== undefined)
         span.setAttribute('title', json.label.title);
       span.appendChild(document.createTextNode(json.label.value));
       div.appendChild(span);
     }
 
     return div;
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -121,15 +121,15 @@ function Rendering() {
    * @param      {<type>}  json     { description }
    * @param      {<type>}  element  { description }
    */
-  function buildFieldElement (json, element) {
+  function buildFieldElement(json, element) {
 
-    if(json.name == undefined)
+    if (json.name === undefined)
       throw new SyntaxError('FieldName is required.', json.name);
 
-    if(configs.show_input_label && json.label && json.label.value)
+    if (configs.showInputLabel && json.label && json.label.value)
       buildFieldLabel(json, element);
 
-    switch(json.type) {
+    switch (json.type) {
       case 'checkboxone':
         element = buildCheckboxOne(json, element);
       case 'checkbox':
@@ -154,7 +154,7 @@ function Rendering() {
       default:
         buildFieldInput(json, element);
     }
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -168,21 +168,21 @@ function Rendering() {
 
     var label = document.createElement('label');
 
-    if(json.id != undefined)
+    if (json.id !== undefined)
       label.setAttribute('for', json.id);
-    if(json.label.class != undefined)
+    if (json.label.class !== undefined)
       label.setAttribute('class', json.label.class);
-    if(json.label.title != undefined)
+    if (json.label.title !== undefined)
       label.setAttribute('title', json.label.title);
     label.appendChild(document.createTextNode(json.label.value));
-    if(configs.required_label && json.required) {
+    if (configs.requiredLabel && json.required) {
       var span = document.createElement('span');
-      span.appendChild(document.createTextNode(configs.required_label));
+      span.appendChild(document.createTextNode(configs.requiredLabel));
       label.appendChild(span);
     }
 
     element.appendChild(label);
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -197,46 +197,46 @@ function Rendering() {
     var input = document.createElement('input');
     input.setAttribute('type', json.type);
     input.setAttribute('name', json.name);
-    if(json.id != undefined)
+    if (json.id !== undefined)
       input.setAttribute('id', json.id);
-    if(json.class != undefined)
+    if (json.class !== undefined)
       input.setAttribute('class', json.class);
-    if(json.default != undefined)
+    if (json.default !== undefined)
       input.setAttribute('value', json.default);
-    if(json.title != undefined)
+    if (json.title !== undefined)
       input.setAttribute('title', json.title);
-    if(json.list != undefined)
+    if (json.list !== undefined)
       input.setAttribute('list', json.list);
-    if(json.pattern != undefined)
+    if (json.pattern !== undefined)
       input.setAttribute('pattern', json.pattern);
-    if(json.step != undefined)
+    if (json.step !== undefined)
       input.setAttribute('step', json.step);
-    if(json.size != undefined)
+    if (json.size !== undefined)
       input.setAttribute('size', json.size);
-    if(json.max != undefined)
+    if (json.max !== undefined)
       input.setAttribute('max', json.max);
-    if(json.min != undefined)
+    if (json.min !== undefined)
       input.setAttribute('min', json.min);
-    if(json.maxlength != undefined)
+    if (json.maxlength !== undefined)
       input.setAttribute('maxlength', json.maxlength);
-    if(json.autocomplete != undefined)
+    if (json.autocomplete !== undefined)
       input.setAttribute('autocomplete', json.autocomplete);
-    if(json.required)
+    if (json.required)
       input.setAttribute('required', 'required');
-    if(json.readonly)
+    if (json.readonly)
       input.setAttribute('readonly', 'readonly');
-    if(json.autofocus)
+    if (json.autofocus)
       input.setAttribute('autofocus', 'autofocus');
-    if(json.disabled)
+    if (json.disabled)
       input.setAttribute('disabled', 'disabled');
-    if(configs.show_placeholder &&
-        (json.placeholder != undefined || json.label != undefined)) {
+    if (configs.showPlaceholder &&
+        (json.placeholder !== undefined || json.label !== undefined)) {
       input.setAttribute('placeholder',
-        json.placeholder == undefined ? json.label.value : json.placeholder);
+        json.placeholder === undefined ? json.label.value : json.placeholder);
     }
 
     element.appendChild(input);
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -247,8 +247,8 @@ function Rendering() {
    * @param      {<type>}  element  { description }
    */
   function buildFieldCurrency(json, element) {
-      json.type = 'number';
-      json.step = '0.01';
+    json.type = 'number';
+    json.step = '0.01';
   }
 
   /**
@@ -263,34 +263,34 @@ function Rendering() {
 
     var textarea = document.createElement('textarea');
     textarea.setAttribute('name', json.name);
-    if(json.id != undefined)
+    if (json.id !== undefined)
       textarea.setAttribute('id', json.id);
-    if(json.class != undefined)
+    if (json.class !== undefined)
       textarea.setAttribute('class', json.class);
-    if(json.title != undefined)
+    if (json.title !== undefined)
       textarea.setAttribute('title', json.title);
-    if(json.maxlength != undefined)
+    if (json.maxlength !== undefined)
       input.setAttribute('maxlength', json.maxlength);
-    if(json.wrap != undefined)
+    if (json.wrap !== undefined)
       input.setAttribute('wrap', json.wrap);
-    if(json.readonly)
+    if (json.readonly)
       input.setAttribute('readonly', 'readonly');
-    if(json.autofocus)
+    if (json.autofocus)
       input.setAttribute('autofocus', 'autofocus');
-    if(json.required)
+    if (json.required)
       textarea.setAttribute('required', 'required');
-    if(json.disabled)
+    if (json.disabled)
       input.setAttribute('disabled', 'disabled');
-    if(json.default != undefined)
+    if (json.default !== undefined)
       textarea.appendChild(document.createTextNode(json.default));
-    if(configs.show_placeholder &&
-        (json.placeholder != undefined || json.label != undefined)) {
+    if (configs.showPlaceholder &&
+        (json.placeholder !== undefined || json.label !== undefined)) {
       input.setAttribute('placeholder',
-        json.placeholder == undefined ? json.label.value : json.placeholder);
+        json.placeholder === undefined ? json.label.value : json.placeholder);
     }
 
     element.appendChild(textarea);
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -302,36 +302,35 @@ function Rendering() {
    */
   function buildFieldCheckboxRadio(json, element) {
 
-    for(var i in json.values) {
+    for (var i in json.values) {
       var input = document.createElement('input');
       input.setAttribute('type', json.type);
       input.setAttribute('name', json.name);
       input.setAttribute('value', json.values[i].value);
-      if(json.id != undefined)
+      if (json.id !== undefined)
         input.setAttribute('id', json.id + '_' + i);
-      if(json.class != undefined)
+      if (json.class !== undefined)
         input.setAttribute('class', json.class);
-      if(json.default == json.values[i].value)
+      if (json.default == json.values[i].value)
         input.setAttribute('checked', 'checked');
-      if(json.required)
+      if (json.required)
         input.setAttribute('required', 'required');
 
-      if(json.values[i].label != undefined) {
+      if (json.values[i].label !== undefined) {
         var label = document.createElement('label');
-        if(json.id != undefined)
+        if (json.id !== undefined)
           label.setAttribute('for', json.id + '_' + i);
-        if(json.values[i].label.class != undefined)
+        if (json.values[i].label.class !== undefined)
           label.setAttribute('class', json.values[i].label.class);
-        if(json.values[i].label.title != undefined)
+        if (json.values[i].label.title !== undefined)
           label.setAttribute('title', json.values[i].label.title);
         label.appendChild(input);
         label.appendChild(document.createTextNode(json.values[i].label.value));
         element.appendChild(label);
-      }
-      else
+      } else
         element.appendChild(input);
     }
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -347,7 +346,7 @@ function Rendering() {
     div.setAttribute('id', 'checkboxone_' + json.name);
     div.setAttribute('title', json.name);
 
-    if(json.required) {
+    if (json.required) {
       div.setAttribute('required', 'required');
       json.required = false;
     }
@@ -355,7 +354,7 @@ function Rendering() {
     json.type = 'checkbox';
     element.appendChild(div);
     return div;
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -369,30 +368,30 @@ function Rendering() {
 
     var select = document.createElement('select');
     select.setAttribute('name', json.name);
-    if(json.id != undefined)
+    if (json.id !== undefined)
       select.setAttribute('id', json.id);
-    if(json.class != undefined)
+    if (json.class !== undefined)
       select.setAttribute('class', json.class);
-    if(json.title != undefined)
+    if (json.title !== undefined)
       select.setAttribute('title', json.title);
-    if(json.required)
+    if (json.required)
       select.setAttribute('required', 'required');
-    if(configs.multiselect_input)
+    if (configs.multiselectInput)
       select.setAttribute('multiple', 'multiple');
 
-    for(var i in json.values) {
+    for (var i in json.values) {
       var option = document.createElement('option');
       option.appendChild(document.createTextNode(json.values[i].label.value));
       option.setAttribute('value', json.values[i].value);
-      if(json.values[i].label.class != undefined)
+      if (json.values[i].label.class !== undefined)
         option.setAttribute('class', json.values[i].label.class);
-      if(json.default == json.values[i].value)
+      if (json.default == json.values[i].value)
         option.setAttribute('selected', 'selected');
       select.appendChild(option);
     }
 
     element.appendChild(select);
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -407,19 +406,19 @@ function Rendering() {
     var input = document.createElement('input');
     input.setAttribute('type', 'file');
     input.setAttribute('name', json.name);
-    if(json.id != undefined)
+    if (json.id !== undefined)
       input.setAttribute('id', json.id);
-    if(json.class != undefined)
+    if (json.class !== undefined)
       input.setAttribute('class', json.class);
-    if(json.accept != undefined)
+    if (json.accept !== undefined)
       input.setAttribute('accept', json.accept);
-    if(json.title != undefined)
+    if (json.title !== undefined)
       input.setAttribute('title', json.title);
-    if(json.required)
+    if (json.required)
       input.setAttribute('required', 'required');
-    if(configs.multifile_input)
+    if (configs.multifileInput)
       input.setAttribute('multiple', 'multiple');
     element.appendChild(input);
-  };
+  }
 }
 })();

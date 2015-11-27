@@ -22,14 +22,14 @@ describe('leafbird', function() {
 
   it('verify if leafbird global variable has a Leafbird object instance',
     function() {
-      if(!(typeof leafbird !== 'Leafbird')) {
+      if (typeof leafbird !== 'Leafbird') {
         fail('leafbird global variable is not a Leafbird instance.');
       }
     }
   );
 
   it('verify if Leafbird has a configure method', function() {
-    if(typeof leafbird.configure !== 'function') {
+    if (typeof leafbird.configure !== 'function') {
       fail('The Leafbird object has not a configure method');
     }
   });
@@ -37,15 +37,16 @@ describe('leafbird', function() {
   it('verify if configs() returns the configuration of Leafbird', function() {
     var defaultConfig = {
       json: null,
-      replace_element: false,
-      validation_callback: undefined,
-      required_label: null,
-      show_group_label: false,
-      show_placeholder: false,
-      show_input_label: false,
-      multiselect_input: false,
-      multifile_input: false
-    }
+      validationCallback: undefined,
+      replaceElement: false,
+      requiredLabel: null,
+      showGroupLabel: false,
+      showPlaceholder: false,
+      showInputLabel: false,
+      multiselectInput: false,
+      multifileInput: false
+    };
+
     expect(leafbird.configure()).toEqual(defaultConfig);
   });
 
@@ -53,14 +54,14 @@ describe('leafbird', function() {
     function() {
       var configObject = {
         json: null,
-        replace_element: true,
-        validation_callback: undefined,
-        required_label: true,
-        show_group_label: false,
-        show_placeholder: false,
-        show_input_label: false,
-        multiselect_input: false,
-        multifile_input: false
+        validationCallback: undefined,
+        replaceElement: true,
+        requiredLabel: null,
+        showGroupLabel: false,
+        showPlaceholder: false,
+        showInputLabel: false,
+        multiselectInput: false,
+        multifileInput: false
       };
 
       leafbird.configure(configObject);

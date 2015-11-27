@@ -14,9 +14,8 @@
   limitations under the License.
 */
 
-
 describe('rendering', function() {
-  
+
   it('verify if a global object to rendering was defined', function() {
     expect(leafbird.rendering).toBeDefined();
   });

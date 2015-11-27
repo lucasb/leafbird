@@ -15,7 +15,7 @@
 
 'use strict';
 
-if(!window.leafbird)
+if (!window.leafbird)
   window.leafbird = new Leafbird();
 
 /**
@@ -44,19 +44,19 @@ function Leafbird() {
    * @property {boolean} multifile_input Set this field as a multifile input.
    */
 
-   /**
-    * @type {LeafbirdConfig}
-    */
+  /**
+   * @type {LeafbirdConfig}
+   */
   var configs = {
     json: null,
-    replace_element: false,
-    validation_callback: undefined,
-    required_label: null,
-    show_group_label: false,
-    show_placeholder: false,
-    show_input_label: false,
-    multiselect_input: false,
-    multifile_input: false
+    validationCallback: undefined,
+    replaceElement: false,
+    requiredLabel: null,
+    showGroupLabel: false,
+    showPlaceHolder: false,
+    showInputLabel: false,
+    multiselectInput: false,
+    multifileInput: false
   };
 
   /**
@@ -69,16 +69,16 @@ function Leafbird() {
    */
   function configure(args) {
 
-    if(args !== undefined) {
-      for(var key in args) {
-        if(configs.hasOwnProperty(key) && args[key] !== undefined) {
+    if (args !== undefined) {
+      for (var key in args) {
+        if (configs.hasOwnProperty(key) && args[key] !== undefined) {
           configs[key] = args[key];
         }
       }
     }
 
     return configs;
-  };
+  }
 }
 
 })();

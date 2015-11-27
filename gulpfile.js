@@ -28,21 +28,19 @@ var jscs = require('gulp-jscs');
 
 // Code Checkstyle
 gulp.task('checkstyle', function() {
-  return gulp.src(['./src/js/**/*.js', './src/test/**.*.js'])
+  return gulp.src('./src/**/*.js')
   .pipe(jscs())
   .pipe(jscs.reporter())
   .pipe(jscs.reporter('fail'));
 });
 
-
-
 // Concatenate & Minify JS
 gulp.task('build', function() {
-    return gulp.src(['./src/js/leafbird.js', './src/js/*.js'])
-      .pipe(concat('leafbird.js'))
-      .pipe(rename({suffix: '.min'}))
-      .pipe(uglify())
-      .pipe(gulp.dest('./dest'));
+  return gulp.src(['./src/js/leafbird.js', './src/js/*.js'])
+    .pipe(concat('leafbird.js'))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(uglify())
+    .pipe(gulp.dest('./dest'));
 });
 
 // Unit Testing
@@ -53,15 +51,13 @@ gulp.task('test', function() {
 });
 
 // Coverage tool
-gulp.task('coverage', function () {
+gulp.task('coverage', function() {
   return gulp.src(['./src/js/*.js'])
-    // Covering files
     .pipe(istanbul({includeUntested: true}))
-    // Write the covered files to a temporary directory
     .pipe(istanbul.writeReports({
       dir: './coverage',
-      reporters: [ 'lcov' ],
-      reportOpts: { dir: './coverage'}
+      reporters: ['lcov'],
+      reportOpts: {dir: './coverage'}
     }));
 });
 
