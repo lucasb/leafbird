@@ -53,7 +53,7 @@ function Leafbird() {
     replaceElement: false,
     requiredLabel: null,
     showGroupLabel: false,
-    showPlaceHolder: false,
+    showPlaceholder: false,
     showInputLabel: false,
     multiselectInput: false,
     multifileInput: false

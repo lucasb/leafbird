@@ -16,14 +16,14 @@
 
 describe('leafbird', function() {
 
-  it('verify if a global object to leafbird.element was defined', function() {
+  it('verify if a global object to leafbird was defined', function() {
     expect(leafbird).toBeDefined();
   });
 
-  it('verify if leafbird global variable has a Leafbird object instance',
+  it('verify if leafbird global variable is a object instance',
     function() {
-      if (typeof leafbird !== 'Leafbird') {
-        fail('leafbird global variable is not a Leafbird instance.');
+      if (typeof leafbird !== 'object') {
+        fail('leafbird global variable is not a object instance.');
       }
     }
   );
