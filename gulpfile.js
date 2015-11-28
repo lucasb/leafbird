@@ -24,7 +24,16 @@ var rename = require('gulp-rename');
 var jasmine = require('gulp-jasmine-browser');
 var istanbul = require('gulp-istanbul');
 var coveralls = require('gulp-coveralls');
+var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
+
+// Code lint
+gulp.task('lint', function() {
+  return gulp.src('./src/**/*.js')
+  .pipe(jshint())
+  .pipe(jshint.reporter())
+  .pipe(jshint.reporter('fail'));
+});
 
 // Code Checkstyle
 gulp.task('checkstyle', function() {
@@ -68,4 +77,4 @@ gulp.task('coveralls', function() {
 });
 
 // run all tasks
-gulp.task('default', ['checkstyle', 'build', 'test', 'coverage']);
+gulp.task('default', ['lint', 'checkstyle', 'build', 'test', 'coverage']);
