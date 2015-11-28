@@ -45,18 +45,19 @@ function Validation() {
     var isValid = true;
 
     var invalidFields = [].filter.call(
-      form.getElementsByTagName('*'), function(element) {
-        return (['INPUT', 'TEXTAREA', 'SELECT'].indexOf(element.nodeName) > -1
-                && !element.checkValidity()) || !validateCheckboxOne(element);
-    });
+      form.getElementsByTagName('*'), function(elmt) {
+        return (['INPUT', 'TEXTAREA', 'SELECT'].indexOf(elmt.nodeName) > -1 &&
+                !elmt.checkValidity()) || !validateCheckboxOne(elmt);
+      }
+    );
 
-    if(invalidFields.length>0) {
-      configs.validation_callback(invalidFields, form);
+    if (invalidFields.length > 0) {
+      configs.validationCallback(invalidFields, form);
       isValid = false;
     }
 
     return isValid;
-  };
+  }
 
   /**
    * @todo Write JSDoc here
@@ -67,8 +68,8 @@ function Validation() {
    */
   function validateCheckboxOne(element) {
 
-    if(element.id && element.id.indexOf('checkboxone_') > -1
-                  && element.getAttribute('required')) {
+    if (element.id && element.id.indexOf('checkboxone_') > -1 &&
+                                element.getAttribute('required')) {
 
       var checkBoxes = document.getElementsByName(
                                 element.id.substring('checkboxone_'.length));
@@ -81,7 +82,7 @@ function Validation() {
     }
 
     return true;
-  };
+  }
 }
 
 })();

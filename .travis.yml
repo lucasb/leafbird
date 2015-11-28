@@ -10,7 +10,7 @@ before_script:
   - npm install -g bower
 
 script:
-  - gulp build test
+  - gulp lint checkstyle build test
 
 after_success:
   - gulp coverage
