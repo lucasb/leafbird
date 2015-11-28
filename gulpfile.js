@@ -24,14 +24,32 @@ var rename = require('gulp-rename');
 var jasmine = require('gulp-jasmine-browser');
 var istanbul = require('gulp-istanbul');
 var coveralls = require('gulp-coveralls');
+var jshint = require('gulp-jshint');
+var jscs = require('gulp-jscs');
+
+// Code lint
+gulp.task('lint', function() {
+  return gulp.src('./src/**/*.js')
+  .pipe(jshint())
+  .pipe(jshint.reporter())
+  .pipe(jshint.reporter('fail'));
+});
+
+// Code Checkstyle
+gulp.task('checkstyle', function() {
+  return gulp.src('./src/**/*.js')
+  .pipe(jscs())
+  .pipe(jscs.reporter())
+  .pipe(jscs.reporter('fail'));
+});
 
 // Concatenate & Minify JS
 gulp.task('build', function() {
-    return gulp.src(['./src/js/leafbird.js', './src/js/*.js'])
-      .pipe(concat('leafbird.js'))
-      .pipe(rename({suffix: '.min'}))
-      .pipe(uglify())
-      .pipe(gulp.dest('./dest'));
+  return gulp.src(['./src/js/leafbird.js', './src/js/*.js'])
+    .pipe(concat('leafbird.js'))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(uglify())
+    .pipe(gulp.dest('./dest'));
 });
 
 // Unit Testing
@@ -42,15 +60,13 @@ gulp.task('test', function() {
 });
 
 // Coverage tool
-gulp.task('coverage', function () {
+gulp.task('coverage', function() {
   return gulp.src(['./src/js/*.js'])
-    // Covering files
     .pipe(istanbul({includeUntested: true}))
-    // Write the covered files to a temporary directory
     .pipe(istanbul.writeReports({
       dir: './coverage',
-      reporters: [ 'lcov' ],
-      reportOpts: { dir: './coverage'}
+      reporters: ['lcov'],
+      reportOpts: {dir: './coverage'}
     }));
 });
 
@@ -61,4 +77,4 @@ gulp.task('coveralls', function() {
 });
 
 // run all tasks
-gulp.task('default', ['build', 'test', 'coverage']);
+gulp.task('default', ['lint', 'checkstyle', 'build', 'test', 'coverage']);

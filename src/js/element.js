@@ -48,61 +48,56 @@ function Element() {
 
     configs = leafbird.configure();
     var arrFound = [];
-    var obj = (_json == undefined) ? configs.json : _json;
+    var obj = (_json === undefined) ? configs.json : _json;
 
-    for(var key in obj) {
-      if(key == property && (_value == undefined
-          || (_contains && obj[property].indexOf(_value) > -1)
-          || (!_contains && obj[property] == _value))) {
+    for (var key in obj) {
+      if (key == property && (_value === undefined ||
+          (_contains && obj[property].indexOf(_value) > -1) ||
+          (!_contains && obj[property] == _value))) {
         arrFound.push(obj);
       }
 
-      if(obj[key] instanceof Object) {
-        var found = this.find(property, _value, _contains, obj[key]);
-        if(found.length > 0)
+      if (obj[key] instanceof Object) {
+        var found = find(property, _value, _contains, obj[key]);
+        if (found.length > 0)
           arrFound = arrFound.concat(found);
       }
     }
 
     return arrFound;
-  };
+  }
 
   /**
    * @todo Write JSDoc here
    *
    * { function_description }
    *
-   * @method     configure
+   * @method     getElements
    * @param      {<type>}  args    { description }
    */
   function getElements(_attr) {
 
     configs = leafbird.configure();
 
-    if(!configs || !configs.json)
+    if (!configs || !configs.json)
       throw new Error('JSON is not valid.');
 
     var reducedJson = [];
-    var index = (_attr && _attr.indexOf('*') == 0) ? 1 : 0;
+    var index = (_attr && _attr.indexOf('*') === 0) ? 1 : 0;
 
-    if(_attr == undefined) {
+    if (_attr === undefined)
       reducedJson.push(configs.json);
-    }
-    else if(_attr.indexOf('#') == index) {
-      reducedJson = this.find('id', _attr.substring(index + 1), index);
-    }
-    else if(_attr.indexOf('.') == index) {
-      reducedJson = this.find('class', _attr.substring(index + 1), index);
-    }
-    else if(_attr.indexOf(':') == index) {
-      reducedJson = this.find('name', _attr.substring(index + 1), index);
-    }
-    else {
-      throw new SyntaxError('JSONAttribute '+ _attr + ' is not valid.', _attr);
-    }
+    else if (_attr.indexOf('#') == index)
+      reducedJson = find('id', _attr.substring(index + 1), index);
+    else if (_attr.indexOf('.') == index)
+      reducedJson = find('class', _attr.substring(index + 1), index);
+    else if (_attr.indexOf(':') == index)
+      reducedJson = find('name', _attr.substring(index + 1), index);
+    else
+      throw new SyntaxError('JSONAttribute ' + _attr + ' is not valid.');
 
     return reducedJson;
-  };
+  }
 }
 
 })();

@@ -14,7 +14,6 @@
   limitations under the License.
 */
 
-
 describe('validation', function() {
 
   it('verify if a global object to validation was defined', function() {

@@ -14,7 +14,6 @@
   limitations under the License.
 */
 
-
 describe('element', function() {
 
   it('verify if a global object to element was defined', function() {
