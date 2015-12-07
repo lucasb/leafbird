@@ -1,5 +1,4 @@
 {
     "preset": "google",
-    "requireCurlyBraces": null,
-    "jsDoc": null
+    "requireCurlyBraces": null
 }

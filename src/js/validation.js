@@ -22,7 +22,6 @@ leafbird.validation = new Validation();
  * { function_description }
  *
  * @class
- * @return     {boolean}  { description_of_the_return_value }
  */
 function Validation() {
 
@@ -36,10 +35,15 @@ function Validation() {
    * @todo Write JSDoc here
    * { function_description }
    *
-   * @method     validateForm
-   * @return     {boolean}  { description_of_the_return_value }
+   * @param   {HTMLElement}   form  HTML element that contains inputs to validate.
+   *
+   * @return  {boolean}       Validation status, true if all values is valid.
    */
   function validateForm(form) {
+
+    if (!(form instanceof HTMLElement)) {
+      throw new SyntaxError('Invalid HTMLElement.', form);
+    }
 
     configs = leafbird.configure();
     var isValid = true;
@@ -63,8 +67,9 @@ function Validation() {
    * @todo Write JSDoc here
    * { function_description }
    *
-   * @method     validateCheckboxOne
-   * @return     {boolean}  { description_of_the_return_value }
+   * @param   {HTMLElement}   element  HTML element with group checkbox to verify.
+   *
+   * @return  {boolean}       True if at least one checkbox is checked or it is not required.
    */
   function validateCheckboxOne(element) {
 

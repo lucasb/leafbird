@@ -19,11 +19,10 @@ if (!window.leafbird)
   window.leafbird = new Leafbird();
 
 /**
+ * @todo Write docs to this
  * { function_description }
  *
- * @todo Write docs to this
  * @class
- * @return     {(Array|Function|Object|boolean|number)}  { description_of_the_return_value }
  */
 function Leafbird() {
 
@@ -33,15 +32,15 @@ function Leafbird() {
 
   /**
    * @typedef LeafbirdConfig
-   * @type {object}
-   * @property {object} json Form specification.
-   * @property {boolean} replace_element Transclude parent element.
-   * @property {callback} validation_callback Validation callback function.
-   * @property {string} required_label String indicate required field.
-   * @property {boolean} show_group_label Display a group label.
-   * @property {boolean} show_placeholder Display a field placeholder.
-   * @property {boolean} multiselect_input Set this field as a multiselect.
-   * @property {boolean} multifile_input Set this field as a multifile input.
+   * @type      {object}
+   * @property  {object}   json                 Form specification.
+   * @property  {boolean}  replace_element      Transclude parent element.
+   * @property  {function} validation_callback  Validation callback function.
+   * @property  {string}   required_label       String indicate required field.
+   * @property  {boolean}  show_group_label     Display a group label.
+   * @property  {boolean}  show_placeholder     Display a field placeholder.
+   * @property  {boolean}  multiselect_input    Set this field as a multiselect.
+   * @property  {boolean}  multifile_input      Set this field as a multifile input.
    */
 
   /**
@@ -61,18 +60,18 @@ function Leafbird() {
 
   /**
    * @todo Write JSDoc here
-   *
    * { function_description }
    *
-   * @method     configure
-   * @param      {<type>}  args    { description }
+   * @param   {LeafbirdConfig}  _args  Configs to change default values.
+   *
+   * @return  {object}  Current configs that are set.
    */
-  function configure(args) {
+  function configure(_args) {
 
-    if (args !== undefined) {
-      for (var key in args) {
-        if (configs.hasOwnProperty(key) && args[key] !== undefined) {
-          configs[key] = args[key];
+    if (_args !== undefined) {
+      for (var key in _args) {
+        if (configs.hasOwnProperty(key) && _args[key] !== undefined) {
+          configs[key] = _args[key];
         }
       }
     }
