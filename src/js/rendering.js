@@ -37,7 +37,7 @@ function Rendering() {
    *
    * @param   {HTMLElement}      element   Root element to insert form.
    * @param   {string}           _attr     Attribute to get specific element(s) from json to print.
-   * @param   {LeafbirdConfig}   _configs  Configuration to change default to print.
+   * @param   {LeafbirdConfig}   _configs  Configuration to change previous values for new and just to this print action.
    */
   function print(element, _attr, _configs) {
 
