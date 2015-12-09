@@ -22,7 +22,6 @@ leafbird.rendering = new Rendering();
  * { function_description }
  *
  * @class
- * @return     {<type>}  { description_of_the_return_value }
  */
 function Rendering() {
 
@@ -34,11 +33,11 @@ function Rendering() {
 
   /**
    * @todo Write JSDoc here
-   *
    * { function_description }
    *
-   * @method     configure
-   * @param      {<type>}  args    { description }
+   * @param   {HTMLElement}      element   Root element to insert form.
+   * @param   {string}           _attr     Attribute to get specific element(s) from json to print.
+   * @param   {LeafbirdConfig}   _configs  Configuration to change default to print.
    */
   function print(element, _attr, _configs) {
 
@@ -65,9 +64,8 @@ function Rendering() {
    * @todo Write JSDoc here
    * { function_description }
    *
-   * @method     buildHTMLElement
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildHTMLElement(json, element) {
 
@@ -91,9 +89,8 @@ function Rendering() {
    * @todo Write JSDoc here
    * { function_description }
    *
-   * @method     buildDivGroup
-   * @param      {<type>}  json    { description }
-   * @return     {<type>}  { description_of_the_return_value }
+   * @param   {object}        json     Object wih form specification.
+   * @return  {HTMLElement}   Element div created following group specified in json object.
    */
   function buildDivGroup(json) {
 
@@ -117,9 +114,8 @@ function Rendering() {
    * @todo Write JSDoc here
    * { function_description }
    *
-   * @method     buildFieldElement
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldElement(json, element) {
 
@@ -160,9 +156,8 @@ function Rendering() {
    * @todo Write JSDoc here
    * { function_description }
    *
-   * @method     buildFieldLabel
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldLabel(json, element) {
 
@@ -188,9 +183,8 @@ function Rendering() {
    * @todo Write JSDoc here
    * { function_description }
    *
-   * @method     buildFieldText
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldInput(json, element) {
 
@@ -242,9 +236,8 @@ function Rendering() {
    * @todo Write JSDoc here
    * { function_description }
    *
-   * @method     buildFieldCurrency
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldCurrency(json, element) {
     json.type = 'number';
@@ -255,9 +248,8 @@ function Rendering() {
    * @todo Write JSDoc here
    * { function_description }
    *
-   * @method     buildFieldTextarea
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldTextarea(json, element) {
 
@@ -296,9 +288,8 @@ function Rendering() {
    * @todo Write JSDoc here
    * { function_description }
    *
-   * @method     buildFieldCheckboxRadio
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldCheckboxRadio(json, element) {
 
@@ -336,9 +327,8 @@ function Rendering() {
    * @todo Write JSDoc here
    * { function_description }
    *
-   * @method     buildCheckboxOne
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildCheckboxOne(json, element) {
 
@@ -360,9 +350,8 @@ function Rendering() {
    * @todo Write JSDoc here
    * { function_description }
    *
-   * @method     buildFieldSelect
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldSelect(json, element) {
 
@@ -397,9 +386,8 @@ function Rendering() {
    * @todo Write JSDoc here
    * { function_description }
    *
-   * @method     buildFieldFile
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldFile(json, element) {
 
