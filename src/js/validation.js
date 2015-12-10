@@ -18,8 +18,9 @@
 leafbird.validation = new Validation();
 
 /**
- * @todo Write JSDoc here
- * { function_description }
+ * Validation provides form checks based on json specification.
+ * Validate special fields and compatibility with all HTML5
+ * resources for all modern browsers is another requirement.
  *
  * @class
  */

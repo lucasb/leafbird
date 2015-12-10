@@ -19,8 +19,10 @@ if (!window.leafbird)
   window.leafbird = new Leafbird();
 
 /**
- * @todo Write docs to this
- * { function_description }
+ * It is main class for Leafbird and provide access to all resources,
+ * such as: element, rendering and validation. Configurations is used
+ * to define or/and change default values for design and behavior,
+ * and that configuration can be use to the all methods cross the project.
  *
  * @class
  */

@@ -18,8 +18,10 @@
 leafbird.rendering = new Rendering();
 
 /**
- * @todo Write JSDoc here
- * { function_description }
+ * Rendering has the unique responsibility to render all elements
+ * (fields, labels and others) in DOM. It provide all input form
+ * types and use json specification to define them and their
+ * attributes to determine style and behavior.
  *
  * @class
  */
