@@ -34,8 +34,8 @@ function Rendering() {
   var configs;
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Print whole form, a specific group or one element.
+   * It is printing elements recusive, all itens from element base will be print.
    *
    * @param   {HTMLElement}      element   Root element to insert form.
    * @param   {string}           _attr     Attribute to get specific element(s) from json to print.
@@ -63,8 +63,10 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build html elements and organize groups and fields.
+   * Groups is recusive, however is possible have gruops inner groups,
+   * fields inner groups and mixing groups and fields inner a group.
+   * Warning: Fields should not have groups or/and others fields.
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
@@ -92,6 +94,7 @@ function Rendering() {
    * { function_description }
    *
    * @param   {object}        json     Object wih form specification.
+   *
    * @return  {HTMLElement}   Element div created following group specified in json object.
    */
   function buildDivGroup(json) {
