@@ -90,8 +90,11 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build HTML div from a group. 
+   * Attributes:
+   * -> id: identifier; unique;
+   * -> class: style classes; to multiples use space as separetor;
+   * -> title: group name; it create a span inside of group with title;
    *
    * @param   {object}        json     Object wih form specification.
    *
@@ -116,8 +119,8 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Identify which field should be built and use element as a reference. 
+   * Attribute name in json is required. 
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
@@ -158,8 +161,15 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build label to a specific field. Label is defined in saction label inner
+   * field that it has. Configs are used here.
+   * Attributes:
+   * -> id: field identifier; reference for field;
+   * -> class: style classes to field; to multiples use space as separetor;
+   * -> title:field name;
+   * -> required: set field as riquired;
+   * Configs:
+   * -> requiredLabel: Label to add in fields that are required; 
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
