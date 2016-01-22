@@ -90,7 +90,7 @@ function Rendering() {
   }
 
   /**
-   * Build HTML div from a group. 
+   * Build HTML div from a group.
    * Attributes:
    * -> id: identifier; unique;
    * -> class: style classes; to multiples use space as separetor;
@@ -119,8 +119,8 @@ function Rendering() {
   }
 
   /**
-   * Identify which field should be built and use element as a reference. 
-   * Attribute name in json is required. 
+   * Identify which field should be built and use element as a reference.
+   * Attribute name in json is required.
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
@@ -161,15 +161,15 @@ function Rendering() {
   }
 
   /**
-   * Build label to a specific field. Label is defined in saction label inner
-   * field that it has. Configs are used here.
+   * Build label to related field. It is defined in saction label inner
+   * field that it belong. Settings that are used here.
    * Attributes:
    * -> id: field identifier; reference for field;
    * -> class: style classes to field; to multiples use space as separetor;
-   * -> title:field name;
+   * -> title: field name;
    * -> required: set field as riquired;
    * Configs:
-   * -> requiredLabel: Label to add in fields that are required; 
+   * -> requiredLabel: Label to add in fields that are required;
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
@@ -195,8 +195,30 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build input field, it is a generic builder to inputs and the attribute
+   * type that define which one it is. Settings that are used here.
+   * Attributes:
+   * -> type: input type; required;
+   * -> name: name to access field; required;
+   * -> id: field identifier; unique;
+   * -> class: style classes to field; to multiples use space as separetor;
+   * -> default: values default to field;
+   * -> title: Description to show when houver mouse;
+   * -> list: refer a list;
+   * -> pattern: define regex;
+   * -> step: number of intervals;
+   * -> size: number to char width;
+   * -> max: value maximum;
+   * -> min: value minimum;
+   * -> maxlength: maximum number of chars;
+   * -> autocomplete: enable autocomplete;
+   * -> required: set field as riquired;
+   * -> readonly: set field only to read;
+   * -> autofocus: set a field to staerted focus;
+   * -> disabled: set field to edit desable;
+   * -> placeholder: add placeholder to field;
+   * Configs:
+   * -> showPlaceholder: boolean to check if placeholder should be print or not;
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
