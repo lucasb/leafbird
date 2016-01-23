@@ -91,7 +91,7 @@ function Rendering() {
 
   /**
    * Build HTML div from a group.
-   * Attributes:
+   * Attributes in json:
    * -> id: identifier; unique;
    * -> class: style classes; to multiples use space as separetor;
    * -> title: group name; it create a span inside of group with title;
@@ -163,13 +163,13 @@ function Rendering() {
   /**
    * Build label to related field. It is defined in saction label inner
    * field that it belong. Settings that are used here.
-   * Attributes:
+   * Attributes in json:
    * -> id: field identifier; reference for field;
    * -> class: style classes to field; to multiples use space as separetor;
    * -> title: field name;
    * -> required: set field as riquired;
    * Configs:
-   * -> requiredLabel: Label to add in fields that are required;
+   * -> requiredLabel: label to add in fields that are required;
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
@@ -197,13 +197,13 @@ function Rendering() {
   /**
    * Build input field, it is a generic builder to inputs and the attribute
    * type that define which one it is. Settings that are used here.
-   * Attributes:
+   * Attributes in json:
    * -> type: input type; required;
    * -> name: name to access field; required;
    * -> id: field identifier; unique;
    * -> class: style classes to field; to multiples use space as separetor;
    * -> default: values default to field;
-   * -> title: Description to show when houver mouse;
+   * -> title: description to show when houver mouse;
    * -> list: refer a list;
    * -> pattern: define regex;
    * -> step: number of intervals;
@@ -270,8 +270,8 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build to currency input. It is a number input that recive step attribute
+   * with two characters on decimal part.
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
@@ -282,8 +282,22 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build textarea field based from settings. Settings that are used here.
+   * Attributes in json:
+   * -> name: name to access field; required;
+   * -> id: field identifier; unique;
+   * -> class: style classes to field; to multiples use space as separetor;
+   * -> default: values default to field;
+   * -> title: description to show when houver mouse;
+   * -> maxlength: maximum number of chars;
+   * -> autocomplete: enable autocomplete;
+   * -> readonly: set field only to read;
+   * -> autofocus: set a field to staerted focus;
+   * -> disabled: set field to edit desable;
+   * -> placeholder: add placeholder to field;
+   * -> required: set field as riquired;
+   * Configs:
+   * -> showPlaceholder: boolean to check if placeholder should be print or not;
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
@@ -322,8 +336,21 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build a list of checkbox or radio button field based from settings.
+   * Settings that are used here.
+   * Attributes in json:
+   * -> type: input type; required;
+   * -> name: name to access field; required;
+   * -> id: field identifier; unique; it is add count to each id in checkbox
+   * -> class: style classes to field; to multiples use space as separetor;
+   * -> default: value to default checked;
+   * -> values: array with value for each item; required at least one;
+   *   -> label: object with information about item;
+   *     -> title: description to show when houver mouse;
+   *     -> class: style classes to item; to multiples use space as separetor;
+   *     -> value: description to a item;
+   *   -> value: item value;
+   *   -> required: boolean; if item is required;
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
@@ -361,8 +388,8 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build to checkbox field when at least one must be required.
+   * It is a checkbox input, so all atributes and format are the same.
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
@@ -384,8 +411,21 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build select field based from settings. Settings that are used here.
+   * Attributes in json:
+   * -> name: name to access field; required;
+   * -> id: field identifier; unique;
+   * -> class: style classes to field; to multiples use space as separetor;
+   * -> default: value default selected;
+   * -> title: description to show when houver mouse;
+   * -> required: set field as riquired;
+   * -> values: array with value for each item; required at least one;
+   *   -> label: object with information about item;
+   *     -> value: description to a item;
+   *     -> class: style classes to item; to multiples use space as separetor;
+   *   -> value: item value;
+   * Configs:
+   * -> multiselectInput: boolean that set select field as multiple choice;
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
@@ -420,8 +460,17 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build file field based from settings. Settings that are used here.
+   * Attributes in json:
+   * -> type: input type; required;
+   * -> name: name to access field; required;
+   * -> id: field identifier; unique;
+   * -> class: style classes to field; to multiples use space as separetor;
+   * -> accept: type of file can be accepted;
+   * -> title: description to show when houver mouse;
+   * -> required: set field as riquired;
+   * Configs:
+   * -> multifileInput: boolean toaccept multifiles in one field;
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
