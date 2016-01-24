@@ -33,8 +33,10 @@ function Validation() {
   var configs;
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * This method should be called to validate a form. It check same validation
+   * that HTML5 and retur if is a form valid. When form is invalid callback sending
+   * fields with problems and form of origen. It use the setting in config named
+   * validationCallback to know how function call.
    *
    * @param   {HTMLElement}   form  HTML element that contains inputs to validate.
    *
@@ -65,8 +67,8 @@ function Validation() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Special case to validate if at least one in a group of checkbox is checked.
+   * It use attribute required to know if that field should be check.
    *
    * @param   {HTMLElement}   element  HTML element with group checkbox to verify.
    *
