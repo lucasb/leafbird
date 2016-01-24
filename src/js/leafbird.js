@@ -16,6 +16,10 @@
 'use strict';
 
 if (!window.leafbird)
+  /**
+   * Set leafbird as lib namespace.
+   * @namespace Leafbird
+   */
   window.leafbird = new Leafbird();
 
 /**

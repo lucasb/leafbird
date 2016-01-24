@@ -15,6 +15,9 @@
 
 'use strict';
 
+/**
+ * @module leafbird/rendering
+ */
 leafbird.rendering = new Rendering();
 
 /**

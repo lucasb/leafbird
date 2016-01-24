@@ -15,6 +15,9 @@
 
 'use strict';
 
+/**
+ * @module leafbird/element
+ */
 leafbird.element = new Element();
 
 /**

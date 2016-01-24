@@ -15,6 +15,9 @@
 
 'use strict';
 
+/**
+ * @module leafbird/validation
+ */
 leafbird.validation = new Validation();
 
 /**
