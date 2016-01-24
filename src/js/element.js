@@ -34,8 +34,8 @@ function Element() {
   var configs;
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Funtion to find a element in json (group or field), it match a property(key)
+   * and value then return a array with objects and its siblings.
    *
    * @param   {string}  property  Name of key in json object.
    * @param   {string}  _value    Value expected to key.
@@ -47,8 +47,13 @@ function Element() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Returns elements found by attribute, when _attr is undefined returns whole
+   * json. It is a helper to build finds using this order: contains, property and
+   * value. When start with contains(*) it find values that contains string value.
+   *  -> # = id; #value;
+   *  -> . = class; .value;
+   *  -> : = name; :name;
+   *  -> * = contains; *.partValue;
    *
    * @param   {string}  _attr Attribute to get specific element(s) from json object.
    *
@@ -79,8 +84,8 @@ function Element() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Funtion recursive to find a element in json (group or field), it match a
+   * property(key) and value then return a array with objects and its siblings.
    *
    * @param   {string}  property    Name of key in json object.
    * @param   {string}  _value      Value expected to key.
