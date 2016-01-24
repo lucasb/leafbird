@@ -37,6 +37,8 @@ function Validation() {
    * that HTML5 and retur if is a form valid. When form is invalid callback sending
    * fields with problems and form of origen. It use the setting in config named
    * validationCallback to know how function call.
+   * Configs:
+   *   -> validationCallback: function to callback validation errors;
    *
    * @param   {HTMLElement}   form  HTML element that contains inputs to validate.
    *

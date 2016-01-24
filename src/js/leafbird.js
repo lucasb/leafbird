@@ -61,8 +61,8 @@ function Leafbird() {
   };
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Set configs value to project. Json is only config required. If a config is
+   * not found it is kept the default.
    *
    * @param   {LeafbirdConfig}  _args  Configs to change default values.
    *

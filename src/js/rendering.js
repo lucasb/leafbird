@@ -36,6 +36,8 @@ function Rendering() {
   /**
    * Print whole form, a specific group or one element.
    * It is printing elements recusive, all itens from element base will be print.
+   * Configs:
+   *   -> replaceElement: boolean to replace base element or not;
    *
    * @param   {HTMLElement}      element   Root element to insert form.
    * @param   {string}           _attr     Attribute to get specific element(s) from json to print.
@@ -95,6 +97,8 @@ function Rendering() {
    * -> id: identifier; unique;
    * -> class: style classes; to multiples use space as separetor;
    * -> title: group name; it create a span inside of group with title;
+   * Configs:
+   * -> showGroupLabel: boolean to show or not label to a group;
    *
    * @param   {object}        json     Object wih form specification.
    *
@@ -121,6 +125,8 @@ function Rendering() {
   /**
    * Identify which field should be built and use element as a reference.
    * Attribute name in json is required.
+   * Configs:
+   *   -> showInputLabel: boolean to define if label should be build to field;
    *
    * @param   {object}        json     Object wih form specification.
    * @param   {HTMLElement}   element  HTML element to put fields or group.
