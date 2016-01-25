@@ -15,14 +15,18 @@
 
 'use strict';
 
+/**
+ * @module leafbird/rendering
+ */
 leafbird.rendering = new Rendering();
 
 /**
- * @todo Write JSDoc here
- * { function_description }
+ * Rendering has the unique responsibility to render all elements
+ * (fields, labels and others) in DOM. It provide all input form
+ * types and use json specification to define them and their
+ * attributes to determine style and behavior.
  *
  * @class
- * @return     {<type>}  { description_of_the_return_value }
  */
 function Rendering() {
 
@@ -33,12 +37,14 @@ function Rendering() {
   var configs;
 
   /**
-   * @todo Write JSDoc here
+   * Print whole form, a specific group or one element.
+   * It is printing elements recusive, all itens from element base will be print.
+   * Configs:
+   *   -> replaceElement: boolean to replace base element or not;
    *
-   * { function_description }
-   *
-   * @method     configure
-   * @param      {<type>}  args    { description }
+   * @param   {HTMLElement}      element   Root element to insert form.
+   * @param   {string}           _attr     Attribute to get specific element(s) from json to print.
+   * @param   {LeafbirdConfig}   _configs  Configuration to change previous values for new and just to this print action.
    */
   function print(element, _attr, _configs) {
 
@@ -62,12 +68,13 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build html elements and organize groups and fields.
+   * Groups is recusive, however is possible have gruops inner groups,
+   * fields inner groups and mixing groups and fields inner a group.
+   * Warning: Fields should not have groups or/and others fields.
    *
-   * @method     buildHTMLElement
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildHTMLElement(json, element) {
 
@@ -88,12 +95,17 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build HTML div from a group.
+   * Attributes in json:
+   * -> id: identifier; unique;
+   * -> class: style classes; to multiples use space as separetor;
+   * -> title: group name; it create a span inside of group with title;
+   * Configs:
+   * -> showGroupLabel: boolean to show or not label to a group;
    *
-   * @method     buildDivGroup
-   * @param      {<type>}  json    { description }
-   * @return     {<type>}  { description_of_the_return_value }
+   * @param   {object}        json     Object wih form specification.
+   *
+   * @return  {HTMLElement}   Element div created following group specified in json object.
    */
   function buildDivGroup(json) {
 
@@ -114,12 +126,13 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Identify which field should be built and use element as a reference.
+   * Attribute name in json is required.
+   * Configs:
+   *   -> showInputLabel: boolean to define if label should be build to field;
    *
-   * @method     buildFieldElement
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldElement(json, element) {
 
@@ -157,12 +170,18 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build label to related field. It is defined in saction label inner
+   * field that it belong. Settings that are used here.
+   * Attributes in json:
+   * -> id: field identifier; reference for field;
+   * -> class: style classes to field; to multiples use space as separetor;
+   * -> title: field name;
+   * -> required: set field as riquired;
+   * Configs:
+   * -> requiredLabel: label to add in fields that are required;
    *
-   * @method     buildFieldLabel
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldLabel(json, element) {
 
@@ -185,12 +204,33 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build input field, it is a generic builder to inputs and the attribute
+   * type that define which one it is. Settings that are used here.
+   * Attributes in json:
+   * -> type: input type; required;
+   * -> name: name to access field; required;
+   * -> id: field identifier; unique;
+   * -> class: style classes to field; to multiples use space as separetor;
+   * -> default: values default to field;
+   * -> title: description to show when houver mouse;
+   * -> list: refer a list;
+   * -> pattern: define regex;
+   * -> step: number of intervals;
+   * -> size: number to char width;
+   * -> max: value maximum;
+   * -> min: value minimum;
+   * -> maxlength: maximum number of chars;
+   * -> autocomplete: enable autocomplete;
+   * -> required: set field as riquired;
+   * -> readonly: set field only to read;
+   * -> autofocus: set a field to staerted focus;
+   * -> disabled: set field to edit desable;
+   * -> placeholder: add placeholder to field;
+   * Configs:
+   * -> showPlaceholder: boolean to check if placeholder should be print or not;
    *
-   * @method     buildFieldText
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldInput(json, element) {
 
@@ -239,12 +279,11 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build to currency input. It is a number input that recive step attribute
+   * with two characters on decimal part.
    *
-   * @method     buildFieldCurrency
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldCurrency(json, element) {
     json.type = 'number';
@@ -252,12 +291,25 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build textarea field based from settings. Settings that are used here.
+   * Attributes in json:
+   * -> name: name to access field; required;
+   * -> id: field identifier; unique;
+   * -> class: style classes to field; to multiples use space as separetor;
+   * -> default: values default to field;
+   * -> title: description to show when houver mouse;
+   * -> maxlength: maximum number of chars;
+   * -> autocomplete: enable autocomplete;
+   * -> readonly: set field only to read;
+   * -> autofocus: set a field to staerted focus;
+   * -> disabled: set field to edit desable;
+   * -> placeholder: add placeholder to field;
+   * -> required: set field as riquired;
+   * Configs:
+   * -> showPlaceholder: boolean to check if placeholder should be print or not;
    *
-   * @method     buildFieldTextarea
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldTextarea(json, element) {
 
@@ -293,12 +345,24 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build a list of checkbox or radio button field based from settings.
+   * Settings that are used here.
+   * Attributes in json:
+   * -> type: input type; required;
+   * -> name: name to access field; required;
+   * -> id: field identifier; unique; it is add count to each id in checkbox
+   * -> class: style classes to field; to multiples use space as separetor;
+   * -> default: value to default checked;
+   * -> values: array with value for each item; required at least one;
+   *   -> label: object with information about item;
+   *     -> title: description to show when houver mouse;
+   *     -> class: style classes to item; to multiples use space as separetor;
+   *     -> value: description to a item;
+   *   -> value: item value;
+   *   -> required: boolean; if item is required;
    *
-   * @method     buildFieldCheckboxRadio
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldCheckboxRadio(json, element) {
 
@@ -333,12 +397,11 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build to checkbox field when at least one must be required.
+   * It is a checkbox input, so all atributes and format are the same.
    *
-   * @method     buildCheckboxOne
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildCheckboxOne(json, element) {
 
@@ -357,12 +420,24 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build select field based from settings. Settings that are used here.
+   * Attributes in json:
+   * -> name: name to access field; required;
+   * -> id: field identifier; unique;
+   * -> class: style classes to field; to multiples use space as separetor;
+   * -> default: value default selected;
+   * -> title: description to show when houver mouse;
+   * -> required: set field as riquired;
+   * -> values: array with value for each item; required at least one;
+   *   -> label: object with information about item;
+   *     -> value: description to a item;
+   *     -> class: style classes to item; to multiples use space as separetor;
+   *   -> value: item value;
+   * Configs:
+   * -> multiselectInput: boolean that set select field as multiple choice;
    *
-   * @method     buildFieldSelect
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldSelect(json, element) {
 
@@ -394,12 +469,20 @@ function Rendering() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Build file field based from settings. Settings that are used here.
+   * Attributes in json:
+   * -> type: input type; required;
+   * -> name: name to access field; required;
+   * -> id: field identifier; unique;
+   * -> class: style classes to field; to multiples use space as separetor;
+   * -> accept: type of file can be accepted;
+   * -> title: description to show when houver mouse;
+   * -> required: set field as riquired;
+   * Configs:
+   * -> multifileInput: boolean toaccept multifiles in one field;
    *
-   * @method     buildFieldFile
-   * @param      {<type>}  json     { description }
-   * @param      {<type>}  element  { description }
+   * @param   {object}        json     Object wih form specification.
+   * @param   {HTMLElement}   element  HTML element to put fields or group.
    */
   function buildFieldFile(json, element) {
 

@@ -1,5 +1,9 @@
 {
     "preset": "google",
     "requireCurlyBraces": null,
-    "jsDoc": null
+    "jsDoc": {
+      "checkAnnotations": {
+        "preset": "jsdoc3"
+      }
+    }
 }

@@ -26,6 +26,7 @@ var istanbul = require('gulp-istanbul');
 var coveralls = require('gulp-coveralls');
 var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
+var jsdoc = require('gulp-jsdoc3');
 
 // Code lint
 gulp.task('lint', function() {
@@ -74,6 +75,11 @@ gulp.task('coverage', function() {
 gulp.task('coveralls', function() {
   return gulp.src('./coverage/lcov.info')
     .pipe(coveralls());
+});
+
+gulp.task('doc', function(c) {
+  return gulp.src(['README.md', './src/js/*.js'])
+    .pipe(jsdoc());
 });
 
 // run all tasks
