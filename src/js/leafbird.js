@@ -16,14 +16,19 @@
 'use strict';
 
 if (!window.leafbird)
+  /**
+   * Set leafbird as lib namespace.
+   * @namespace Leafbird
+   */
   window.leafbird = new Leafbird();
 
 /**
- * { function_description }
+ * It is main class for Leafbird and provide access to all resources,
+ * such as: element, rendering and validation. Configurations is used
+ * to define or/and change default values for design and behavior,
+ * and that configuration can be use to the all methods cross the project.
  *
- * @todo Write docs to this
  * @class
- * @return     {(Array|Function|Object|boolean|number)}  { description_of_the_return_value }
  */
 function Leafbird() {
 
@@ -33,15 +38,15 @@ function Leafbird() {
 
   /**
    * @typedef LeafbirdConfig
-   * @type {object}
-   * @property {object} json Form specification.
-   * @property {boolean} replace_element Transclude parent element.
-   * @property {callback} validation_callback Validation callback function.
-   * @property {string} required_label String indicate required field.
-   * @property {boolean} show_group_label Display a group label.
-   * @property {boolean} show_placeholder Display a field placeholder.
-   * @property {boolean} multiselect_input Set this field as a multiselect.
-   * @property {boolean} multifile_input Set this field as a multifile input.
+   * @type      {object}
+   * @property  {object}   json                 Form specification.
+   * @property  {boolean}  replace_element      Transclude parent element.
+   * @property  {function} validation_callback  Validation callback function.
+   * @property  {string}   required_label       String indicate required field.
+   * @property  {boolean}  show_group_label     Display a group label.
+   * @property  {boolean}  show_placeholder     Display a field placeholder.
+   * @property  {boolean}  multiselect_input    Set this field as a multiselect.
+   * @property  {boolean}  multifile_input      Set this field as a multifile input.
    */
 
   /**
@@ -60,19 +65,19 @@ function Leafbird() {
   };
 
   /**
-   * @todo Write JSDoc here
+   * Set configs value to project. Json is only config required. If a config is
+   * not found it is kept the default.
    *
-   * { function_description }
+   * @param   {LeafbirdConfig}  _args  Configs to change default values.
    *
-   * @method     configure
-   * @param      {<type>}  args    { description }
+   * @return  {object}  Current configs that are set.
    */
-  function configure(args) {
+  function configure(_args) {
 
-    if (args !== undefined) {
-      for (var key in args) {
-        if (configs.hasOwnProperty(key) && args[key] !== undefined) {
-          configs[key] = args[key];
+    if (_args !== undefined) {
+      for (var key in _args) {
+        if (configs.hasOwnProperty(key) && _args[key] !== undefined) {
+          configs[key] = _args[key];
         }
       }
     }

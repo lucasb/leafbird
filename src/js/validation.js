@@ -15,14 +15,17 @@
 
 'use strict';
 
+/**
+ * @module leafbird/validation
+ */
 leafbird.validation = new Validation();
 
 /**
- * @todo Write JSDoc here
- * { function_description }
+ * Validation provides form checks based on json specification.
+ * Validate special fields and compatibility with all HTML5
+ * resources for all modern browsers is another requirement.
  *
  * @class
- * @return     {boolean}  { description_of_the_return_value }
  */
 function Validation() {
 
@@ -33,13 +36,22 @@ function Validation() {
   var configs;
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * This method should be called to validate a form. It check same validation
+   * that HTML5 and retur if is a form valid. When form is invalid callback sending
+   * fields with problems and form of origen. It use the setting in config named
+   * validationCallback to know how function call.
+   * Configs:
+   *   -> validationCallback: function to callback validation errors;
    *
-   * @method     validateForm
-   * @return     {boolean}  { description_of_the_return_value }
+   * @param   {HTMLElement}   form  HTML element that contains inputs to validate.
+   *
+   * @return  {boolean}       Validation status, true if all values is valid.
    */
   function validateForm(form) {
+
+    if (!(form instanceof HTMLElement)) {
+      throw new SyntaxError('Invalid HTMLElement.', form);
+    }
 
     configs = leafbird.configure();
     var isValid = true;
@@ -60,11 +72,12 @@ function Validation() {
   }
 
   /**
-   * @todo Write JSDoc here
-   * { function_description }
+   * Special case to validate if at least one in a group of checkbox is checked.
+   * It use attribute required to know if that field should be check.
    *
-   * @method     validateCheckboxOne
-   * @return     {boolean}  { description_of_the_return_value }
+   * @param   {HTMLElement}   element  HTML element with group checkbox to verify.
+   *
+   * @return  {boolean}       True if at least one checkbox is checked or it is not required.
    */
   function validateCheckboxOne(element) {
 

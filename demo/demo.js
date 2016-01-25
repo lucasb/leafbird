@@ -20,26 +20,26 @@ var parseResponse = function(data) {
   // configure general paramters after lib was intanced
   leafbird.configure({
     json: data,
-    required_label: ' *',
-    validation_callback: validateFormCallback,
-    show_group_label: true,
-    show_input_label: true,
-    multifile_input: true
+    requiredLabel: ' *',
+    validationCallback: validateFormCallback,
+    showGroupLabel: true,
+    showInputLabel: true,
+    multifileInput: true
   });
 
   // get a elements object before to set on DOM, to add/change anything
   console.log(leafbird.element.getElements());
-  console.log(leafbird.element.find("id", "text"));
+  console.log(leafbird.element.find('id', 'text'));
 
   // print all elements into html form
-  var element = document.getElementById("form");
+  var element = document.getElementById('form');
   leafbird.rendering.print(element);
 
   // print specific element with name text into html form2
-  var element2 = document.getElementById("form2");
-  leafbird.rendering.print(element2, ":text", {replace_element: true,
-                                               show_placeholder: true,
-                                               show_input_label: false});
+  var element2 = document.getElementById('form2');
+  leafbird.rendering.print(element2, ':text', {replaceElement: true,
+                                               showPlaceholder: true,
+                                               showInputLabel: false});
 
 };
 
@@ -50,7 +50,7 @@ var validateFormCallback = function(invalidFields, form) {
   divErrors.setAttribute('class', 'errors');
   divErrors.appendChild(document.createTextNode('Invalid fields:'));
 
-  for(var i = 0; i < invalidFields.length; i++) {
+  for (var i = 0; i < invalidFields.length; i++) {
     var span = document.createElement('span');
     var name = invalidFields[i].name ? invalidFields[i].name
                                      : invalidFields[i].title;
@@ -59,15 +59,18 @@ var validateFormCallback = function(invalidFields, form) {
   }
 
   form.insertBefore(divErrors, form.firstChild);
-}
+};
+
+// Define function to submit form
+var onSubmitEvent = function(event) {
+  if (this.firstChild.className == 'errors')
+    this.removeChild(this.firstChild);
+  window.scrollTo(0, 0);
+  return leafbird.validation.validateForm(this);
+};
 
 // Add call to validateForm function from Leafbird on submit forms
 var forms = document.getElementsByTagName('form');
-for(var i = 0; i < forms.length; i++) {
-  forms[i].onsubmit = function (event) {
-    if(this.firstChild.className == 'errors')
-      this.removeChild(this.firstChild);
-    window.scrollTo(0, 0);
-    return leafbird.validation.validateForm(this);
-  }
+for (var i = 0; i < forms.length; i++) {
+  forms[i].onsubmit = onSubmitEvent;
 }
